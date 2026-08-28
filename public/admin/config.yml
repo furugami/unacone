@@ -1,0 +1,116 @@
+# Decap CMSの設定ファイル。ここに書いたフィールドが、そのまま管理画面のフォームになる。
+# 各コレクションは src/content.config.ts のスキーマ（Zod）と対応させている。
+# 認証部分（base_url）は、OAuth仲介サーバーのデプロイ後に差し替える。
+
+backend:
+  name: github
+  repo: furugami/unacone
+  branch: main
+  # TODO: OAuth仲介サーバーをデプロイしたら、そのURLに差し替える
+  base_url: https://REPLACE-ME-oauth-proxy.example.com
+
+media_folder: "public/images/uploads"
+public_folder: "/unacone/images/uploads"
+
+collections:
+  - name: "pokemon-jp"
+    label: "ポケモン図鑑"
+    folder: "src/content/pokemon-jp"
+    create: true
+    slug: "{{fields.slug}}"
+    fields:
+      - { label: "スラッグ（半角英数、ファイル名になる）", name: "slug", widget: "string" }
+      - { label: "日本語名", name: "name_ja", widget: "string" }
+      - label: "ロール"
+        name: "role"
+        widget: "select"
+        options:
+          - { label: "アタッカー", value: "attacker" }
+          - { label: "スピーディ", value: "speedster" }
+          - { label: "ディフェンダー", value: "defender" }
+          - { label: "サポーター", value: "supporter" }
+          - { label: "オールラウンダー", value: "allrounder" }
+      - label: "Tier評価（人力・主観、任意）"
+        name: "tier"
+        widget: "select"
+        required: false
+        options: ["S", "A", "B", "C"]
+      - label: "おすすめビルド"
+        name: "builds"
+        widget: "list"
+        required: false
+        fields:
+          - { label: "ビルド名", name: "title", widget: "string" }
+          - { label: "もちもの（3つまで）", name: "held_items", widget: "list" }
+          - { label: "バトルアイテム", name: "battle_item", widget: "string" }
+          - { label: "補足", name: "note", widget: "string", required: false }
+      - { label: "立ち回り解説（本文）", name: "body", widget: "markdown" }
+
+  - name: "articles"
+    label: "セオリー解説記事"
+    folder: "src/content/articles"
+    create: true
+    slug: "{{fields.slug}}"
+    fields:
+      - { label: "スラッグ", name: "slug", widget: "string" }
+      - { label: "タイトル", name: "title", widget: "string" }
+      - label: "難易度カテゴリ"
+        name: "category"
+        widget: "select"
+        options:
+          - { label: "初心者向け", value: "beginner" }
+          - { label: "中級者向け", value: "intermediate" }
+          - { label: "上級者向け", value: "advanced" }
+      - { label: "公開日", name: "publish_date", widget: "datetime" }
+      - { label: "要約（一覧カードに表示）", name: "excerpt", widget: "text" }
+      - { label: "サムネイル（任意）", name: "thumbnail", widget: "image", required: false }
+      - { label: "本文（YouTube埋め込み可）", name: "body", widget: "markdown" }
+
+  - name: "streamers"
+    label: "配信者プロフィール"
+    folder: "src/content/streamers"
+    create: true
+    slug: "{{fields.slug}}"
+    fields:
+      - { label: "スラッグ", name: "slug", widget: "string" }
+      - { label: "名前", name: "name", widget: "string" }
+      - { label: "アイコン（任意）", name: "icon", widget: "image", required: false }
+      - { label: "Twitchログイン名（任意）", name: "twitch_channel", widget: "string", required: false }
+      - { label: "YouTubeチャンネルID（任意）", name: "youtube_channel_id", widget: "string", required: false }
+
+  - name: "held-items"
+    label: "もちもの"
+    folder: "src/content/held-items"
+    create: true
+    slug: "{{fields.slug}}"
+    fields:
+      - { label: "スラッグ", name: "slug", widget: "string" }
+      - { label: "名前", name: "name_ja", widget: "string" }
+      - { label: "アイコン（任意）", name: "icon", widget: "image", required: false }
+      - { label: "要約（一覧に表示）", name: "summary", widget: "text" }
+      - { label: "効果の説明（本文）", name: "body", widget: "markdown" }
+
+  - name: "battle-items"
+    label: "バトルアイテム"
+    folder: "src/content/battle-items"
+    create: true
+    slug: "{{fields.slug}}"
+    fields:
+      - { label: "スラッグ", name: "slug", widget: "string" }
+      - { label: "名前", name: "name_ja", widget: "string" }
+      - { label: "アイコン（任意）", name: "icon", widget: "image", required: false }
+      - { label: "要約（一覧に表示）", name: "summary", widget: "text" }
+      - { label: "効果の説明（本文）", name: "body", widget: "markdown" }
+
+  - name: "medals"
+    label: "メダル"
+    folder: "src/content/medals"
+    create: true
+    slug: "{{fields.slug}}"
+    fields:
+      - { label: "スラッグ", name: "slug", widget: "string" }
+      - { label: "名前", name: "name_ja", widget: "string" }
+      - { label: "対象ポケモンのスラッグ（任意）", name: "pokemon_slug", widget: "string", required: false }
+      - { label: "アイコン（任意）", name: "icon", widget: "image", required: false }
+      - { label: "要約（一覧に表示）", name: "summary", widget: "text" }
+      - { label: "入手条件・効果の説明（本文）", name: "body", widget: "markdown" }
