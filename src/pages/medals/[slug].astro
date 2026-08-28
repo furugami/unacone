@@ -1,0 +1,62 @@
+---
+// メダル個別ページ（/medals/{slug}/）。pokemon_slug が設定されていれば対象ポケモンページへリンクする。
+import Layout from '../../layouts/Layout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+	const medals = await getCollection('medals');
+	return medals.map((entry) => ({
+		params: { slug: entry.data.slug },
+		props: { entry },
+	}));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const { name_ja, summary, pokemon_slug } = entry.data;
+
+let relatedPokemonName: string | undefined;
+if (pokemon_slug) {
+	const pokemonList = await getCollection('pokemon-jp');
+	relatedPokemonName = pokemonList.find((p) => p.data.slug === pokemon_slug)?.data.name_ja;
+}
+---
+
+<Layout title={name_ja}>
+	<header>
+		<h1>{name_ja}</h1>
+		<p class="summary">{summary}</p>
+		{
+			pokemon_slug && relatedPokemonName && (
+				<p class="related-pokemon">
+					対象ポケモン: <a href={`/pokemon/${pokemon_slug}/`}>{relatedPokemonName}</a>
+				</p>
+			)
+		}
+	</header>
+	<div class="body">
+		<Content />
+	</div>
+</Layout>
+
+<style>
+	.summary {
+		color: var(--ink-soft);
+	}
+
+	.related-pokemon {
+		margin-top: 8px;
+	}
+
+	.related-pokemon a {
+		color: var(--blue);
+	}
+
+	.body {
+		margin-top: 16px;
+		background: var(--surface);
+		border-radius: var(--radius);
+		padding: 24px;
+		line-height: 1.8;
+	}
+</style>

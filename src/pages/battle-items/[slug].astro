@@ -1,0 +1,41 @@
+---
+// バトルアイテム個別ページ（/battle-items/{slug}/）。
+import Layout from '../../layouts/Layout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+	const battleItems = await getCollection('battle-items');
+	return battleItems.map((entry) => ({
+		params: { slug: entry.data.slug },
+		props: { entry },
+	}));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const { name_ja, summary } = entry.data;
+---
+
+<Layout title={name_ja}>
+	<header>
+		<h1>{name_ja}</h1>
+		<p class="summary">{summary}</p>
+	</header>
+	<div class="body">
+		<Content />
+	</div>
+</Layout>
+
+<style>
+	.summary {
+		color: var(--ink-soft);
+	}
+
+	.body {
+		margin-top: 16px;
+		background: var(--surface);
+		border-radius: var(--radius);
+		padding: 24px;
+		line-height: 1.8;
+	}
+</style>

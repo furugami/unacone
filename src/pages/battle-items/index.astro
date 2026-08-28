@@ -1,0 +1,60 @@
+---
+// バトルアイテム図鑑 一覧ページ（/battle-items/）。
+// 参照: CLAUDE-3.md「もちもの／バトルアイテム／メダル 図鑑」
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const battleItems = (await getCollection('battle-items')).sort((a, b) =>
+	a.data.name_ja.localeCompare(b.data.name_ja, 'ja')
+);
+---
+
+<Layout title="バトルアイテム">
+	<h1>バトルアイテム</h1>
+	<ul class="item-list">
+		{
+			battleItems.map((item) => (
+				<li>
+					<a href={`/battle-items/${item.data.slug}/`}>
+						<span class="name">{item.data.name_ja}</span>
+						<span class="summary">{item.data.summary}</span>
+					</a>
+				</li>
+			))
+		}
+	</ul>
+	{battleItems.length === 0 && <p>準備中です。もうしばらくお待ちください。</p>}
+</Layout>
+
+<style>
+	.item-list {
+		list-style: none;
+		margin: 24px 0 0;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+	}
+
+	.item-list a {
+		display: block;
+		padding: 16px;
+		background: var(--surface);
+		border-radius: var(--radius);
+		text-decoration: none;
+		box-shadow: 0 1px 2px rgba(27, 34, 51, 0.08);
+	}
+
+	.name {
+		display: block;
+		font-family: var(--font-heading);
+		font-weight: 700;
+	}
+
+	.summary {
+		display: block;
+		margin-top: 4px;
+		color: var(--ink-soft);
+		font-size: 0.9rem;
+	}
+</style>
