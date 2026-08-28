@@ -1,0 +1,146 @@
+---
+// 全ページ共通のレイアウト。<head>・ヘッダーナビ・フッターをここに集約する。
+// 各ページは <Layout title="..."> 中身 </Layout> という形で使う。
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+
+const navItems = [
+  { href: '/pokemon/', label: '図鑑' },
+  { href: '/held-items/', label: 'もちもの' },
+  { href: '/battle-items/', label: 'バトルアイテム' },
+  { href: '/medals/', label: 'メダル' },
+  { href: '/articles/', label: 'セオリー記事' },
+  { href: '/schedule/', label: '配信スケジュール' },
+  { href: '/discord/', label: 'Discord' },
+];
+---
+
+<!doctype html>
+<html lang="ja">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title} | ユナコネ</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700&family=Noto+Sans+JP:wght@400;500;700&family=M+PLUS+Rounded+1c:wght@400;700&display=swap"
+			rel="stylesheet"
+		/>
+	</head>
+	<body>
+		<header class="site-header">
+			<a class="site-logo" href="/">ユナコネ</a>
+			<nav class="site-nav">
+				{navItems.map((item) => (
+					<a href={item.href}>{item.label}</a>
+				))}
+			</nav>
+		</header>
+		<main>
+			<slot />
+		</main>
+		<footer class="site-footer">
+			<p>ユナコネ — ユナイト関連でまず最初に来るサイト</p>
+		</footer>
+	</body>
+</html>
+
+<style is:global>
+	:root {
+		--bg: #f5f7fb;
+		--surface: #ffffff;
+		--ink: #1b2233;
+		--ink-soft: #6b7280;
+		--blue: #4c6fff;
+		--amber: #ffb238;
+
+		--r-attacker: #f2536b;
+		--r-speedster: #f0b429;
+		--r-defender: #3d8bfd;
+		--r-supporter: #2bc7a0;
+		--r-allrounder: #ff8a3d;
+
+		--radius: 12px;
+
+		--font-heading: 'Zen Kaku Gothic New', sans-serif;
+		--font-body: 'Noto Sans JP', sans-serif;
+		--font-number: 'M PLUS Rounded 1c', sans-serif;
+	}
+
+	* {
+		box-sizing: border-box;
+	}
+
+	body {
+		margin: 0;
+		background: var(--bg);
+		color: var(--ink);
+		font-family: var(--font-body);
+	}
+
+	h1,
+	h2,
+	h3,
+	h4 {
+		font-family: var(--font-heading);
+	}
+
+	a {
+		color: inherit;
+	}
+</style>
+
+<style>
+	.site-header {
+		display: flex;
+		align-items: center;
+		gap: 24px;
+		padding: 16px 24px;
+		background: var(--surface);
+		border-bottom: 1px solid #e5e9f2;
+		flex-wrap: wrap;
+	}
+
+	.site-logo {
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 1.25rem;
+		text-decoration: none;
+		color: var(--blue);
+	}
+
+	.site-nav {
+		display: flex;
+		gap: 16px;
+		flex-wrap: wrap;
+	}
+
+	.site-nav a {
+		text-decoration: none;
+		font-size: 0.9rem;
+		color: var(--ink-soft);
+	}
+
+	.site-nav a:hover {
+		color: var(--blue);
+	}
+
+	main {
+		max-width: 1080px;
+		margin: 0 auto;
+		padding: 32px 24px;
+	}
+
+	.site-footer {
+		text-align: center;
+		padding: 24px;
+		color: var(--ink-soft);
+		font-size: 0.85rem;
+	}
+</style>

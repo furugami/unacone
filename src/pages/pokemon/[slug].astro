@@ -1,0 +1,108 @@
+---
+// ポケモン個別ページ（/pokemon/zeraora/ のような動的ページ）。
+// ファイル名の [slug] が可変部分になる。
+//
+// 静的サイト（SSG）では「どんなURLが存在するか」を事前に全部書き出しておく必要があるため、
+// getStaticPaths() という特別な関数で「有り得るslugの一覧」をAstroに教える。
+// ここではポケモン全件ぶんのパスを作っている。
+import Layout from '../../layouts/Layout.astro';
+import { getCollection, render } from 'astro:content';
+import { ROLE_LABELS, ROLE_COLOR_VARS } from '../../lib/pokemon';
+
+export async function getStaticPaths() {
+	const pokemonList = await getCollection('pokemon-jp');
+	return pokemonList.map((entry) => ({
+		params: { slug: entry.data.slug },
+		props: { entry },
+	}));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const { name_ja, role, tier, builds } = entry.data;
+---
+
+<Layout title={name_ja}>
+	<header class="pokemon-header">
+		<h1>{name_ja}</h1>
+		<span class="role-badge" style={`background: var(${ROLE_COLOR_VARS[role]})`}>
+			{ROLE_LABELS[role]}
+		</span>
+		{tier && <span class="tier-badge">Tier {tier}</span>}
+	</header>
+
+	<section class="external-link-card">
+		<p>
+			詳しい数値データ（ステータス・勝率など）は外部サイトのUniteAPI/unite-db.comをご覧ください。
+		</p>
+		<a href="https://unite-db.com/" target="_blank" rel="noopener noreferrer">
+			unite-db.comで詳細を見る →
+		</a>
+	</section>
+
+	{
+		builds && builds.length > 0 && (
+			<section>
+				<h2>おすすめビルド</h2>
+				{builds.map((build) => (
+					<article class="build-card">
+						<h3>{build.title}</h3>
+						<p>もちもの: {build.held_items.join(' / ')}</p>
+						<p>バトルアイテム: {build.battle_item}</p>
+						{build.note && <p class="note">{build.note}</p>}
+					</article>
+				))}
+			</section>
+		)
+	}
+
+	<section class="commentary">
+		<h2>立ち回り解説</h2>
+		<Content />
+	</section>
+</Layout>
+
+<style>
+	.pokemon-header {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+	}
+
+	.role-badge,
+	.tier-badge {
+		padding: 4px 12px;
+		border-radius: 999px;
+		font-size: 0.85rem;
+		color: #fff;
+	}
+
+	.tier-badge {
+		background: var(--amber);
+		font-family: var(--font-number);
+	}
+
+	.external-link-card {
+		margin-top: 20px;
+		padding: 16px;
+		background: var(--surface);
+		border-radius: var(--radius);
+		border: 1px solid #e5e9f2;
+	}
+
+	.build-card {
+		margin-top: 12px;
+		padding: 16px;
+		background: var(--surface);
+		border-radius: var(--radius);
+	}
+
+	.note {
+		color: var(--ink-soft);
+		font-size: 0.9rem;
+	}
+
+	.commentary {
+		margin-top: 24px;
+	}
+</style>
