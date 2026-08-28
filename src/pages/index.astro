@@ -5,6 +5,7 @@
 import Layout from '../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 import { ROLE_COLOR_VARS, TIER_ORDER } from '../lib/pokemon';
+import { withBase } from '../lib/url';
 
 const pokemonList = await getCollection('pokemon-jp');
 
@@ -27,7 +28,7 @@ const latestArticles = (await getCollection('articles'))
 	<section class="tier-section">
 		<div class="section-header">
 			<h2>現在のTier表</h2>
-			<a href="/pokemon/">図鑑をもっと見る →</a>
+			<a href={withBase('/pokemon/')}>図鑑をもっと見る →</a>
 		</div>
 		{
 			tierRows.length > 0 ? (
@@ -38,7 +39,7 @@ const latestArticles = (await getCollection('articles'))
 							{row.pokemon.map((p) => (
 								<li>
 									<a
-										href={`/pokemon/${p.data.slug}/`}
+										href={withBase(`/pokemon/${p.data.slug}/`)}
 										style={`--role-color: var(${ROLE_COLOR_VARS[p.data.role]})`}
 									>
 										{p.data.name_ja}
@@ -57,14 +58,14 @@ const latestArticles = (await getCollection('articles'))
 	<section class="articles-section">
 		<div class="section-header">
 			<h2>セオリー解説記事</h2>
-			<a href="/articles/">記事一覧を見る →</a>
+			<a href={withBase('/articles/')}>記事一覧を見る →</a>
 		</div>
 		{
 			latestArticles.length > 0 ? (
 				<ul class="article-cards">
 					{latestArticles.map((a) => (
 						<li>
-							<a href={`/articles/${a.data.slug}/`}>
+							<a href={withBase(`/articles/${a.data.slug}/`)}>
 								<span class="title">{a.data.title}</span>
 								<span class="excerpt">{a.data.excerpt}</span>
 							</a>
@@ -78,7 +79,7 @@ const latestArticles = (await getCollection('articles'))
 	</section>
 
 	<section class="pokemon-cta">
-		<a class="cta-button" href="/pokemon/">ポケモン図鑑を見る →</a>
+		<a class="cta-button" href={withBase('/pokemon/')}>ポケモン図鑑を見る →</a>
 	</section>
 </Layout>
 

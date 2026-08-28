@@ -5,6 +5,7 @@
 import Layout from '../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 import { ARTICLE_CATEGORY_LABELS, ARTICLE_CATEGORY_ORDER } from '../../lib/articles';
+import { withBase } from '../../lib/url';
 
 const allArticles = await getCollection('articles');
 
@@ -28,7 +29,7 @@ const sections = ARTICLE_CATEGORY_ORDER.map((category) => {
 				<ul class="article-list">
 					{section.articlesInCategory.map((article) => (
 						<li>
-							<a href={`/articles/${article.data.slug}/`}>
+							<a href={withBase(`/articles/${article.data.slug}/`)}>
 								<span class="title">{article.data.title}</span>
 								<span class="excerpt">{article.data.excerpt}</span>
 							</a>

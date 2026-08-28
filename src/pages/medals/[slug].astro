@@ -2,6 +2,7 @@
 // メダル個別ページ（/medals/{slug}/）。pokemon_slug が設定されていれば対象ポケモンページへリンクする。
 import Layout from '../../layouts/Layout.astro';
 import { getCollection, render } from 'astro:content';
+import { withBase } from '../../lib/url';
 
 export async function getStaticPaths() {
 	const medals = await getCollection('medals');
@@ -29,7 +30,7 @@ if (pokemon_slug) {
 		{
 			pokemon_slug && relatedPokemonName && (
 				<p class="related-pokemon">
-					対象ポケモン: <a href={`/pokemon/${pokemon_slug}/`}>{relatedPokemonName}</a>
+					対象ポケモン: <a href={withBase(`/pokemon/${pokemon_slug}/`)}>{relatedPokemonName}</a>
 				</p>
 			)
 		}

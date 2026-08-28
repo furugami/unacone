@@ -1,6 +1,8 @@
 ---
 // 全ページ共通のレイアウト。<head>・ヘッダーナビ・フッターをここに集約する。
 // 各ページは <Layout title="..."> 中身 </Layout> という形で使う。
+import { withBase } from '../lib/url';
+
 interface Props {
   title: string;
 }
@@ -8,13 +10,13 @@ interface Props {
 const { title } = Astro.props;
 
 const navItems = [
-  { href: '/pokemon/', label: '図鑑' },
-  { href: '/held-items/', label: 'もちもの' },
-  { href: '/battle-items/', label: 'バトルアイテム' },
-  { href: '/medals/', label: 'メダル' },
-  { href: '/articles/', label: 'セオリー記事' },
-  { href: '/schedule/', label: '配信スケジュール' },
-  { href: '/discord/', label: 'Discord' },
+  { href: withBase('/pokemon/'), label: '図鑑' },
+  { href: withBase('/held-items/'), label: 'もちもの' },
+  { href: withBase('/battle-items/'), label: 'バトルアイテム' },
+  { href: withBase('/medals/'), label: 'メダル' },
+  { href: withBase('/articles/'), label: 'セオリー記事' },
+  { href: withBase('/schedule/'), label: '配信スケジュール' },
+  { href: withBase('/discord/'), label: 'Discord' },
 ];
 ---
 
@@ -22,7 +24,7 @@ const navItems = [
 <html lang="ja">
 	<head>
 		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title} | ユナコネ</title>
@@ -35,7 +37,7 @@ const navItems = [
 	</head>
 	<body>
 		<header class="site-header">
-			<a class="site-logo" href="/">ユナコネ</a>
+			<a class="site-logo" href={withBase('/')}>ユナコネ</a>
 			<nav class="site-nav">
 				{navItems.map((item) => (
 					<a href={item.href}>{item.label}</a>

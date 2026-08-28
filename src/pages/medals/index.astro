@@ -3,6 +3,7 @@
 // 参照: CLAUDE-3.md「もちもの／バトルアイテム／メダル 図鑑」
 import Layout from '../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
+import { withBase } from '../../lib/url';
 
 const medals = (await getCollection('medals')).sort((a, b) =>
 	a.data.name_ja.localeCompare(b.data.name_ja, 'ja')
@@ -15,7 +16,7 @@ const medals = (await getCollection('medals')).sort((a, b) =>
 		{
 			medals.map((item) => (
 				<li>
-					<a href={`/medals/${item.data.slug}/`}>
+					<a href={withBase(`/medals/${item.data.slug}/`)}>
 						<span class="name">{item.data.name_ja}</span>
 						<span class="summary">{item.data.summary}</span>
 					</a>
