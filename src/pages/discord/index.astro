@@ -1,0 +1,144 @@
+---
+// Discord誘導ページ（/discord/）。固定ページ（コード直書き、CMS管理はしない方針。
+// 参照: CLAUDE.md「Discordサーバー差別化構想」、CLAUDE-2.md「/discord/ ページ構成」）
+//
+// サーバー自体は未構築のため、招待リンクは仮のプレースホルダー。
+// サーバー開設後にDISCORD_INVITE_URLを差し替える。
+import Layout from '../../layouts/Layout.astro';
+
+const DISCORD_INVITE_URL = '#';
+
+const features = [
+	{
+		title: 'エンジョイ/ガチでミスマッチを削減',
+		description:
+			'プレイスタイルでロール・チャンネルを分けているので、「民度も実力層もわからないまま募集する」不安が起きにくい仕組みです。',
+	},
+	{
+		title: '良かった相手と自然に繋がれる（今後実装予定）',
+		description:
+			'一緒にプレイした相手に「また一緒にやりたい」を送り合い、双方が思っていた場合だけ繋がれるマッチング機能を開発予定です。',
+	},
+	{
+		title: '新規が入りやすい空気づくり',
+		description: '常連だけで固まらないよう、新しく参加した人が馴染みやすいチャンネル構成・ルールを用意しています。',
+	},
+];
+---
+
+<Layout title="Discord">
+	<section class="intro">
+		<h1>デュオ・フルパ相手を、安心して見つけよう</h1>
+		<p>
+			ユナコネ公式Discordは、Pokémon
+			UNITEのデュオ・フルパ相手を見つけるためのコミュニティです。初心者〜中堅層の方が、安心して仲間を探せる場所を目指しています。
+		</p>
+	</section>
+
+	<section class="features">
+		<h2>このサーバーの特徴</h2>
+		<div class="feature-cards">
+			{
+				features.map((f) => (
+					<div class="feature-card">
+						<h3>{f.title}</h3>
+						<p>{f.description}</p>
+					</div>
+				))
+			}
+		</div>
+	</section>
+
+	<section class="channels">
+		<h2>チャンネル・ロール構成</h2>
+		<p>
+			参加時にプレイスタイル（エンジョイ／ガチ）を選んでロールを設定します。募集チャンネルはロールごとに分かれているので、近い温度感の相手を見つけやすくなっています。
+			（詳しいチャンネル名はサーバー構築後にここに掲載します）
+		</p>
+	</section>
+
+	<section class="rules">
+		<h2>参加ルール・マナー</h2>
+		<ul>
+			<li>暴言・トキシックな言動、他責的な発言は禁止です。</li>
+			<li>参加時にルールへの同意（リアクションロール）が必要です。同意するまで一部チャンネルは閲覧できません。</li>
+			<li>募集した相手には敬意を持って接しましょう。</li>
+		</ul>
+	</section>
+
+	<section class="join">
+		<h2>参加方法</h2>
+		<p>下のボタンから参加できます。参加後、自己紹介とロール選択を行ってください。</p>
+		<a class="invite-button" href={DISCORD_INVITE_URL}>Discordサーバーに参加する →</a>
+	</section>
+</Layout>
+
+<style>
+	section {
+		margin-top: 40px;
+	}
+
+	.intro h1 {
+		font-size: 1.75rem;
+		margin-bottom: 8px;
+	}
+
+	.intro p {
+		color: var(--ink-soft);
+		line-height: 1.8;
+	}
+
+	.feature-cards {
+		margin-top: 16px;
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+		gap: 12px;
+	}
+
+	.feature-card {
+		padding: 20px;
+		background: var(--surface);
+		border-radius: var(--radius);
+		box-shadow: 0 1px 2px rgba(27, 34, 51, 0.08);
+	}
+
+	.feature-card h3 {
+		margin: 0 0 8px;
+		font-size: 1rem;
+	}
+
+	.feature-card p {
+		margin: 0;
+		color: var(--ink-soft);
+		font-size: 0.9rem;
+		line-height: 1.6;
+	}
+
+	.channels p,
+	.rules ul {
+		color: var(--ink-soft);
+		line-height: 1.8;
+	}
+
+	.rules ul {
+		padding-left: 1.2em;
+	}
+
+	.join {
+		text-align: center;
+		padding: 32px;
+		background: var(--surface);
+		border-radius: var(--radius);
+	}
+
+	.invite-button {
+		display: inline-block;
+		margin-top: 12px;
+		padding: 14px 32px;
+		border-radius: 999px;
+		background: var(--blue);
+		color: #fff;
+		text-decoration: none;
+		font-weight: 700;
+	}
+</style>
