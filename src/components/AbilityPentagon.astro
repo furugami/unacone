@@ -1,0 +1,122 @@
+---
+// 能力評価（戦闘/耐久/起動/得点/補佐）を五角形のレーダーチャートで表示するコンポーネント。
+// 純粋にSVGを組み立てるだけなので、クライアント側のJavaScriptは一切使わない
+// （ビルド時に一度だけ計算して、完成したSVGとしてHTMLに出力する）。
+interface Abilities {
+	combat: number;
+	durability: number;
+	mobility: number;
+	scoring: number;
+	support: number;
+}
+
+interface Props {
+	abilities: Abilities;
+}
+
+const { abilities } = Astro.props;
+
+const LABELS: Record<keyof Abilities, string> = {
+	combat: '戦闘能力',
+	durability: '耐久能力',
+	mobility: '起動能力',
+	scoring: '得点能力',
+	support: '補佐能力',
+};
+const KEYS: (keyof Abilities)[] = ['combat', 'durability', 'mobility', 'scoring', 'support'];
+
+// SVG全体のサイズ（正方形）。ラベル文字がはみ出さないよう、五角形本体の外側に
+// 十分な余白（ラベル用スペース）を確保している。
+const SIZE = 300;
+const CENTER = SIZE / 2;
+const MAX_RADIUS = 75; // 5点満点のときの半径
+const MAX_VALUE = 5;
+
+// 5つの軸を円周上に均等配置する（360度 ÷ 5 = 72度ごと）。
+// -90度から始めることで、1つ目の軸が真上を向くようにしている。
+function pointAtRadius(index: number, radius: number): [number, number] {
+	const angleDeg = -90 + index * 72;
+	const angleRad = (angleDeg * Math.PI) / 180;
+	return [CENTER + radius * Math.cos(angleRad), CENTER + radius * Math.sin(angleRad)];
+}
+
+function pointForValue(index: number, value: number): [number, number] {
+	return pointAtRadius(index, (value / MAX_VALUE) * MAX_RADIUS);
+}
+
+// 背景のグリッド線（1〜5点の位置に薄い五角形を5枚重ねる）
+const gridLevels = [1, 2, 3, 4, 5];
+const gridPolygons = gridLevels.map((level) =>
+	KEYS.map((_, i) => pointForValue(i, level).join(',')).join(' ')
+);
+
+// 中心から各頂点へ伸びる軸線
+const axisLines = KEYS.map((_, i) => pointForValue(i, MAX_VALUE));
+
+// 実際の評価値を結んだ多角形
+const dataPolygon = KEYS.map((key, i) => pointForValue(i, abilities[key]).join(',')).join(' ');
+
+// ラベル（項目名＋数値）の表示位置。五角形の外側に配置する。
+const labelRadius = MAX_RADIUS + 28;
+const labels = KEYS.map((key, i) => {
+	const [x, y] = pointAtRadius(i, labelRadius);
+	const textAnchor = x < CENTER - 2 ? 'end' : x > CENTER + 2 ? 'start' : 'middle';
+	const dy = y < CENTER - 2 ? -2 : y > CENTER + 2 ? 12 : 4;
+	return { x, y, dy, textAnchor, label: LABELS[key], value: abilities[key] };
+});
+---
+
+<svg viewBox={`0 0 ${SIZE} ${SIZE}`} class="ability-pentagon" role="img" aria-label="能力評価レーダーチャート">
+	{gridPolygons.map((points) => <polygon points={points} class="grid-line" />)}
+	{axisLines.map(([x, y]) => <line x1={CENTER} y1={CENTER} x2={x} y2={y} class="axis-line" />)}
+	<polygon points={dataPolygon} class="data-polygon" />
+	{
+		labels.map((l) => (
+			<text x={l.x} y={l.y + l.dy} text-anchor={l.textAnchor} class="label-text">
+				{l.label}
+			</text>
+		))
+	}
+	{
+		labels.map((l) => (
+			<text x={l.x} y={l.y + l.dy + 14} text-anchor={l.textAnchor} class="value-text">
+				{l.value.toFixed(1)}
+			</text>
+		))
+	}
+</svg>
+
+<style>
+	.ability-pentagon {
+		width: 100%;
+		max-width: 280px;
+	}
+
+	.grid-line {
+		fill: none;
+		stroke: #e5e9f2;
+		stroke-width: 1;
+	}
+
+	.axis-line {
+		stroke: #e5e9f2;
+		stroke-width: 1;
+	}
+
+	.data-polygon {
+		fill: color-mix(in srgb, var(--blue) 30%, transparent);
+		stroke: var(--blue);
+		stroke-width: 2;
+	}
+
+	.label-text {
+		font-size: 11px;
+		fill: var(--ink);
+	}
+
+	.value-text {
+		font-size: 11px;
+		font-family: var(--font-number);
+		fill: var(--ink-soft);
+	}
+</style>

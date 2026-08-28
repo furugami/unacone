@@ -45,6 +45,16 @@ collections:
         widget: "select"
         required: false
         options: ["S", "A", "B", "C"]
+      - label: "能力評価（5点満点・0.5刻み、任意。5項目まとめて設定する）"
+        name: "abilities"
+        widget: "object"
+        required: false
+        fields:
+          - { label: "戦闘能力", name: "combat", widget: "number", value_type: "float", min: 0, max: 5, step: 0.5 }
+          - { label: "耐久能力", name: "durability", widget: "number", value_type: "float", min: 0, max: 5, step: 0.5 }
+          - { label: "起動能力", name: "mobility", widget: "number", value_type: "float", min: 0, max: 5, step: 0.5 }
+          - { label: "得点能力", name: "scoring", widget: "number", value_type: "float", min: 0, max: 5, step: 0.5 }
+          - { label: "補佐能力", name: "support", widget: "number", value_type: "float", min: 0, max: 5, step: 0.5 }
       - label: "おすすめビルド"
         name: "builds"
         widget: "list"

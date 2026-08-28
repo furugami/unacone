@@ -6,6 +6,7 @@
 // getStaticPaths() という特別な関数で「有り得るslugの一覧」をAstroに教える。
 // ここではポケモン全件ぶんのパスを作っている。
 import Layout from '../../layouts/Layout.astro';
+import AbilityPentagon from '../../components/AbilityPentagon.astro';
 import { getCollection, render } from 'astro:content';
 import { ROLE_LABELS, ROLE_COLOR_VARS, ATTACK_TYPE_LABELS } from '../../lib/pokemon';
 
@@ -19,7 +20,7 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
-const { name_ja, role, tier, attack_type, builds } = entry.data;
+const { name_ja, role, tier, attack_type, abilities, builds } = entry.data;
 ---
 
 <Layout title={name_ja}>
@@ -31,6 +32,14 @@ const { name_ja, role, tier, attack_type, builds } = entry.data;
 		{attack_type && <span class="attack-type-badge">{ATTACK_TYPE_LABELS[attack_type]}</span>}
 		{tier && <span class="tier-badge">Tier {tier}</span>}
 	</header>
+
+	{
+		abilities && (
+			<section class="abilities-section">
+				<AbilityPentagon abilities={abilities} />
+			</section>
+		)
+	}
 
 	<section class="external-link-card">
 		<p>
@@ -68,6 +77,12 @@ const { name_ja, role, tier, attack_type, builds } = entry.data;
 		display: flex;
 		align-items: center;
 		gap: 12px;
+	}
+
+	.abilities-section {
+		display: flex;
+		justify-content: center;
+		margin-top: 16px;
 	}
 
 	.role-badge,

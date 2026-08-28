@@ -13,6 +13,16 @@ const pokemonJp = defineCollection({
     tier: z.enum(['S', 'A', 'B', 'C']).optional(),
     // 攻撃分類（物理攻撃寄り/特殊攻撃寄り）。2026/08/29追加、運営者要望。
     attack_type: z.enum(['physical', 'special']).optional(),
+    // 能力評価（人力・主観、5点満点0.5刻み）。5軸レーダーチャート表示用。2026/08/29追加。
+    abilities: z
+      .object({
+        combat: z.number().min(0).max(5).multipleOf(0.5), // 戦闘能力
+        durability: z.number().min(0).max(5).multipleOf(0.5), // 耐久能力
+        mobility: z.number().min(0).max(5).multipleOf(0.5), // 起動能力
+        scoring: z.number().min(0).max(5).multipleOf(0.5), // 得点能力
+        support: z.number().min(0).max(5).multipleOf(0.5), // 補佐能力
+      })
+      .optional(),
     builds: z
       .array(
         z.object({
