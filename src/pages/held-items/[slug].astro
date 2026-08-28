@@ -19,7 +19,7 @@ const { name_ja, summary, icon } = entry.data;
 
 <Layout title={name_ja}>
 	<header class="item-header">
-		{icon && <img src={withBase(icon)} alt="" class="icon" />}
+		{icon && <img src={icon} alt="" class="icon" />}
 		<div>
 			<h1>{name_ja}</h1>
 			<p class="summary">{summary}</p>

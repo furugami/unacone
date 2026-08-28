@@ -17,7 +17,7 @@ const battleItems = (await getCollection('battle-items')).sort((a, b) =>
 			battleItems.map((item) => (
 				<li>
 					<a href={withBase(`/battle-items/${item.data.slug}/`)}>
-						{item.data.icon && <img src={withBase(item.data.icon)} alt="" class="icon" />}
+						{item.data.icon && <img src={item.data.icon} alt="" class="icon" />}
 						<span class="text">
 							<span class="name">{item.data.name_ja}</span>
 							<span class="summary">{item.data.summary}</span>

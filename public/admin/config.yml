@@ -13,9 +13,12 @@ backend:
   auth_endpoint: /auth
 
 media_folder: "public/images/uploads"
-# サイトのbaseパス（/unacone）は含めない。表示側で withBase() を通して付与する
-# （src/lib/url.ts参照。リポジトリ名が変わっても画像リンクが壊れないようにするため）。
-public_folder: "/images/uploads"
+# サイトのbaseパス（/unacone）を含めた実際のURLにする。
+# 理由: これを省略すると値は移植しやすくなるが、Decap CMS自体の編集画面プレビューが
+# サブパスを認識できず壊れて見える（2026/08/29に実際に発生・確認済み）。
+# 毎回の編集体験を優先し、あえて実URLを直書きする。将来リポジトリ名を変える場合は
+# 既存コンテンツのicon/thumbnailフィールドを一括置換する必要がある。
+public_folder: "/unacone/images/uploads"
 
 collections:
   - name: "pokemon-jp"

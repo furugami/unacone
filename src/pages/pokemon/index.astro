@@ -16,7 +16,7 @@ const pokemonList = await getCollection('pokemon-jp');
 			pokemonList.map((p) => (
 				<li>
 					<a href={withBase(`/pokemon/${p.data.slug}/`)}>
-						{p.data.icon && <img src={withBase(p.data.icon)} alt="" class="icon" />}
+						{p.data.icon && <img src={p.data.icon} alt="" class="icon" />}
 						<span class="badges">
 							<span
 								class="role-badge"

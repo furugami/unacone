@@ -62,7 +62,7 @@ const resolvedBuilds = (builds ?? []).map((build) => ({
 
 <Layout title={name_ja}>
 	<header class="pokemon-header">
-		{icon && <img src={withBase(icon)} alt="" class="pokemon-icon" />}
+		{icon && <img src={icon} alt="" class="pokemon-icon" />}
 		<h1>{name_ja}</h1>
 		<span class="role-badge" style={`background: var(${ROLE_COLOR_VARS[role]})`}>
 			{ROLE_LABELS[role]}
@@ -92,7 +92,7 @@ const resolvedBuilds = (builds ?? []).map((build) => ({
 							{build.heldItemDetails.map(({ slug, item }) =>
 								item ? (
 									<a href={withBase(`/held-items/${slug}/`)} class="item-chip">
-										{item.icon && <img src={withBase(item.icon)} alt="" class="chip-icon" />}
+										{item.icon && <img src={item.icon} alt="" class="chip-icon" />}
 										{item.name_ja}
 									</a>
 								) : (
@@ -105,7 +105,7 @@ const resolvedBuilds = (builds ?? []).map((build) => ({
 							{build.battleItemDetail.item ? (
 								<a href={withBase(`/battle-items/${build.battleItemDetail.slug}/`)} class="item-chip">
 									{build.battleItemDetail.item.icon && (
-										<img src={withBase(build.battleItemDetail.item.icon)} alt="" class="chip-icon" />
+										<img src={build.battleItemDetail.item.icon} alt="" class="chip-icon" />
 									)}
 									{build.battleItemDetail.item.name_ja}
 								</a>
@@ -144,7 +144,7 @@ const resolvedBuilds = (builds ?? []).map((build) => ({
 				{moveEntries.map((m) => (
 					<article id={`move-${m.key}`} class:list={['move-card', { indent: m.indent }]}>
 						<h3>
-							{m.data.icon && <img src={withBase(m.data.icon)} alt="" class="move-icon" />}
+							{m.data.icon && <img src={m.data.icon} alt="" class="move-icon" />}
 							{m.label}: {m.data.name}
 						</h3>
 						<p>{m.data.effect}</p>
