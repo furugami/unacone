@@ -1,13 +1,16 @@
 # Decap CMSの設定ファイル。ここに書いたフィールドが、そのまま管理画面のフォームになる。
 # 各コレクションは src/content.config.ts のスキーマ（Zod）と対応させている。
-# 認証部分（base_url）は、OAuth仲介サーバーのデプロイ後に差し替える。
+#
+# 認証（OAuth仲介サーバー）: Cloudflare Workers上に sterlingwes/decap-proxy をデプロイ済み
+# （ワーカー名 unacone-cms-auth、リポジトリはこのプロジェクトとは別に
+# C:\Users\ytkyf\OneDrive\Desktop\unacone-cms-auth に配置。詳細はCLAUDE-3.md参照）。
 
 backend:
   name: github
   repo: furugami/unacone
   branch: main
-  # TODO: OAuth仲介サーバーをデプロイしたら、そのURLに差し替える
-  base_url: https://REPLACE-ME-oauth-proxy.example.com
+  base_url: https://unacone-cms-auth.furugami.workers.dev
+  auth_endpoint: /auth
 
 media_folder: "public/images/uploads"
 public_folder: "/unacone/images/uploads"
