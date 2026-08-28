@@ -1,0 +1,110 @@
+// 配信スケジュール取得（ビルド時にTwitch/YouTube公式APIから取得。CMS管理はしない）
+// 参照: CLAUDE.md「配信者スケジュールカレンダー 設計」、CLAUDE-3.md「配信者カレンダー実装方針の軽量化」
+//
+// APIキー未設定の場合は空配列を返し、ページ側で「予定は配信者のSNS等でご確認ください」に
+// フォールバックする（ビルドを失敗させない）。
+// 必要な環境変数: TWITCH_CLIENT_ID / TWITCH_CLIENT_SECRET / YOUTUBE_API_KEY
+// （.env.example参照。ローカルは.envファイル、本番はGitHub Actions Secretsで設定する）
+
+export type ScheduleEntry = {
+	platform: 'twitch' | 'youtube';
+	title: string;
+	startTime: Date;
+	url: string;
+};
+
+async function getTwitchAppToken(clientId: string, clientSecret: string): Promise<string | null> {
+	try {
+		const res = await fetch('https://id.twitch.tv/oauth2/token', {
+			method: 'POST',
+			body: new URLSearchParams({
+				client_id: clientId,
+				client_secret: clientSecret,
+				grant_type: 'client_credentials',
+			}),
+		});
+		if (!res.ok) return null;
+		const data = await res.json();
+		return data.access_token ?? null;
+	} catch {
+		return null;
+	}
+}
+
+// Twitchの配信スケジュール機能（配信者がTwitch上で設定した予定）を取得する
+export async function fetchTwitchSchedule(login: string): Promise<ScheduleEntry[]> {
+	const clientId = import.meta.env.TWITCH_CLIENT_ID;
+	const clientSecret = import.meta.env.TWITCH_CLIENT_SECRET;
+	if (!clientId || !clientSecret) return [];
+
+	const token = await getTwitchAppToken(clientId, clientSecret);
+	if (!token) return [];
+
+	try {
+		const headers = { 'Client-Id': clientId, Authorization: `Bearer ${token}` };
+
+		const userRes = await fetch(
+			`https://api.twitch.tv/helix/users?login=${encodeURIComponent(login)}`,
+			{ headers }
+		);
+		if (!userRes.ok) return [];
+		const userData = await userRes.json();
+		const broadcasterId = userData.data?.[0]?.id;
+		if (!broadcasterId) return [];
+
+		const scheduleRes = await fetch(
+			`https://api.twitch.tv/helix/schedule?broadcaster_id=${broadcasterId}`,
+			{ headers }
+		);
+		if (!scheduleRes.ok) return [];
+		const scheduleData = await scheduleRes.json();
+		const segments = scheduleData.data?.segments ?? [];
+
+		return segments.map((segment: { title: string; start_time: string }) => ({
+			platform: 'twitch' as const,
+			title: segment.title,
+			startTime: new Date(segment.start_time),
+			url: `https://twitch.tv/${login}`,
+		}));
+	} catch {
+		return [];
+	}
+}
+
+// YouTubeの予約配信（upcoming live）を取得する。search.listで動画IDを探し、
+// videos.listで正確な予定開始時刻（liveStreamingDetails.scheduledStartTime）を取得する2段階構成。
+export async function fetchYoutubeUpcoming(channelId: string): Promise<ScheduleEntry[]> {
+	const apiKey = import.meta.env.YOUTUBE_API_KEY;
+	if (!apiKey) return [];
+
+	try {
+		const searchUrl = `https://www.googleapis.com/youtube/v3/search?key=${apiKey}&channelId=${channelId}&type=video&eventType=upcoming&order=date&part=id`;
+		const searchRes = await fetch(searchUrl);
+		if (!searchRes.ok) return [];
+		const searchData = await searchRes.json();
+		const videoIds = (searchData.items ?? [])
+			.map((item: { id: { videoId?: string } }) => item.id.videoId)
+			.filter((id: string | undefined): id is string => Boolean(id));
+		if (videoIds.length === 0) return [];
+
+		const videosUrl = `https://www.googleapis.com/youtube/v3/videos?key=${apiKey}&id=${videoIds.join(',')}&part=snippet,liveStreamingDetails`;
+		const videosRes = await fetch(videosUrl);
+		if (!videosRes.ok) return [];
+		const videosData = await videosRes.json();
+
+		return (videosData.items ?? []).map(
+			(item: {
+				id: string;
+				snippet: { title: string; publishedAt: string };
+				liveStreamingDetails?: { scheduledStartTime?: string };
+			}) => ({
+				platform: 'youtube' as const,
+				title: item.snippet.title,
+				startTime: new Date(item.liveStreamingDetails?.scheduledStartTime ?? item.snippet.publishedAt),
+				url: `https://www.youtube.com/watch?v=${item.id}`,
+			})
+		);
+	} catch {
+		return [];
+	}
+}
