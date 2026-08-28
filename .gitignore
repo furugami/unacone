@@ -22,3 +22,8 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# Claude Code: プロジェクトの設計メモ・ローカル設定（社外秘の戦略メモを含むためGit管理外にする）
+CLAUDE.md
+CLAUDE-*.md
+.claude/
