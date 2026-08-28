@@ -1,18 +1,213 @@
 ---
+// トップページ（/）。確定済みヒーロー構成（CLAUDE-3.md「トップページヒーロー構成」参照）:
+// 1. キャッチコピー 2. ポケモンTier表 3. セオリー記事への導線 4. 図鑑への入り口
+// 配信スケジュール・Discordはヘッダーナビからの導線のみで、ここには置かない。
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import { ROLE_COLOR_VARS, TIER_ORDER } from '../lib/pokemon';
 
+const pokemonList = await getCollection('pokemon-jp');
+
+const tierRows = TIER_ORDER.map((tier) => ({
+	tier,
+	pokemon: pokemonList.filter((p) => p.data.tier === tier),
+})).filter((row) => row.pokemon.length > 0);
+
+const latestArticles = (await getCollection('articles'))
+	.sort((a, b) => b.data.publish_date.valueOf() - a.data.publish_date.valueOf())
+	.slice(0, 3);
 ---
 
-<html lang="ja">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>ユナコネ</title>
-	</head>
-	<body>
-		<h1>ユナコネ</h1>
-		<p>ユナイト関連でまず最初に来るサイト（準備中）</p>
-	</body>
-</html>
+<Layout title="トップページ">
+	<section class="hero">
+		<h1>ユナイト関連で、まず最初に来るサイト。</h1>
+		<p>図鑑・セオリー記事・仲間探しをまとめてここに。</p>
+	</section>
+
+	<section class="tier-section">
+		<div class="section-header">
+			<h2>現在のTier表</h2>
+			<a href="/pokemon/">図鑑をもっと見る →</a>
+		</div>
+		{
+			tierRows.length > 0 ? (
+				tierRows.map((row) => (
+					<div class="tier-row">
+						<span class={`tier-label tier-${row.tier}`}>{row.tier}</span>
+						<ul class="tier-pokemon-list">
+							{row.pokemon.map((p) => (
+								<li>
+									<a
+										href={`/pokemon/${p.data.slug}/`}
+										style={`--role-color: var(${ROLE_COLOR_VARS[p.data.role]})`}
+									>
+										{p.data.name_ja}
+									</a>
+								</li>
+							))}
+						</ul>
+					</div>
+				))
+			) : (
+				<p>Tier表は準備中です。</p>
+			)
+		}
+	</section>
+
+	<section class="articles-section">
+		<div class="section-header">
+			<h2>セオリー解説記事</h2>
+			<a href="/articles/">記事一覧を見る →</a>
+		</div>
+		{
+			latestArticles.length > 0 ? (
+				<ul class="article-cards">
+					{latestArticles.map((a) => (
+						<li>
+							<a href={`/articles/${a.data.slug}/`}>
+								<span class="title">{a.data.title}</span>
+								<span class="excerpt">{a.data.excerpt}</span>
+							</a>
+						</li>
+					))}
+				</ul>
+			) : (
+				<p>記事は準備中です。</p>
+			)
+		}
+	</section>
+
+	<section class="pokemon-cta">
+		<a class="cta-button" href="/pokemon/">ポケモン図鑑を見る →</a>
+	</section>
+</Layout>
+
+<style>
+	.hero {
+		text-align: center;
+		padding: 32px 0 16px;
+	}
+
+	.hero h1 {
+		font-size: 2rem;
+		margin: 0 0 8px;
+	}
+
+	.hero p {
+		color: var(--ink-soft);
+		margin: 0;
+	}
+
+	section {
+		margin-top: 40px;
+	}
+
+	.section-header {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+	}
+
+	.section-header a {
+		font-size: 0.85rem;
+		color: var(--blue);
+		text-decoration: none;
+	}
+
+	.tier-row {
+		display: flex;
+		align-items: center;
+		gap: 16px;
+		margin-top: 12px;
+	}
+
+	.tier-label {
+		flex-shrink: 0;
+		width: 40px;
+		height: 40px;
+		border-radius: var(--radius);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-family: var(--font-number);
+		font-weight: 700;
+		color: #fff;
+	}
+
+	.tier-S {
+		background: var(--amber);
+	}
+	.tier-A {
+		background: var(--blue);
+	}
+	.tier-B {
+		background: var(--r-supporter);
+	}
+	.tier-C {
+		background: var(--ink-soft);
+	}
+
+	.tier-pokemon-list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+	}
+
+	.tier-pokemon-list a {
+		display: inline-block;
+		padding: 6px 14px;
+		border-radius: 999px;
+		background: var(--surface);
+		border-left: 4px solid var(--role-color);
+		text-decoration: none;
+		font-size: 0.9rem;
+	}
+
+	.article-cards {
+		list-style: none;
+		margin: 12px 0 0;
+		padding: 0;
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+		gap: 12px;
+	}
+
+	.article-cards a {
+		display: block;
+		padding: 16px;
+		background: var(--surface);
+		border-radius: var(--radius);
+		text-decoration: none;
+		box-shadow: 0 1px 2px rgba(27, 34, 51, 0.08);
+	}
+
+	.article-cards .title {
+		display: block;
+		font-family: var(--font-heading);
+		font-weight: 700;
+	}
+
+	.article-cards .excerpt {
+		display: block;
+		margin-top: 4px;
+		color: var(--ink-soft);
+		font-size: 0.85rem;
+	}
+
+	.pokemon-cta {
+		text-align: center;
+	}
+
+	.cta-button {
+		display: inline-block;
+		padding: 14px 32px;
+		border-radius: 999px;
+		background: var(--blue);
+		color: #fff;
+		text-decoration: none;
+		font-weight: 700;
+	}
+</style>
