@@ -22,8 +22,8 @@ moves:
   unite_move: { name: "サンプルユナイト技", effect: "サンプルデータのため内容は仮です。" }
 builds:
   - title: ランクマ標準ビルド
-    held_items: [脚力増強ブーツ, 危険予知の器官, きあいのハチマキ]
-    battle_item: 疾風の術
+    held_items: [kiaino-hachimaki]
+    battle_item: shippuu-no-jutsu
     note: 序盤から積極的にジャングルを回るビルド
 ---
 

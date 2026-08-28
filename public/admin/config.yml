@@ -13,7 +13,9 @@ backend:
   auth_endpoint: /auth
 
 media_folder: "public/images/uploads"
-public_folder: "/unacone/images/uploads"
+# サイトのbaseパス（/unacone）は含めない。表示側で withBase() を通して付与する
+# （src/lib/url.ts参照。リポジトリ名が変わっても画像リンクが壊れないようにするため）。
+public_folder: "/images/uploads"
 
 collections:
   - name: "pokemon-jp"
@@ -24,6 +26,7 @@ collections:
     fields:
       - { label: "スラッグ（半角英数、ファイル名になる）", name: "slug", widget: "string" }
       - { label: "日本語名", name: "name_ja", widget: "string" }
+      - { label: "アイコン画像（任意）", name: "icon", widget: "image", required: false }
       - label: "ロール"
         name: "role"
         widget: "select"
@@ -75,6 +78,7 @@ collections:
             fields:
               - { label: "名前", name: "name", widget: "string" }
               - { label: "効果", name: "effect", widget: "text" }
+              - { label: "アイコン画像（任意）", name: "icon", widget: "image", required: false }
           - label: "わざ1"
             name: "move1"
             widget: "object"
@@ -82,6 +86,7 @@ collections:
             fields:
               - { label: "名前", name: "name", widget: "string" }
               - { label: "効果", name: "effect", widget: "text" }
+              - { label: "アイコン画像（任意）", name: "icon", widget: "image", required: false }
           - label: "わざ1派生A"
             name: "move1_upgrade_a"
             widget: "object"
@@ -89,6 +94,7 @@ collections:
             fields:
               - { label: "名前", name: "name", widget: "string" }
               - { label: "効果", name: "effect", widget: "text" }
+              - { label: "アイコン画像（任意）", name: "icon", widget: "image", required: false }
           - label: "わざ1派生B"
             name: "move1_upgrade_b"
             widget: "object"
@@ -96,6 +102,7 @@ collections:
             fields:
               - { label: "名前", name: "name", widget: "string" }
               - { label: "効果", name: "effect", widget: "text" }
+              - { label: "アイコン画像（任意）", name: "icon", widget: "image", required: false }
           - label: "わざ2"
             name: "move2"
             widget: "object"
@@ -103,6 +110,7 @@ collections:
             fields:
               - { label: "名前", name: "name", widget: "string" }
               - { label: "効果", name: "effect", widget: "text" }
+              - { label: "アイコン画像（任意）", name: "icon", widget: "image", required: false }
           - label: "わざ2派生A"
             name: "move2_upgrade_a"
             widget: "object"
@@ -110,6 +118,7 @@ collections:
             fields:
               - { label: "名前", name: "name", widget: "string" }
               - { label: "効果", name: "effect", widget: "text" }
+              - { label: "アイコン画像（任意）", name: "icon", widget: "image", required: false }
           - label: "わざ2派生B"
             name: "move2_upgrade_b"
             widget: "object"
@@ -117,6 +126,7 @@ collections:
             fields:
               - { label: "名前", name: "name", widget: "string" }
               - { label: "効果", name: "effect", widget: "text" }
+              - { label: "アイコン画像（任意）", name: "icon", widget: "image", required: false }
           - label: "ユナイト技"
             name: "unite_move"
             widget: "object"
@@ -124,14 +134,31 @@ collections:
             fields:
               - { label: "名前", name: "name", widget: "string" }
               - { label: "効果", name: "effect", widget: "text" }
+              - { label: "アイコン画像（任意）", name: "icon", widget: "image", required: false }
       - label: "おすすめビルド"
         name: "builds"
         widget: "list"
         required: false
         fields:
           - { label: "ビルド名", name: "title", widget: "string" }
-          - { label: "もちもの（3つまで）", name: "held_items", widget: "list" }
-          - { label: "バトルアイテム", name: "battle_item", widget: "string" }
+          - label: "もちもの（3つまで、もちもの図鑑から選択）"
+            name: "held_items"
+            widget: "list"
+            field:
+              label: "もちもの"
+              name: "held_item"
+              widget: "relation"
+              collection: "held-items"
+              search_fields: ["name_ja"]
+              value_field: "slug"
+              display_fields: ["name_ja"]
+          - label: "バトルアイテム（バトルアイテム図鑑から選択）"
+            name: "battle_item"
+            widget: "relation"
+            collection: "battle-items"
+            search_fields: ["name_ja"]
+            value_field: "slug"
+            display_fields: ["name_ja"]
           - { label: "補足", name: "note", widget: "string", required: false }
       - { label: "立ち回り解説（本文）", name: "body", widget: "markdown" }
 

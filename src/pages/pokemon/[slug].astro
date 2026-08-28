@@ -15,6 +15,7 @@ import {
 	DIFFICULTY_LABELS,
 	MOVE_SECTIONS,
 } from '../../lib/pokemon';
+import { withBase } from '../../lib/url';
 
 export async function getStaticPaths() {
 	const pokemonList = await getCollection('pokemon-jp');
@@ -26,7 +27,7 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
-const { name_ja, role, tier, attack_type, difficulty, abilities, moves, builds } = entry.data;
+const { name_ja, icon, role, tier, attack_type, difficulty, abilities, moves, builds } = entry.data;
 
 // movesオブジェクトのうち、実際に値が入っている項目だけを表示順に並べる
 const moveEntries = moves
@@ -35,10 +36,22 @@ const moveEntries = moves
 			data: moves[section.key]!,
 		}))
 	: [];
+
+// おすすめビルドの「もちもの」「バトルアイテム」は、もちもの/バトルアイテム図鑑の
+// slugを指しているので、実際のデータ（名前・アイコン・詳細ページへのリンク）に解決する。
+const heldItemMap = new Map((await getCollection('held-items')).map((i) => [i.data.slug, i.data]));
+const battleItemMap = new Map((await getCollection('battle-items')).map((i) => [i.data.slug, i.data]));
+
+const resolvedBuilds = (builds ?? []).map((build) => ({
+	...build,
+	heldItemDetails: build.held_items.map((slug) => ({ slug, item: heldItemMap.get(slug) })),
+	battleItemDetail: { slug: build.battle_item, item: battleItemMap.get(build.battle_item) },
+}));
 ---
 
 <Layout title={name_ja}>
 	<header class="pokemon-header">
+		{icon && <img src={withBase(icon)} alt="" class="pokemon-icon" />}
 		<h1>{name_ja}</h1>
 		<span class="role-badge" style={`background: var(${ROLE_COLOR_VARS[role]})`}>
 			{ROLE_LABELS[role]}
@@ -63,6 +76,7 @@ const moveEntries = moves
 				{moveEntries.map((m) => (
 					<article class:list={['move-card', { indent: m.indent }]}>
 						<h3>
+							{m.data.icon && <img src={withBase(m.data.icon)} alt="" class="move-icon" />}
 							{m.label}: {m.data.name}
 						</h3>
 						<p>{m.data.effect}</p>
@@ -82,14 +96,38 @@ const moveEntries = moves
 	</section>
 
 	{
-		builds && builds.length > 0 && (
+		resolvedBuilds.length > 0 && (
 			<section>
 				<h2>おすすめビルド</h2>
-				{builds.map((build) => (
+				{resolvedBuilds.map((build) => (
 					<article class="build-card">
 						<h3>{build.title}</h3>
-						<p>もちもの: {build.held_items.join(' / ')}</p>
-						<p>バトルアイテム: {build.battle_item}</p>
+						<p class="items-row">
+							もちもの:
+							{build.heldItemDetails.map(({ slug, item }) =>
+								item ? (
+									<a href={withBase(`/held-items/${slug}/`)} class="item-chip">
+										{item.icon && <img src={withBase(item.icon)} alt="" class="chip-icon" />}
+										{item.name_ja}
+									</a>
+								) : (
+									<span class="item-chip missing">{slug}</span>
+								)
+							)}
+						</p>
+						<p class="items-row">
+							バトルアイテム:
+							{build.battleItemDetail.item ? (
+								<a href={withBase(`/battle-items/${build.battleItemDetail.slug}/`)} class="item-chip">
+									{build.battleItemDetail.item.icon && (
+										<img src={withBase(build.battleItemDetail.item.icon)} alt="" class="chip-icon" />
+									)}
+									{build.battleItemDetail.item.name_ja}
+								</a>
+							) : (
+								<span class="item-chip missing">{build.battleItemDetail.slug}</span>
+							)}
+						</p>
 						{build.note && <p class="note">{build.note}</p>}
 					</article>
 				))}
@@ -108,6 +146,49 @@ const moveEntries = moves
 		display: flex;
 		align-items: center;
 		gap: 12px;
+	}
+
+	.pokemon-icon {
+		width: 56px;
+		height: 56px;
+		object-fit: contain;
+	}
+
+	.move-icon {
+		width: 20px;
+		height: 20px;
+		object-fit: contain;
+		vertical-align: middle;
+		margin-right: 4px;
+	}
+
+	.items-row {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 8px;
+	}
+
+	.item-chip {
+		display: inline-flex;
+		align-items: center;
+		gap: 4px;
+		padding: 2px 10px;
+		border-radius: 999px;
+		background: var(--bg);
+		color: var(--blue);
+		text-decoration: none;
+		font-size: 0.9rem;
+	}
+
+	.item-chip.missing {
+		color: var(--ink-soft);
+	}
+
+	.chip-icon {
+		width: 18px;
+		height: 18px;
+		object-fit: contain;
 	}
 
 	.abilities-section {

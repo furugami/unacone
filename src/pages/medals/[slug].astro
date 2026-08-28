@@ -14,7 +14,7 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
-const { name_ja, summary, pokemon_slug } = entry.data;
+const { name_ja, summary, pokemon_slug, icon } = entry.data;
 
 let relatedPokemonName: string | undefined;
 if (pokemon_slug) {
@@ -24,16 +24,19 @@ if (pokemon_slug) {
 ---
 
 <Layout title={name_ja}>
-	<header>
-		<h1>{name_ja}</h1>
-		<p class="summary">{summary}</p>
-		{
-			pokemon_slug && relatedPokemonName && (
-				<p class="related-pokemon">
-					対象ポケモン: <a href={withBase(`/pokemon/${pokemon_slug}/`)}>{relatedPokemonName}</a>
-				</p>
-			)
-		}
+	<header class="item-header">
+		{icon && <img src={withBase(icon)} alt="" class="icon" />}
+		<div>
+			<h1>{name_ja}</h1>
+			<p class="summary">{summary}</p>
+			{
+				pokemon_slug && relatedPokemonName && (
+					<p class="related-pokemon">
+						対象ポケモン: <a href={withBase(`/pokemon/${pokemon_slug}/`)}>{relatedPokemonName}</a>
+					</p>
+				)
+			}
+		</div>
 	</header>
 	<div class="body">
 		<Content />
@@ -41,6 +44,19 @@ if (pokemon_slug) {
 </Layout>
 
 <style>
+	.item-header {
+		display: flex;
+		align-items: center;
+		gap: 16px;
+	}
+
+	.icon {
+		width: 56px;
+		height: 56px;
+		object-fit: contain;
+		flex-shrink: 0;
+	}
+
 	.summary {
 		color: var(--ink-soft);
 	}

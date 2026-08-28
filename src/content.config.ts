@@ -1,10 +1,11 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
-// わざ説明の1項目（名前＋効果）。とくせい・わざ・ユナイト技で共通の形。
+// わざ説明の1項目（名前＋効果＋アイコン画像）。とくせい・わざ・ユナイト技で共通の形。
 const moveSchema = z.object({
   name: z.string(),
   effect: z.string(),
+  icon: z.string().optional(),
 });
 
 // ポケモン図鑑（人力データ）
@@ -14,6 +15,7 @@ const pokemonJp = defineCollection({
   schema: z.object({
     slug: z.string(),
     name_ja: z.string(),
+    icon: z.string().optional(),
     role: z.enum(['attacker', 'speedster', 'defender', 'supporter', 'allrounder']),
     // 人力・主観のTier評価。UniteAPI等の数値データとは無関係（CLAUDE-3.md「ポケモンTier表」参照）
     tier: z.enum(['S', 'A', 'B', 'C']).optional(),
@@ -48,7 +50,10 @@ const pokemonJp = defineCollection({
       .array(
         z.object({
           title: z.string(),
+          // held-itemsコレクションのslugの配列（CMSではrelationウィジェットで選択、
+          // 自由入力ではない。2026/08/29変更）
           held_items: z.array(z.string()),
+          // battle-itemsコレクションのslug（同上）
           battle_item: z.string(),
           note: z.string().optional(),
         })

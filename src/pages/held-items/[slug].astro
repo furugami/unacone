@@ -2,6 +2,7 @@
 // もちもの個別ページ（/held-items/{slug}/）。
 import Layout from '../../layouts/Layout.astro';
 import { getCollection, render } from 'astro:content';
+import { withBase } from '../../lib/url';
 
 export async function getStaticPaths() {
 	const heldItems = await getCollection('held-items');
@@ -13,13 +14,16 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
-const { name_ja, summary } = entry.data;
+const { name_ja, summary, icon } = entry.data;
 ---
 
 <Layout title={name_ja}>
-	<header>
-		<h1>{name_ja}</h1>
-		<p class="summary">{summary}</p>
+	<header class="item-header">
+		{icon && <img src={withBase(icon)} alt="" class="icon" />}
+		<div>
+			<h1>{name_ja}</h1>
+			<p class="summary">{summary}</p>
+		</div>
 	</header>
 	<div class="body">
 		<Content />
@@ -27,6 +31,19 @@ const { name_ja, summary } = entry.data;
 </Layout>
 
 <style>
+	.item-header {
+		display: flex;
+		align-items: center;
+		gap: 16px;
+	}
+
+	.icon {
+		width: 56px;
+		height: 56px;
+		object-fit: contain;
+		flex-shrink: 0;
+	}
+
 	.summary {
 		color: var(--ink-soft);
 	}

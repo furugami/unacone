@@ -17,8 +17,11 @@ const heldItems = (await getCollection('held-items')).sort((a, b) =>
 			heldItems.map((item) => (
 				<li>
 					<a href={withBase(`/held-items/${item.data.slug}/`)}>
-						<span class="name">{item.data.name_ja}</span>
-						<span class="summary">{item.data.summary}</span>
+						{item.data.icon && <img src={withBase(item.data.icon)} alt="" class="icon" />}
+						<span class="text">
+							<span class="name">{item.data.name_ja}</span>
+							<span class="summary">{item.data.summary}</span>
+						</span>
 					</a>
 				</li>
 			))
@@ -38,12 +41,26 @@ const heldItems = (await getCollection('held-items')).sort((a, b) =>
 	}
 
 	.item-list a {
-		display: block;
+		display: flex;
+		align-items: center;
+		gap: 12px;
 		padding: 16px;
 		background: var(--surface);
 		border-radius: var(--radius);
 		text-decoration: none;
 		box-shadow: 0 1px 2px rgba(27, 34, 51, 0.08);
+	}
+
+	.icon {
+		width: 40px;
+		height: 40px;
+		object-fit: contain;
+		flex-shrink: 0;
+	}
+
+	.text {
+		display: flex;
+		flex-direction: column;
 	}
 
 	.name {
