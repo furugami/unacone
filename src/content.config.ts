@@ -1,6 +1,12 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
+// わざ説明の1項目（名前＋効果）。とくせい・わざ・ユナイト技で共通の形。
+const moveSchema = z.object({
+  name: z.string(),
+  effect: z.string(),
+});
+
 // ポケモン図鑑（人力データ）
 // 参照: CLAUDE-2.md「データ設計: 全面人力データ化」
 const pokemonJp = defineCollection({
@@ -13,6 +19,21 @@ const pokemonJp = defineCollection({
     tier: z.enum(['S', 'A', 'B', 'C']).optional(),
     // 攻撃分類（物理攻撃寄り/特殊攻撃寄り）。2026/08/29追加、運営者要望。
     attack_type: z.enum(['physical', 'special']).optional(),
+    // 使用難易度（このポケモンを使いこなす難易度。記事のカテゴリとは別軸）。2026/08/29追加。
+    difficulty: z.enum(['beginner', 'intermediate', 'advanced']).optional(),
+    // わざ説明（数値は扱わない、名前＋効果の文章のみ。更新頻度は低い想定）。2026/08/29追加。
+    moves: z
+      .object({
+        ability: moveSchema.optional(), // とくせい
+        move1: moveSchema.optional(), // わざ1
+        move1_upgrade_a: moveSchema.optional(), // わざ1派生A
+        move1_upgrade_b: moveSchema.optional(), // わざ1派生B
+        move2: moveSchema.optional(), // わざ2
+        move2_upgrade_a: moveSchema.optional(), // わざ2派生A
+        move2_upgrade_b: moveSchema.optional(), // わざ2派生B
+        unite_move: moveSchema.optional(), // ユナイト技
+      })
+      .optional(),
     // 能力評価（人力・主観、5点満点0.5刻み）。5軸レーダーチャート表示用。2026/08/29追加。
     abilities: z
       .object({

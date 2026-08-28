@@ -24,3 +24,22 @@ export const ATTACK_TYPE_LABELS: Record<string, string> = {
   physical: '攻撃',
   special: '特攻',
 };
+
+// 使用難易度（このポケモンを使いこなす難易度）。2026/08/29追加。
+export const DIFFICULTY_LABELS: Record<string, string> = {
+  beginner: '初心者向け',
+  intermediate: '中級者向け',
+  advanced: '上級者向け',
+};
+
+// わざ説明の表示順・見出し。派生わざはインデント表示する。
+export const MOVE_SECTIONS = [
+  { key: 'ability', label: 'とくせい', indent: false },
+  { key: 'move1', label: 'わざ1', indent: false },
+  { key: 'move1_upgrade_a', label: 'わざ1派生A', indent: true },
+  { key: 'move1_upgrade_b', label: 'わざ1派生B', indent: true },
+  { key: 'move2', label: 'わざ2', indent: false },
+  { key: 'move2_upgrade_a', label: 'わざ2派生A', indent: true },
+  { key: 'move2_upgrade_b', label: 'わざ2派生B', indent: true },
+  { key: 'unite_move', label: 'ユナイト技', indent: false },
+] as const;

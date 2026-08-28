@@ -8,7 +8,13 @@
 import Layout from '../../layouts/Layout.astro';
 import AbilityPentagon from '../../components/AbilityPentagon.astro';
 import { getCollection, render } from 'astro:content';
-import { ROLE_LABELS, ROLE_COLOR_VARS, ATTACK_TYPE_LABELS } from '../../lib/pokemon';
+import {
+	ROLE_LABELS,
+	ROLE_COLOR_VARS,
+	ATTACK_TYPE_LABELS,
+	DIFFICULTY_LABELS,
+	MOVE_SECTIONS,
+} from '../../lib/pokemon';
 
 export async function getStaticPaths() {
 	const pokemonList = await getCollection('pokemon-jp');
@@ -20,7 +26,15 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
-const { name_ja, role, tier, attack_type, abilities, builds } = entry.data;
+const { name_ja, role, tier, attack_type, difficulty, abilities, moves, builds } = entry.data;
+
+// movesオブジェクトのうち、実際に値が入っている項目だけを表示順に並べる
+const moveEntries = moves
+	? MOVE_SECTIONS.filter((section) => moves[section.key]).map((section) => ({
+			...section,
+			data: moves[section.key]!,
+		}))
+	: [];
 ---
 
 <Layout title={name_ja}>
@@ -31,12 +45,29 @@ const { name_ja, role, tier, attack_type, abilities, builds } = entry.data;
 		</span>
 		{attack_type && <span class="attack-type-badge">{ATTACK_TYPE_LABELS[attack_type]}</span>}
 		{tier && <span class="tier-badge">Tier {tier}</span>}
+		{difficulty && <span class="difficulty-badge">{DIFFICULTY_LABELS[difficulty]}</span>}
 	</header>
 
 	{
 		abilities && (
 			<section class="abilities-section">
 				<AbilityPentagon abilities={abilities} />
+			</section>
+		)
+	}
+
+	{
+		moveEntries.length > 0 && (
+			<section class="moves-section">
+				<h2>わざ説明</h2>
+				{moveEntries.map((m) => (
+					<article class:list={['move-card', { indent: m.indent }]}>
+						<h3>
+							{m.label}: {m.data.name}
+						</h3>
+						<p>{m.data.effect}</p>
+					</article>
+				))}
 			</section>
 		)
 	}
@@ -87,7 +118,8 @@ const { name_ja, role, tier, attack_type, abilities, builds } = entry.data;
 
 	.role-badge,
 	.tier-badge,
-	.attack-type-badge {
+	.attack-type-badge,
+	.difficulty-badge {
 		padding: 4px 12px;
 		border-radius: 999px;
 		font-size: 0.85rem;
@@ -99,8 +131,38 @@ const { name_ja, role, tier, attack_type, abilities, builds } = entry.data;
 		font-family: var(--font-number);
 	}
 
-	.attack-type-badge {
+	.attack-type-badge,
+	.difficulty-badge {
 		background: var(--ink-soft);
+	}
+
+	.moves-section {
+		margin-top: 24px;
+	}
+
+	.move-card {
+		margin-top: 12px;
+		padding: 16px;
+		background: var(--surface);
+		border-radius: var(--radius);
+	}
+
+	.move-card.indent {
+		margin-left: 24px;
+		background: var(--bg);
+		border: 1px solid #e5e9f2;
+	}
+
+	.move-card h3 {
+		margin: 0 0 6px;
+		font-size: 1rem;
+	}
+
+	.move-card p {
+		margin: 0;
+		color: var(--ink-soft);
+		font-size: 0.9rem;
+		line-height: 1.6;
 	}
 
 	.external-link-card {

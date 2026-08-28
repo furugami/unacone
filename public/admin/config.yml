@@ -55,6 +55,75 @@ collections:
           - { label: "起動能力", name: "mobility", widget: "number", value_type: "float", min: 0, max: 5, step: 0.5 }
           - { label: "得点能力", name: "scoring", widget: "number", value_type: "float", min: 0, max: 5, step: 0.5 }
           - { label: "補佐能力", name: "support", widget: "number", value_type: "float", min: 0, max: 5, step: 0.5 }
+      - label: "使用難易度（任意）"
+        name: "difficulty"
+        widget: "select"
+        required: false
+        options:
+          - { label: "初心者向け", value: "beginner" }
+          - { label: "中級者向け", value: "intermediate" }
+          - { label: "上級者向け", value: "advanced" }
+      - label: "わざ説明（任意。更新頻度は低い想定）"
+        name: "moves"
+        widget: "object"
+        required: false
+        fields:
+          - label: "とくせい"
+            name: "ability"
+            widget: "object"
+            required: false
+            fields:
+              - { label: "名前", name: "name", widget: "string" }
+              - { label: "効果", name: "effect", widget: "text" }
+          - label: "わざ1"
+            name: "move1"
+            widget: "object"
+            required: false
+            fields:
+              - { label: "名前", name: "name", widget: "string" }
+              - { label: "効果", name: "effect", widget: "text" }
+          - label: "わざ1派生A"
+            name: "move1_upgrade_a"
+            widget: "object"
+            required: false
+            fields:
+              - { label: "名前", name: "name", widget: "string" }
+              - { label: "効果", name: "effect", widget: "text" }
+          - label: "わざ1派生B"
+            name: "move1_upgrade_b"
+            widget: "object"
+            required: false
+            fields:
+              - { label: "名前", name: "name", widget: "string" }
+              - { label: "効果", name: "effect", widget: "text" }
+          - label: "わざ2"
+            name: "move2"
+            widget: "object"
+            required: false
+            fields:
+              - { label: "名前", name: "name", widget: "string" }
+              - { label: "効果", name: "effect", widget: "text" }
+          - label: "わざ2派生A"
+            name: "move2_upgrade_a"
+            widget: "object"
+            required: false
+            fields:
+              - { label: "名前", name: "name", widget: "string" }
+              - { label: "効果", name: "effect", widget: "text" }
+          - label: "わざ2派生B"
+            name: "move2_upgrade_b"
+            widget: "object"
+            required: false
+            fields:
+              - { label: "名前", name: "name", widget: "string" }
+              - { label: "効果", name: "effect", widget: "text" }
+          - label: "ユナイト技"
+            name: "unite_move"
+            widget: "object"
+            required: false
+            fields:
+              - { label: "名前", name: "name", widget: "string" }
+              - { label: "効果", name: "effect", widget: "text" }
       - label: "おすすめビルド"
         name: "builds"
         widget: "list"
