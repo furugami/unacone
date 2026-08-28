@@ -27,3 +27,7 @@ pnpm-debug.log*
 CLAUDE.md
 CLAUDE-*.md
 .claude/
+
+# 画像素材のローカル作業フォルダ（CMS経由でpublic/images/uploads/にアップロードするまでの
+# 個人的な置き場。サイトの一部ではないためGit管理外にする）
+material/

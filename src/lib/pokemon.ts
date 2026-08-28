@@ -43,3 +43,17 @@ export const MOVE_SECTIONS = [
   { key: 'move2_upgrade_b', label: 'わざ2派生B', indent: true },
   { key: 'unite_move', label: 'ユナイト技', indent: false },
 ] as const;
+
+export const MOVE_LABEL_BY_KEY: Record<string, string> = Object.fromEntries(
+  MOVE_SECTIONS.map((s) => [s.key, s.label])
+);
+
+// ビルドでのわざ1/わざ2の選択肢から、moves内の実際のキーを求める。
+// 'base'ならmove1/move2そのもの、それ以外は「move1_upgrade_a」のような派生キーになる。
+export function moveKeyForChoice(
+  baseKey: 'move1' | 'move2',
+  choice: 'base' | 'upgrade_a' | 'upgrade_b' | undefined
+): string | undefined {
+  if (!choice) return undefined;
+  return choice === 'base' ? baseKey : `${baseKey}_${choice}`;
+}

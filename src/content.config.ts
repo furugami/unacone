@@ -8,6 +8,9 @@ const moveSchema = z.object({
   icon: z.string().optional(),
 });
 
+// ビルドでのわざ1/わざ2の選択（そのまま/派生A/派生B）。2026/08/29追加。
+const moveChoiceSchema = z.enum(['base', 'upgrade_a', 'upgrade_b']);
+
 // ポケモン図鑑（人力データ）
 // 参照: CLAUDE-2.md「データ設計: 全面人力データ化」
 const pokemonJp = defineCollection({
@@ -55,6 +58,9 @@ const pokemonJp = defineCollection({
           held_items: z.array(z.string()),
           // battle-itemsコレクションのslug（同上）
           battle_item: z.string(),
+          // このビルドでのわざ1/わざ2の選択（moves内のどの項目を使うか）。任意。
+          move1_choice: moveChoiceSchema.optional(),
+          move2_choice: moveChoiceSchema.optional(),
           note: z.string().optional(),
         })
       )

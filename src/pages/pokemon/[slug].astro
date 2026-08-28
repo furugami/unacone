@@ -14,6 +14,8 @@ import {
 	ATTACK_TYPE_LABELS,
 	DIFFICULTY_LABELS,
 	MOVE_SECTIONS,
+	MOVE_LABEL_BY_KEY,
+	moveKeyForChoice,
 } from '../../lib/pokemon';
 import { withBase } from '../../lib/url';
 
@@ -42,10 +44,19 @@ const moveEntries = moves
 const heldItemMap = new Map((await getCollection('held-items')).map((i) => [i.data.slug, i.data]));
 const battleItemMap = new Map((await getCollection('battle-items')).map((i) => [i.data.slug, i.data]));
 
+// ビルドのわざ1/わざ2選択も、moves内の実データ（表示名・アンカーリンク先）に解決する。
+function resolveMoveChoice(baseKey: 'move1' | 'move2', choice: 'base' | 'upgrade_a' | 'upgrade_b' | undefined) {
+	const key = moveKeyForChoice(baseKey, choice);
+	if (!key || !moves?.[key]) return null;
+	return { key, label: MOVE_LABEL_BY_KEY[key], name: moves[key]!.name };
+}
+
 const resolvedBuilds = (builds ?? []).map((build) => ({
 	...build,
 	heldItemDetails: build.held_items.map((slug) => ({ slug, item: heldItemMap.get(slug) })),
 	battleItemDetail: { slug: build.battle_item, item: battleItemMap.get(build.battle_item) },
+	move1Selection: resolveMoveChoice('move1', build.move1_choice),
+	move2Selection: resolveMoveChoice('move2', build.move2_choice),
 }));
 ---
 
@@ -68,32 +79,6 @@ const resolvedBuilds = (builds ?? []).map((build) => ({
 			</section>
 		)
 	}
-
-	{
-		moveEntries.length > 0 && (
-			<section class="moves-section">
-				<h2>わざ説明</h2>
-				{moveEntries.map((m) => (
-					<article class:list={['move-card', { indent: m.indent }]}>
-						<h3>
-							{m.data.icon && <img src={withBase(m.data.icon)} alt="" class="move-icon" />}
-							{m.label}: {m.data.name}
-						</h3>
-						<p>{m.data.effect}</p>
-					</article>
-				))}
-			</section>
-		)
-	}
-
-	<section class="external-link-card">
-		<p>
-			詳しい数値データ（ステータス・勝率など）は外部サイトのUniteAPI/unite-db.comをご覧ください。
-		</p>
-		<a href="https://unite-db.com/" target="_blank" rel="noopener noreferrer">
-			unite-db.comで詳細を見る →
-		</a>
-	</section>
 
 	{
 		resolvedBuilds.length > 0 && (
@@ -128,12 +113,55 @@ const resolvedBuilds = (builds ?? []).map((build) => ({
 								<span class="item-chip missing">{build.battleItemDetail.slug}</span>
 							)}
 						</p>
+						{
+							(build.move1Selection || build.move2Selection) && (
+								<p class="items-row">
+									わざ:
+									{build.move1Selection && (
+										<a href={`#move-${build.move1Selection.key}`} class="item-chip">
+											{build.move1Selection.label}: {build.move1Selection.name}
+										</a>
+									)}
+									{build.move2Selection && (
+										<a href={`#move-${build.move2Selection.key}`} class="item-chip">
+											{build.move2Selection.label}: {build.move2Selection.name}
+										</a>
+									)}
+								</p>
+							)
+						}
 						{build.note && <p class="note">{build.note}</p>}
 					</article>
 				))}
 			</section>
 		)
 	}
+
+	{
+		moveEntries.length > 0 && (
+			<section class="moves-section">
+				<h2>わざ説明</h2>
+				{moveEntries.map((m) => (
+					<article id={`move-${m.key}`} class:list={['move-card', { indent: m.indent }]}>
+						<h3>
+							{m.data.icon && <img src={withBase(m.data.icon)} alt="" class="move-icon" />}
+							{m.label}: {m.data.name}
+						</h3>
+						<p>{m.data.effect}</p>
+					</article>
+				))}
+			</section>
+		)
+	}
+
+	<section class="external-link-card">
+		<p>
+			詳しい数値データ（ステータス・勝率など）は外部サイトのUniteAPI/unite-db.comをご覧ください。
+		</p>
+		<a href="https://unite-db.com/" target="_blank" rel="noopener noreferrer">
+			unite-db.comで詳細を見る →
+		</a>
+	</section>
 
 	<section class="commentary">
 		<h2>立ち回り解説</h2>
@@ -226,6 +254,7 @@ const resolvedBuilds = (builds ?? []).map((build) => ({
 		padding: 16px;
 		background: var(--surface);
 		border-radius: var(--radius);
+		scroll-margin-top: 16px;
 	}
 
 	.move-card.indent {

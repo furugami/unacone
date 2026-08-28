@@ -159,6 +159,22 @@ collections:
             search_fields: ["name_ja"]
             value_field: "slug"
             display_fields: ["name_ja"]
+          - label: "わざ1の選択（任意。上のわざ説明で入力した内容から選ぶ）"
+            name: "move1_choice"
+            widget: "select"
+            required: false
+            options:
+              - { label: "わざ1（派生なし）", value: "base" }
+              - { label: "わざ1派生A", value: "upgrade_a" }
+              - { label: "わざ1派生B", value: "upgrade_b" }
+          - label: "わざ2の選択（任意）"
+            name: "move2_choice"
+            widget: "select"
+            required: false
+            options:
+              - { label: "わざ2（派生なし）", value: "base" }
+              - { label: "わざ2派生A", value: "upgrade_a" }
+              - { label: "わざ2派生B", value: "upgrade_b" }
           - { label: "補足", name: "note", widget: "string", required: false }
       - { label: "立ち回り解説（本文）", name: "body", widget: "markdown" }
 
