@@ -7,7 +7,7 @@
 // ここではポケモン全件ぶんのパスを作っている。
 import Layout from '../../layouts/Layout.astro';
 import { getCollection, render } from 'astro:content';
-import { ROLE_LABELS, ROLE_COLOR_VARS } from '../../lib/pokemon';
+import { ROLE_LABELS, ROLE_COLOR_VARS, ATTACK_TYPE_LABELS } from '../../lib/pokemon';
 
 export async function getStaticPaths() {
 	const pokemonList = await getCollection('pokemon-jp');
@@ -19,7 +19,7 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
-const { name_ja, role, tier, builds } = entry.data;
+const { name_ja, role, tier, attack_type, builds } = entry.data;
 ---
 
 <Layout title={name_ja}>
@@ -28,6 +28,7 @@ const { name_ja, role, tier, builds } = entry.data;
 		<span class="role-badge" style={`background: var(${ROLE_COLOR_VARS[role]})`}>
 			{ROLE_LABELS[role]}
 		</span>
+		{attack_type && <span class="attack-type-badge">{ATTACK_TYPE_LABELS[attack_type]}</span>}
 		{tier && <span class="tier-badge">Tier {tier}</span>}
 	</header>
 
@@ -70,7 +71,8 @@ const { name_ja, role, tier, builds } = entry.data;
 	}
 
 	.role-badge,
-	.tier-badge {
+	.tier-badge,
+	.attack-type-badge {
 		padding: 4px 12px;
 		border-radius: 999px;
 		font-size: 0.85rem;
@@ -80,6 +82,10 @@ const { name_ja, role, tier, builds } = entry.data;
 	.tier-badge {
 		background: var(--amber);
 		font-family: var(--font-number);
+	}
+
+	.attack-type-badge {
+		background: var(--ink-soft);
 	}
 
 	.external-link-card {

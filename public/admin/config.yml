@@ -28,11 +28,18 @@ collections:
         name: "role"
         widget: "select"
         options:
-          - { label: "アタッカー", value: "attacker" }
-          - { label: "スピーディ", value: "speedster" }
-          - { label: "ディフェンダー", value: "defender" }
-          - { label: "サポーター", value: "supporter" }
-          - { label: "オールラウンダー", value: "allrounder" }
+          - { label: "アタック型", value: "attacker" }
+          - { label: "スピード型", value: "speedster" }
+          - { label: "ディフェンス型", value: "defender" }
+          - { label: "サポート型", value: "supporter" }
+          - { label: "バランス型", value: "allrounder" }
+      - label: "攻撃分類（任意）"
+        name: "attack_type"
+        widget: "select"
+        required: false
+        options:
+          - { label: "攻撃", value: "physical" }
+          - { label: "特攻", value: "special" }
       - label: "Tier評価（人力・主観、任意）"
         name: "tier"
         widget: "select"

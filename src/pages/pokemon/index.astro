@@ -3,7 +3,7 @@
 // 一覧表示に特化したページ。
 import Layout from '../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
-import { ROLE_LABELS, ROLE_COLOR_VARS } from '../../lib/pokemon';
+import { ROLE_LABELS, ROLE_COLOR_VARS, ATTACK_TYPE_LABELS } from '../../lib/pokemon';
 import { withBase } from '../../lib/url';
 
 const pokemonList = await getCollection('pokemon-jp');
@@ -16,11 +16,16 @@ const pokemonList = await getCollection('pokemon-jp');
 			pokemonList.map((p) => (
 				<li>
 					<a href={withBase(`/pokemon/${p.data.slug}/`)}>
-						<span
-							class="role-badge"
-							style={`background: var(${ROLE_COLOR_VARS[p.data.role]})`}
-						>
-							{ROLE_LABELS[p.data.role]}
+						<span class="badges">
+							<span
+								class="role-badge"
+								style={`background: var(${ROLE_COLOR_VARS[p.data.role]})`}
+							>
+								{ROLE_LABELS[p.data.role]}
+							</span>
+							{p.data.attack_type && (
+								<span class="attack-type-badge">{ATTACK_TYPE_LABELS[p.data.attack_type]}</span>
+							)}
 						</span>
 						<span class="name">{p.data.name_ja}</span>
 					</a>
@@ -51,12 +56,26 @@ const pokemonList = await getCollection('pokemon-jp');
 		box-shadow: 0 1px 2px rgba(27, 34, 51, 0.08);
 	}
 
-	.role-badge {
-		align-self: flex-start;
+	.badges {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 4px;
+	}
+
+	.role-badge,
+	.attack-type-badge {
 		padding: 2px 10px;
 		border-radius: 999px;
 		font-size: 0.75rem;
 		color: #fff;
+	}
+
+	.role-badge {
+		align-self: flex-start;
+	}
+
+	.attack-type-badge {
+		background: var(--ink-soft);
 	}
 
 	.name {

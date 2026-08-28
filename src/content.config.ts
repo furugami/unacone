@@ -11,6 +11,8 @@ const pokemonJp = defineCollection({
     role: z.enum(['attacker', 'speedster', 'defender', 'supporter', 'allrounder']),
     // 人力・主観のTier評価。UniteAPI等の数値データとは無関係（CLAUDE-3.md「ポケモンTier表」参照）
     tier: z.enum(['S', 'A', 'B', 'C']).optional(),
+    // 攻撃分類（物理攻撃寄り/特殊攻撃寄り）。2026/08/29追加、運営者要望。
+    attack_type: z.enum(['physical', 'special']).optional(),
     builds: z
       .array(
         z.object({

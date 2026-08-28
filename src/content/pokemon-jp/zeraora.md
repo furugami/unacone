@@ -2,6 +2,7 @@
 slug: zeraora
 name_ja: ゼラオラ
 role: attacker
+attack_type: physical
 tier: S
 builds:
   - title: ランクマ標準ビルド
