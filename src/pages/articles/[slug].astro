@@ -1,0 +1,66 @@
+---
+// セオリー解説記事の個別ページ（/articles/{slug}/）。
+import Layout from '../../layouts/Layout.astro';
+import { getCollection, render } from 'astro:content';
+import { ARTICLE_CATEGORY_LABELS } from '../../lib/articles';
+
+export async function getStaticPaths() {
+	const allArticles = await getCollection('articles');
+	return allArticles.map((entry) => ({
+		params: { slug: entry.data.slug },
+		props: { entry },
+	}));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const { title, category, publish_date } = entry.data;
+---
+
+<Layout title={title}>
+	<article>
+		<header class="article-header">
+			<span class="category-badge">{ARTICLE_CATEGORY_LABELS[category]}</span>
+			<h1>{title}</h1>
+			<p class="publish-date">
+				{publish_date.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' })}
+			</p>
+		</header>
+
+		<div class="article-body">
+			<Content />
+		</div>
+	</article>
+</Layout>
+
+<style>
+	.article-header {
+		margin-bottom: 24px;
+	}
+
+	.category-badge {
+		display: inline-block;
+		padding: 2px 10px;
+		border-radius: 999px;
+		background: var(--blue);
+		color: #fff;
+		font-size: 0.75rem;
+	}
+
+	.publish-date {
+		color: var(--ink-soft);
+		font-size: 0.85rem;
+	}
+
+	.article-body {
+		background: var(--surface);
+		border-radius: var(--radius);
+		padding: 24px;
+		line-height: 1.8;
+	}
+
+	/* YouTube等のiframe埋め込みがはみ出さないようにする */
+	.article-body :global(iframe) {
+		max-width: 100%;
+	}
+</style>

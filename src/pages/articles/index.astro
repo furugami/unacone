@@ -1,0 +1,82 @@
+---
+// セオリー解説記事の目次ページ（/articles/）。
+// 難易度カテゴリ（初心者/中級/上級）ごとにセクション分けして表示する。
+// 参照: CLAUDE.md「セオリー解説記事 コンテンツモデル」
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import { ARTICLE_CATEGORY_LABELS, ARTICLE_CATEGORY_ORDER } from '../../lib/articles';
+
+const allArticles = await getCollection('articles');
+
+// カテゴリごとにグループ化し、各グループ内は公開日の新しい順に並べる。
+// 記事が1件も無いカテゴリはセクションごと表示しない。
+const sections = ARTICLE_CATEGORY_ORDER.map((category) => {
+	const articlesInCategory = allArticles
+		.filter((a) => a.data.category === category)
+		.sort((a, b) => b.data.publish_date.valueOf() - a.data.publish_date.valueOf());
+	return { category, articlesInCategory };
+}).filter((section) => section.articlesInCategory.length > 0);
+---
+
+<Layout title="セオリー解説記事">
+	<h1>セオリー解説記事</h1>
+
+	{
+		sections.map((section) => (
+			<section class="category-section">
+				<h2>{ARTICLE_CATEGORY_LABELS[section.category]}</h2>
+				<ul class="article-list">
+					{section.articlesInCategory.map((article) => (
+						<li>
+							<a href={`/articles/${article.data.slug}/`}>
+								<span class="title">{article.data.title}</span>
+								<span class="excerpt">{article.data.excerpt}</span>
+							</a>
+						</li>
+					))}
+				</ul>
+			</section>
+		))
+	}
+
+	{
+		sections.length === 0 && <p>準備中です。もうしばらくお待ちください。</p>
+	}
+</Layout>
+
+<style>
+	.category-section {
+		margin-top: 32px;
+	}
+
+	.article-list {
+		list-style: none;
+		margin: 16px 0 0;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+	}
+
+	.article-list a {
+		display: block;
+		padding: 16px;
+		background: var(--surface);
+		border-radius: var(--radius);
+		text-decoration: none;
+		box-shadow: 0 1px 2px rgba(27, 34, 51, 0.08);
+	}
+
+	.title {
+		display: block;
+		font-family: var(--font-heading);
+		font-weight: 700;
+	}
+
+	.excerpt {
+		display: block;
+		margin-top: 4px;
+		color: var(--ink-soft);
+		font-size: 0.9rem;
+	}
+</style>
