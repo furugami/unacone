@@ -117,8 +117,9 @@ const battleItems = defineCollection({
     icon: z.string().optional(),
     // クールダウン（秒）。2026/08/29追加。
     cooldown_seconds: z.number().optional(),
-    // このバトルアイテムが使用可能になるトレーナーレベル。2026/08/29追加。
-    unlock_level: z.number().optional(),
+    // 解放条件（トレーナーレベルの数値のほか、「ショップで購入」等のレベル制限なしの
+    // 入手方法も入力できるよう自由記述にしている。2026/08/29追加、2026/08/29に文字列化）。
+    unlock_level: z.coerce.string().optional(),
   }),
 });
 

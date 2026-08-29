@@ -253,7 +253,7 @@ collections:
       - { label: "名前", name: "name_ja", widget: "string" }
       - { label: "アイコン（任意）", name: "icon", widget: "image", required: false }
       - { label: "クールダウン（秒、任意）", name: "cooldown_seconds", widget: "number", value_type: "int", required: false }
-      - { label: "解除されるトレーナーレベル（任意）", name: "unlock_level", widget: "number", value_type: "int", required: false }
+      - { label: "解放条件（トレーナーレベルの数値、または「ショップで購入可能」等の自由記述。任意）", name: "unlock_level", widget: "string", required: false }
       - { label: "効果の説明（本文）", name: "body", widget: "markdown" }
 
   - name: "medals"

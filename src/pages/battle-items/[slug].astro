@@ -15,6 +15,13 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const { Content } = await render(entry);
 const { name_ja, icon, cooldown_seconds, unlock_level } = entry.data;
+
+// CMSで一度入力してから空欄に戻すと undefined ではなく空文字列になるため、
+// 空文字列も「未設定」として扱う。
+const hasUnlockLevel = unlock_level !== undefined && unlock_level.trim() !== '';
+// 数値のみ（例: "10"）ならトレーナーレベルの文言で、それ以外（例: "ショップで購入可能"）は
+// そのまま表示する。レベル制限がなくショップ等で入手できるアイテムがあるため。
+const unlockLevelIsNumeric = hasUnlockLevel && /^\d+$/.test(unlock_level.trim());
 ---
 
 <Layout title={name_ja}>
@@ -31,10 +38,10 @@ const { name_ja, icon, cooldown_seconds, unlock_level } = entry.data;
 		<Content />
 	</div>
 	{
-		unlock_level !== undefined && (
+		hasUnlockLevel && (
 			<div class="unlock-section">
-				<h2>解放トレーナーレベル</h2>
-				<p>トレーナーレベル {unlock_level} で解放されます。</p>
+				<h2>解放条件</h2>
+				<p>{unlockLevelIsNumeric ? `トレーナーレベル ${unlock_level} で解放されます。` : unlock_level}</p>
 			</div>
 		)
 	}
