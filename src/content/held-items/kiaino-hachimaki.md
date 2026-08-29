@@ -1,7 +1,7 @@
 ---
 slug: kiaino-hachimaki
 name_ja: きあいのハチマキ
-icon: /unacone/images/uploads/kiai.png
+icon: /unacone/images/uploads/held-items/kiai.png
 summary: 攻撃・特攻を強化する、サンプルデータのため内容は仮です。
 ---
 

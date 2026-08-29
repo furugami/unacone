@@ -1,7 +1,7 @@
 ---
 slug: potion
 name_ja: きずぐすり
-icon: /unacone/images/uploads/heal.png
+icon: /unacone/images/uploads/battle-items/heal.png
 summary: HPを回復する。
 ---
 

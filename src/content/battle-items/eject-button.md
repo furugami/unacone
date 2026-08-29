@@ -1,7 +1,7 @@
 ---
 slug: eject-button
 name_ja: だっしゅつボタン
-icon: /unacone/images/uploads/button.png
+icon: /unacone/images/uploads/battle-items/button.png
 summary: 使用すると指定方向に高速で移動し、危険な状況から離脱できる。
 ---
 
