@@ -3,6 +3,7 @@ slug: slow-smoke
 name_ja: どんそくスモーク
 icon: /unacone/images/uploads/battle-items/smoke.png
 cooldown_seconds: 35
+unlock_level: 13
 ---
 ## 効果
 
