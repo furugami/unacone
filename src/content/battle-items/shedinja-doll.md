@@ -3,6 +3,7 @@ slug: shedinja-doll
 name_ja: ヌケニンにんぎょう
 icon: /unacone/images/uploads/battle-items/nukenin.png
 cooldown_seconds: 45
+unlock_level: ショップで獲得可能
 ---
 ## 効果
 
