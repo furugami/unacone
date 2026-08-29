@@ -3,7 +3,7 @@ slug: area-controller
 name_ja: ゴールコントローラー
 icon: /unacone/images/uploads/battle-items/controller.png
 cooldown_seconds: 80
-unlock_level: ""
+unlock_level: ショップで獲得可能
 ---
 ## 効果
 
