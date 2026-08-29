@@ -24,7 +24,6 @@ const battleItems = (await getCollection('battle-items')).sort((a, b) =>
 								<span class="badge">CT {item.data.cooldown_seconds}秒</span>
 							)}
 						</span>
-						<span class="summary">{item.data.summary}</span>
 					</a>
 				</li>
 			))
@@ -94,8 +93,4 @@ const battleItems = (await getCollection('battle-items')).sort((a, b) =>
 		padding: 2px 8px;
 	}
 
-	.summary {
-		color: var(--ink-soft);
-		font-size: 0.85rem;
-	}
 </style>

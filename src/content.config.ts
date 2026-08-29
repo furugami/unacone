@@ -115,7 +115,6 @@ const battleItems = defineCollection({
     slug: z.string(),
     name_ja: z.string(),
     icon: z.string().optional(),
-    summary: z.string(),
     // クールダウン（秒）。2026/08/29追加。
     cooldown_seconds: z.number().optional(),
     // このバトルアイテムが使用可能になるトレーナーレベル。2026/08/29追加。

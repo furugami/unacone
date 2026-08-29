@@ -252,7 +252,6 @@ collections:
       - { label: "スラッグ", name: "slug", widget: "string" }
       - { label: "名前", name: "name_ja", widget: "string" }
       - { label: "アイコン（任意）", name: "icon", widget: "image", required: false }
-      - { label: "要約（一覧に表示）", name: "summary", widget: "text" }
       - { label: "クールダウン（秒、任意）", name: "cooldown_seconds", widget: "number", value_type: "int", required: false }
       - { label: "解除されるトレーナーレベル（任意）", name: "unlock_level", widget: "number", value_type: "int", required: false }
       - { label: "効果の説明（本文）", name: "body", widget: "markdown" }
