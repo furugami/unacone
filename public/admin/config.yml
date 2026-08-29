@@ -30,6 +30,7 @@ collections:
     folder: "src/content/pokemon-jp"
     create: true
     slug: "{{fields.slug}}"
+    identifier_field: "name_ja"
     media_folder: "/public/images/uploads/pokemon"
     public_folder: "/unacone/images/uploads/pokemon"
     fields:
@@ -214,6 +215,7 @@ collections:
     folder: "src/content/streamers"
     create: true
     slug: "{{fields.slug}}"
+    identifier_field: "name"
     media_folder: "/public/images/uploads/streamers"
     public_folder: "/unacone/images/uploads/streamers"
     fields:
@@ -228,6 +230,7 @@ collections:
     folder: "src/content/held-items"
     create: true
     slug: "{{fields.slug}}"
+    identifier_field: "name_ja"
     media_folder: "/public/images/uploads/held-items"
     public_folder: "/unacone/images/uploads/held-items"
     fields:
@@ -242,6 +245,7 @@ collections:
     folder: "src/content/battle-items"
     create: true
     slug: "{{fields.slug}}"
+    identifier_field: "name_ja"
     media_folder: "/public/images/uploads/battle-items"
     public_folder: "/unacone/images/uploads/battle-items"
     fields:
@@ -258,6 +262,7 @@ collections:
     folder: "src/content/medals"
     create: true
     slug: "{{fields.slug}}"
+    identifier_field: "name_ja"
     media_folder: "/public/images/uploads/medals"
     public_folder: "/unacone/images/uploads/medals"
     fields:
