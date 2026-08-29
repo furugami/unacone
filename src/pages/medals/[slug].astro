@@ -32,7 +32,8 @@ if (pokemon_slug) {
 			{
 				pokemon_slug && relatedPokemonName && (
 					<p class="related-pokemon">
-						対象ポケモン: <a href={withBase(`/pokemon/${pokemon_slug}/`)}>{relatedPokemonName}</a>
+						<span class="field-label">対象ポケモン</span>
+						<a href={withBase(`/pokemon/${pokemon_slug}/`)}>{relatedPokemonName}</a>
 					</p>
 				)
 			}
@@ -63,16 +64,27 @@ if (pokemon_slug) {
 
 	.related-pokemon {
 		margin-top: 8px;
+		display: flex;
+		align-items: center;
+		gap: 8px;
 	}
 
 	.related-pokemon a {
 		color: var(--blue);
+		font-weight: 700;
+		text-decoration: none;
+	}
+
+	.related-pokemon a:hover {
+		text-decoration: underline;
 	}
 
 	.body {
 		margin-top: 16px;
 		background: var(--surface);
+		border: 1.5px solid #e5e9f2;
 		border-radius: var(--radius);
+		box-shadow: 0 2px 8px rgba(27, 34, 51, 0.06);
 		padding: 24px;
 		line-height: 1.8;
 	}

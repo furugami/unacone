@@ -40,11 +40,13 @@ const { title, category, publish_date } = entry.data;
 
 	.category-badge {
 		display: inline-block;
-		padding: 2px 10px;
+		padding: 3px 12px;
 		border-radius: 999px;
 		background: var(--blue);
 		color: #fff;
+		font-weight: 700;
 		font-size: 0.75rem;
+		box-shadow: 0 2px 6px rgba(76, 111, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.25);
 	}
 
 	.publish-date {
@@ -54,7 +56,9 @@ const { title, category, publish_date } = entry.data;
 
 	.article-body {
 		background: var(--surface);
+		border: 1.5px solid #e5e9f2;
 		border-radius: var(--radius);
+		box-shadow: 0 2px 8px rgba(27, 34, 51, 0.06);
 		padding: 24px;
 		line-height: 1.8;
 	}

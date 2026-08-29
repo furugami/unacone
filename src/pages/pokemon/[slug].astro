@@ -88,7 +88,7 @@ const resolvedBuilds = (builds ?? []).map((build) => ({
 					<article class="build-card">
 						<h3>{build.title}</h3>
 						<p class="items-row">
-							もちもの:
+							<span class="field-label">もちもの</span>
 							{build.heldItemDetails.map(({ slug, item }) =>
 								item ? (
 									<a href={withBase(`/held-items/${slug}/`)} class="item-chip">
@@ -101,7 +101,7 @@ const resolvedBuilds = (builds ?? []).map((build) => ({
 							)}
 						</p>
 						<p class="items-row">
-							バトルアイテム:
+							<span class="field-label">バトルアイテム</span>
 							{build.battleItemDetail.item ? (
 								<a href={withBase(`/battle-items/${build.battleItemDetail.slug}/`)} class="item-chip">
 									{build.battleItemDetail.item.icon && (
@@ -116,7 +116,7 @@ const resolvedBuilds = (builds ?? []).map((build) => ({
 						{
 							(build.move1Selection || build.move2Selection) && (
 								<p class="items-row">
-									わざ:
+									<span class="field-label">わざ</span>
 									{build.move1Selection && (
 										<a href={`#move-${build.move1Selection.key}`} class="item-chip">
 											{build.move1Selection.label}: {build.move1Selection.name}
@@ -204,9 +204,17 @@ const resolvedBuilds = (builds ?? []).map((build) => ({
 		padding: 2px 10px;
 		border-radius: 999px;
 		background: var(--bg);
+		border: 1.5px solid color-mix(in srgb, var(--blue) 30%, white);
 		color: var(--blue);
+		font-weight: 700;
 		text-decoration: none;
 		font-size: 0.9rem;
+		transition: transform 0.15s ease, box-shadow 0.15s ease;
+	}
+
+	.item-chip:hover {
+		transform: translateY(-1px);
+		box-shadow: 0 4px 10px rgba(76, 111, 255, 0.2);
 	}
 
 	.item-chip.missing {
@@ -232,7 +240,9 @@ const resolvedBuilds = (builds ?? []).map((build) => ({
 		padding: 4px 12px;
 		border-radius: 999px;
 		font-size: 0.85rem;
+		font-weight: 700;
 		color: #fff;
+		box-shadow: 0 2px 6px rgba(27, 34, 51, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.25);
 	}
 
 	.tier-badge {
@@ -253,7 +263,9 @@ const resolvedBuilds = (builds ?? []).map((build) => ({
 		margin-top: 12px;
 		padding: 16px;
 		background: var(--surface);
+		border: 1.5px solid #e5e9f2;
 		border-radius: var(--radius);
+		box-shadow: 0 2px 8px rgba(27, 34, 51, 0.06);
 		scroll-margin-top: 16px;
 	}
 
@@ -278,16 +290,18 @@ const resolvedBuilds = (builds ?? []).map((build) => ({
 	.external-link-card {
 		margin-top: 20px;
 		padding: 16px;
-		background: var(--surface);
+		background: color-mix(in srgb, var(--amber) 8%, white);
 		border-radius: var(--radius);
-		border: 1px solid #e5e9f2;
+		border: 1.5px solid color-mix(in srgb, var(--amber) 40%, white);
 	}
 
 	.build-card {
 		margin-top: 12px;
 		padding: 16px;
 		background: var(--surface);
+		border: 1.5px solid #e5e9f2;
 		border-radius: var(--radius);
+		box-shadow: 0 2px 8px rgba(27, 34, 51, 0.06);
 	}
 
 	.note {
