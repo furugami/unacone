@@ -3,6 +3,7 @@ slug: fluffy-tail
 name_ja: エネコのシッポ
 icon: /unacone/images/uploads/battle-items/tail.png
 cooldown_seconds: 22
+unlock_level: 10
 ---
 ## 効果
 
