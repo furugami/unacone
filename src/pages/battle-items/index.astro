@@ -12,16 +12,22 @@ const battleItems = (await getCollection('battle-items')).sort((a, b) =>
 
 <Layout title="バトルアイテム">
 	<h1>バトルアイテム</h1>
-	<ul class="item-list">
+	<ul class="item-grid">
 		{
 			battleItems.map((item) => (
 				<li>
 					<a href={withBase(`/battle-items/${item.data.slug}/`)}>
 						{item.data.icon && <img src={item.data.icon} alt="" class="icon" />}
-						<span class="text">
-							<span class="name">{item.data.name_ja}</span>
-							<span class="summary">{item.data.summary}</span>
+						<span class="name">{item.data.name_ja}</span>
+						<span class="meta">
+							{item.data.cooldown_seconds !== undefined && (
+								<span class="badge">CT {item.data.cooldown_seconds}秒</span>
+							)}
+							{item.data.unlock_level !== undefined && (
+								<span class="badge">Lv.{item.data.unlock_level}〜</span>
+							)}
 						</span>
+						<span class="summary">{item.data.summary}</span>
 					</a>
 				</li>
 			))
@@ -31,20 +37,23 @@ const battleItems = (await getCollection('battle-items')).sort((a, b) =>
 </Layout>
 
 <style>
-	.item-list {
+	.item-grid {
 		list-style: none;
 		margin: 24px 0 0;
 		padding: 0;
-		display: flex;
-		flex-direction: column;
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
 		gap: 12px;
 	}
 
-	.item-list a {
+	.item-grid a {
 		display: flex;
+		flex-direction: column;
 		align-items: center;
-		gap: 12px;
-		padding: 16px;
+		text-align: center;
+		gap: 6px;
+		padding: 16px 12px;
+		height: 100%;
 		background: var(--surface);
 		border-radius: var(--radius);
 		text-decoration: none;
@@ -52,27 +61,34 @@ const battleItems = (await getCollection('battle-items')).sort((a, b) =>
 	}
 
 	.icon {
-		width: 40px;
-		height: 40px;
+		width: 48px;
+		height: 48px;
 		object-fit: contain;
-		flex-shrink: 0;
-	}
-
-	.text {
-		display: flex;
-		flex-direction: column;
 	}
 
 	.name {
-		display: block;
 		font-family: var(--font-heading);
 		font-weight: 700;
 	}
 
-	.summary {
-		display: block;
-		margin-top: 4px;
+	.meta {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 4px;
+	}
+
+	.badge {
+		font-size: 0.75rem;
+		font-family: var(--font-number);
 		color: var(--ink-soft);
-		font-size: 0.9rem;
+		background: var(--bg);
+		border-radius: 999px;
+		padding: 2px 8px;
+	}
+
+	.summary {
+		color: var(--ink-soft);
+		font-size: 0.85rem;
 	}
 </style>

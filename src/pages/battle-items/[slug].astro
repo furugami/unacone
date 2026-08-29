@@ -14,7 +14,7 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
-const { name_ja, summary, icon } = entry.data;
+const { name_ja, summary, icon, cooldown_seconds, unlock_level } = entry.data;
 ---
 
 <Layout title={name_ja}>
@@ -23,6 +23,10 @@ const { name_ja, summary, icon } = entry.data;
 		<div>
 			<h1>{name_ja}</h1>
 			<p class="summary">{summary}</p>
+			<p class="meta">
+				{cooldown_seconds !== undefined && <span class="badge">クールダウン {cooldown_seconds}秒</span>}
+				{unlock_level !== undefined && <span class="badge">トレーナーレベル {unlock_level}で解除</span>}
+			</p>
 		</div>
 	</header>
 	<div class="body">
@@ -46,6 +50,22 @@ const { name_ja, summary, icon } = entry.data;
 
 	.summary {
 		color: var(--ink-soft);
+	}
+
+	.meta {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 6px;
+		margin-top: 8px;
+	}
+
+	.badge {
+		font-size: 0.8rem;
+		font-family: var(--font-number);
+		color: var(--ink-soft);
+		background: var(--bg);
+		border-radius: 999px;
+		padding: 2px 10px;
 	}
 
 	.body {
