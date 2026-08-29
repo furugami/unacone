@@ -25,13 +25,13 @@ const { name_ja, summary, icon, cooldown_seconds, unlock_level } = entry.data;
 			<p class="summary">{summary}</p>
 			<p class="meta">
 				{cooldown_seconds !== undefined && <span class="badge">クールダウン {cooldown_seconds}秒</span>}
-				{unlock_level !== undefined && <span class="badge">トレーナーレベル {unlock_level}で解除</span>}
 			</p>
 		</div>
 	</header>
 	<div class="body">
 		<Content />
 	</div>
+	{unlock_level !== undefined && <p class="unlock-note">トレーナーレベル {unlock_level} で解放</p>}
 </Layout>
 
 <style>
@@ -78,5 +78,12 @@ const { name_ja, summary, icon, cooldown_seconds, unlock_level } = entry.data;
 		box-shadow: 0 2px 8px rgba(27, 34, 51, 0.06);
 		padding: 24px;
 		line-height: 1.8;
+	}
+
+	.unlock-note {
+		margin-top: 16px;
+		text-align: right;
+		color: var(--ink-soft);
+		font-size: 0.8rem;
 	}
 </style>

@@ -23,9 +23,6 @@ const battleItems = (await getCollection('battle-items')).sort((a, b) =>
 							{item.data.cooldown_seconds !== undefined && (
 								<span class="badge">CT {item.data.cooldown_seconds}秒</span>
 							)}
-							{item.data.unlock_level !== undefined && (
-								<span class="badge">Lv.{item.data.unlock_level}〜</span>
-							)}
 						</span>
 						<span class="summary">{item.data.summary}</span>
 					</a>
