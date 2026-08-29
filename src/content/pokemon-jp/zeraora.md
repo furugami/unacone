@@ -1,7 +1,7 @@
 ---
 slug: zeraora
 name_ja: ゼラオラ
-role: attacker
+role: speedster
 attack_type: physical
 tier: S
 abilities:
