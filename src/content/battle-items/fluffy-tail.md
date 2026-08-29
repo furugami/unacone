@@ -1,6 +1,6 @@
 ---
 slug: fluffy-tail
-name_ja: エネコのしっぽ
+name_ja: エネコのシッポ
 icon: /unacone/images/uploads/battle-items/tail.png
 summary: 周囲の野生ポケモンを一定時間ひるませ、足止めできる。
 cooldown_seconds: 22
