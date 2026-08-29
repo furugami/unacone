@@ -1,6 +1,7 @@
 ---
 slug: x-attack
 name_ja: プラスパワー
+icon: /unacone/images/uploads/pluspower.png
 summary: 一定時間、攻撃力を上昇させる。
 ---
 
