@@ -14,7 +14,7 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
-const { name_ja, icon, cooldown_seconds, unlock_level } = entry.data;
+const { name_ja, icon, cooldown_seconds, unlock_level, recommended_pokemon, faq } = entry.data;
 
 // CMSで一度入力してから空欄に戻すと undefined ではなく空文字列になるため、
 // 空文字列も「未設定」として扱う。
@@ -22,6 +22,13 @@ const hasUnlockLevel = unlock_level !== undefined && unlock_level.trim() !== '';
 // 数値のみ（例: "10"）ならトレーナーレベルの文言で、それ以外（例: "ショップで購入可能"）は
 // そのまま表示する。レベル制限がなくショップ等で入手できるアイテムがあるため。
 const unlockLevelIsNumeric = hasUnlockLevel && /^\d+$/.test(unlock_level.trim());
+
+// おすすめポケモンはポケモン図鑑のslugを指しているので、実データ（名前・アイコン）に解決する。
+const pokemonMap = new Map((await getCollection('pokemon-jp')).map((p) => [p.data.slug, p.data]));
+const recommendedPokemonDetails = (recommended_pokemon ?? []).map((slug) => ({
+	slug,
+	pokemon: pokemonMap.get(slug),
+}));
 ---
 
 <Layout title={name_ja}>
@@ -37,6 +44,44 @@ const unlockLevelIsNumeric = hasUnlockLevel && /^\d+$/.test(unlock_level.trim())
 	<div class="body">
 		<Content />
 	</div>
+	{
+		recommendedPokemonDetails.length > 0 && (
+			<div class="recommended-section">
+				<h2>おすすめポケモン</h2>
+				<div class="pokemon-chips">
+					{recommendedPokemonDetails.map(({ slug, pokemon }) =>
+						pokemon ? (
+							<a href={withBase(`/pokemon/${slug}/`)} class="item-chip">
+								{pokemon.icon && <img src={pokemon.icon} alt="" class="chip-icon" />}
+								{pokemon.name_ja}
+							</a>
+						) : (
+							<span class="item-chip missing">{slug}</span>
+						)
+					)}
+				</div>
+			</div>
+		)
+	}
+	{
+		faq && faq.length > 0 && (
+			<div class="faq-section">
+				<h2>よくある質問</h2>
+				{faq.map((qa) => (
+					<div class="faq-item">
+						<p class="faq-q">
+							<span class="qa-badge q">Q</span>
+							{qa.question}
+						</p>
+						<p class="faq-a">
+							<span class="qa-badge a">A</span>
+							{qa.answer}
+						</p>
+					</div>
+				))}
+			</div>
+		)
+	}
 	{
 		hasUnlockLevel && (
 			<div class="unlock-section">
@@ -106,5 +151,109 @@ const unlockLevelIsNumeric = hasUnlockLevel && /^\d+$/.test(unlock_level.trim())
 	.unlock-section p {
 		margin: 0;
 		color: var(--ink-soft);
+	}
+
+	.recommended-section,
+	.faq-section {
+		margin-top: 16px;
+		background: var(--surface);
+		border: 1.5px solid #e5e9f2;
+		border-radius: var(--radius);
+		box-shadow: 0 2px 8px rgba(27, 34, 51, 0.06);
+		padding: 24px;
+	}
+
+	.recommended-section h2,
+	.faq-section h2 {
+		margin: 0 0 16px;
+	}
+
+	.pokemon-chips {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+	}
+
+	.item-chip {
+		display: inline-flex;
+		align-items: center;
+		gap: 4px;
+		padding: 2px 10px;
+		border-radius: 999px;
+		background: var(--bg);
+		border: 1.5px solid color-mix(in srgb, var(--blue) 30%, white);
+		color: var(--blue);
+		font-weight: 700;
+		text-decoration: none;
+		font-size: 0.9rem;
+		transition: transform 0.15s ease, box-shadow 0.15s ease;
+	}
+
+	.item-chip:hover {
+		transform: translateY(-1px);
+		box-shadow: 0 4px 10px rgba(76, 111, 255, 0.2);
+	}
+
+	.item-chip.missing {
+		color: var(--ink-soft);
+	}
+
+	.chip-icon {
+		width: 18px;
+		height: 18px;
+		object-fit: contain;
+	}
+
+	.faq-item {
+		margin-top: 16px;
+	}
+
+	.faq-item:first-of-type {
+		margin-top: 0;
+	}
+
+	.faq-item + .faq-item {
+		padding-top: 16px;
+		border-top: 1.5px solid #e5e9f2;
+	}
+
+	.faq-q,
+	.faq-a {
+		display: flex;
+		align-items: flex-start;
+		gap: 8px;
+		margin: 0;
+		line-height: 1.6;
+	}
+
+	.faq-q {
+		font-weight: 700;
+	}
+
+	.faq-a {
+		margin-top: 6px;
+		color: var(--ink-soft);
+	}
+
+	.qa-badge {
+		flex-shrink: 0;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 22px;
+		height: 22px;
+		border-radius: 999px;
+		font-family: var(--font-number);
+		font-weight: 700;
+		font-size: 0.85rem;
+		color: #fff;
+	}
+
+	.qa-badge.q {
+		background: var(--blue);
+	}
+
+	.qa-badge.a {
+		background: var(--amber);
 	}
 </style>

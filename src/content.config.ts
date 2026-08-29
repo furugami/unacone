@@ -120,6 +120,17 @@ const battleItems = defineCollection({
     // 解放条件（トレーナーレベルの数値のほか、「ショップで購入」等のレベル制限なしの
     // 入手方法も入力できるよう自由記述にしている。2026/08/29追加、2026/08/29に文字列化）。
     unlock_level: z.coerce.string().optional(),
+    // おすすめポケモン（pokemon-jpコレクションのslug配列）。2026/08/30追加。
+    recommended_pokemon: z.array(z.string()).optional(),
+    // よくある質問（Q&Aのセット）。2026/08/30追加。
+    faq: z
+      .array(
+        z.object({
+          question: z.string(),
+          answer: z.string(),
+        })
+      )
+      .optional(),
   }),
 });
 

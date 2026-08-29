@@ -255,6 +255,25 @@ collections:
       - { label: "クールダウン（秒、任意）", name: "cooldown_seconds", widget: "number", value_type: "int", required: false }
       - { label: "解放条件（トレーナーレベルの数値、または「ショップで購入可能」等の自由記述。任意）", name: "unlock_level", widget: "string", required: false }
       - { label: "効果の説明（本文）", name: "body", widget: "markdown" }
+      - label: "おすすめポケモン（ポケモン図鑑から選択、複数可・任意）"
+        name: "recommended_pokemon"
+        widget: "list"
+        required: false
+        field:
+          label: "ポケモン"
+          name: "pokemon"
+          widget: "relation"
+          collection: "pokemon-jp"
+          search_fields: ["name_ja"]
+          value_field: "slug"
+          display_fields: ["name_ja"]
+      - label: "よくある質問（任意）"
+        name: "faq"
+        widget: "list"
+        required: false
+        fields:
+          - { label: "質問", name: "question", widget: "string" }
+          - { label: "回答", name: "answer", widget: "text" }
 
   - name: "medals"
     label: "メダル"
