@@ -19,6 +19,10 @@ media_folder: "public/images/uploads"
 # 毎回の編集体験を優先し、あえて実URLを直書きする。将来リポジトリ名を変える場合は
 # 既存コンテンツのicon/thumbnailフィールドを一括置換する必要がある。
 public_folder: "/unacone/images/uploads"
+# 上記はコレクション側で media_folder/public_folder を指定していない場合のフォールバック
+# （既存の画像はここに残っているので動き続ける）。2026/08/29以降、各コレクションは
+# 下のサブフォルダ（uploads/pokemon, uploads/held-items 等）にアップロードされるよう
+# コレクションごとに上書き設定している。メディアライブラリが種類別に分かれて選びやすくなる。
 
 collections:
   - name: "pokemon-jp"
@@ -26,6 +30,8 @@ collections:
     folder: "src/content/pokemon-jp"
     create: true
     slug: "{{fields.slug}}"
+    media_folder: "/public/images/uploads/pokemon"
+    public_folder: "/unacone/images/uploads/pokemon"
     fields:
       - { label: "スラッグ（半角英数、ファイル名になる）", name: "slug", widget: "string" }
       - { label: "日本語名", name: "name_ja", widget: "string" }
@@ -186,6 +192,8 @@ collections:
     folder: "src/content/articles"
     create: true
     slug: "{{fields.slug}}"
+    media_folder: "/public/images/uploads/articles"
+    public_folder: "/unacone/images/uploads/articles"
     fields:
       - { label: "スラッグ", name: "slug", widget: "string" }
       - { label: "タイトル", name: "title", widget: "string" }
@@ -206,6 +214,8 @@ collections:
     folder: "src/content/streamers"
     create: true
     slug: "{{fields.slug}}"
+    media_folder: "/public/images/uploads/streamers"
+    public_folder: "/unacone/images/uploads/streamers"
     fields:
       - { label: "スラッグ", name: "slug", widget: "string" }
       - { label: "名前", name: "name", widget: "string" }
@@ -218,6 +228,8 @@ collections:
     folder: "src/content/held-items"
     create: true
     slug: "{{fields.slug}}"
+    media_folder: "/public/images/uploads/held-items"
+    public_folder: "/unacone/images/uploads/held-items"
     fields:
       - { label: "スラッグ", name: "slug", widget: "string" }
       - { label: "名前", name: "name_ja", widget: "string" }
@@ -230,6 +242,8 @@ collections:
     folder: "src/content/battle-items"
     create: true
     slug: "{{fields.slug}}"
+    media_folder: "/public/images/uploads/battle-items"
+    public_folder: "/unacone/images/uploads/battle-items"
     fields:
       - { label: "スラッグ", name: "slug", widget: "string" }
       - { label: "名前", name: "name_ja", widget: "string" }
@@ -244,6 +258,8 @@ collections:
     folder: "src/content/medals"
     create: true
     slug: "{{fields.slug}}"
+    media_folder: "/public/images/uploads/medals"
+    public_folder: "/unacone/images/uploads/medals"
     fields:
       - { label: "スラッグ", name: "slug", widget: "string" }
       - { label: "名前", name: "name_ja", widget: "string" }
