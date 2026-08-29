@@ -3,6 +3,7 @@ slug: x-speed
 name_ja: スピーダー
 icon: /unacone/images/uploads/battle-items/speeder.png
 cooldown_seconds: 50
+unlock_level: 8
 ---
 ## 効果
 
