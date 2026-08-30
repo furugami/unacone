@@ -49,7 +49,15 @@ for (const entry of entries) {
 						<td class="time-cell">{timeLabel(entry.startTime)}</td>
 						{showChannelName && (
 							<td class="channel-cell">
-								<a href={entry.url} target="_blank" rel="noopener noreferrer">
+								<a
+									href={
+										entry.channelId
+											? `https://www.youtube.com/channel/${entry.channelId}`
+											: entry.url
+									}
+									target="_blank"
+									rel="noopener noreferrer"
+								>
 									{entry.channelIcon && (
 										<img src={entry.channelIcon} alt="" class="channel-icon" />
 									)}
