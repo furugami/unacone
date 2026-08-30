@@ -1,7 +1,14 @@
 ---
 slug: absol
 name_ja: アブソル
+icon: /unacone/images/uploads/pokemon/absol.png
 role: speedster
+abilities:
+  combat: 0.5
+  durability: 0.5
+  mobility: 0.5
+  scoring: 0.5
+  support: 0.5
 moves:
   ability:
     name: きょううん
