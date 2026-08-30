@@ -14,6 +14,12 @@ import {
 
 const streamers = await getCollection('streamers');
 
+// YouTube広域検索で見つかっても一覧に出したくないチャンネルの除外リスト（CMSで管理）。
+const scheduleSettings = (await getCollection('schedule-settings'))[0];
+const excludedChannelNames = new Set(
+	(scheduleSettings?.data.excluded_channel_names ?? []).map((name) => name.trim())
+);
+
 // 表示するのは「現在〜3日後」の予定のみ（配信中の見逃し防止に1時間分だけ過去も含める）。
 // 更新頻度（cronでの再ビルド間隔）は別途検討のため、ここでは範囲の絞り込みだけを行う。
 const now = new Date();
@@ -43,6 +49,7 @@ const registeredYoutubeChannelIds = new Set(
 const discoveredEntries = (await fetchYoutubeUpcomingByKeyword('ポケモンユナイト'))
 	.filter(inRange)
 	.filter((entry) => !entry.channelId || !registeredYoutubeChannelIds.has(entry.channelId))
+	.filter((entry) => !entry.channelName || !excludedChannelNames.has(entry.channelName.trim()))
 	.sort((a, b) => a.startTime.valueOf() - b.startTime.valueOf());
 ---
 

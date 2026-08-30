@@ -168,6 +168,16 @@ const medals = defineCollection({
   }),
 });
 
+// 配信スケジュールページの設定（単一ファイル）。YouTube広域検索で見つかっても一覧に載せたくない
+// チャンネルを、名前でまとめて除外できるようにする（2026/08/30追加）。
+const scheduleSettings = defineCollection({
+  loader: glob({ pattern: 'schedule-settings.md', base: './src/content/config' }),
+  schema: z.object({
+    // 完全一致（前後の空白は無視）で判定。表示されているチャンネル名をそのままコピーする想定。
+    excluded_channel_names: z.array(z.string()).optional(),
+  }),
+});
+
 export const collections = {
   'pokemon-jp': pokemonJp,
   articles,
@@ -175,4 +185,5 @@ export const collections = {
   'held-items': heldItems,
   'battle-items': battleItems,
   medals,
+  'schedule-settings': scheduleSettings,
 };

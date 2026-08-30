@@ -312,3 +312,16 @@ collections:
       - { label: "アイコン（任意）", name: "icon", widget: "image", required: false }
       - { label: "要約（一覧に表示）", name: "summary", widget: "text" }
       - { label: "入手条件・効果の説明（本文）", name: "body", widget: "markdown" }
+
+  - name: "settings"
+    label: "各種設定"
+    files:
+      - name: "schedule"
+        label: "配信スケジュール設定"
+        file: "src/content/config/schedule-settings.md"
+        fields:
+          - label: "除外するチャンネル名（YouTube検索結果からこのチャンネルを除外する）"
+            name: "excluded_channel_names"
+            widget: "list"
+            required: false
+            hint: "配信スケジュールページに表示されているチャンネル名をそのままコピーして追加してください（完全一致で判定します）。"
