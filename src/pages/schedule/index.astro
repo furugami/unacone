@@ -8,6 +8,12 @@ import { fetchTwitchSchedule, fetchYoutubeUpcoming, type ScheduleEntry } from '.
 
 const streamers = await getCollection('streamers');
 
+// 表示するのは「現在〜3日後」の予定のみ（配信中の見逃し防止に1時間分だけ過去も含める）。
+// 更新頻度（cronでの再ビルド間隔）は別途検討のため、ここでは範囲の絞り込みだけを行う。
+const now = new Date();
+const rangeStart = new Date(now.getTime() - 60 * 60 * 1000);
+const rangeEnd = new Date(now.getTime() + 3 * 24 * 60 * 60 * 1000);
+
 const scheduleByStreamer = await Promise.all(
 	streamers.map(async (streamer) => {
 		const entries: ScheduleEntry[] = [
@@ -15,7 +21,9 @@ const scheduleByStreamer = await Promise.all(
 			...(streamer.data.youtube_channel_id
 				? await fetchYoutubeUpcoming(streamer.data.youtube_channel_id)
 				: []),
-		].sort((a, b) => a.startTime.valueOf() - b.startTime.valueOf());
+		]
+			.filter((entry) => entry.startTime >= rangeStart && entry.startTime <= rangeEnd)
+			.sort((a, b) => a.startTime.valueOf() - b.startTime.valueOf());
 		return { streamer, entries };
 	})
 );
@@ -42,6 +50,7 @@ const scheduleByStreamer = await Promise.all(
 												{entry.startTime.toLocaleString('ja-JP', {
 													month: 'numeric',
 													day: 'numeric',
+													weekday: 'short',
 													hour: '2-digit',
 													minute: '2-digit',
 												})}
