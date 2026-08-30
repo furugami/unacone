@@ -3,6 +3,7 @@
 // ビルド時に取得する（CMS管理はしない）。実装は最小限のシンプルなリスト表示に留める方針
 // （CLAUDE-3.md「配信者カレンダー実装方針の軽量化」参照）。「配信中(LIVE)」表示はPhase 2。
 import Layout from '../../layouts/Layout.astro';
+import ScheduleTable from '../../components/ScheduleTable.astro';
 import { getCollection } from 'astro:content';
 import {
 	fetchTwitchSchedule,
@@ -55,27 +56,7 @@ const discoveredEntries = (await fetchYoutubeUpcomingByKeyword('ポケモンユ�
 					<li class="streamer-block">
 						<h2>{streamer.data.name}</h2>
 						{entries.length > 0 ? (
-							<ul class="entry-list">
-								{entries.map((entry) => (
-									<li>
-										<a href={entry.url} target="_blank" rel="noopener noreferrer">
-											<span class="datetime">
-												{entry.startTime.toLocaleString('ja-JP', {
-													month: 'numeric',
-													day: 'numeric',
-													weekday: 'short',
-													hour: '2-digit',
-													minute: '2-digit',
-												})}
-											</span>
-											<span class="entry-title">{entry.title}</span>
-											<span class={`platform-badge platform-${entry.platform}`}>
-												{entry.platform === 'twitch' ? 'Twitch' : 'YouTube'}
-											</span>
-										</a>
-									</li>
-								))}
-							</ul>
+							<ScheduleTable entries={entries} />
 						) : (
 							<p class="no-schedule">現在配信予定が確認できません。予定は配信者のSNS等でご確認ください。</p>
 						)}
@@ -94,27 +75,7 @@ const discoveredEntries = (await fetchYoutubeUpcomingByKeyword('ポケモンユ�
 				<p class="discovered-note">
 					「ポケモンユナイト」でYouTubeを検索して見つかった予約配信です。無関係な動画が混ざる場合があります。
 				</p>
-				<ul class="entry-list">
-					{discoveredEntries.map((entry) => (
-						<li>
-							<a href={entry.url} target="_blank" rel="noopener noreferrer">
-								<span class="datetime">
-									{entry.startTime.toLocaleString('ja-JP', {
-										month: 'numeric',
-										day: 'numeric',
-										weekday: 'short',
-										hour: '2-digit',
-										minute: '2-digit',
-									})}
-								</span>
-								<span class="entry-title">
-									{entry.channelName} - {entry.title}
-								</span>
-								<span class="platform-badge platform-youtube">YouTube</span>
-							</a>
-						</li>
-					))}
-				</ul>
+				<ScheduleTable entries={discoveredEntries} showChannelName />
 			</section>
 		)
 	}
@@ -141,48 +102,6 @@ const discoveredEntries = (await fetchYoutubeUpcomingByKeyword('ポケモンユ�
 	.streamer-block h2 {
 		margin: 0 0 12px;
 		font-size: 1.1rem;
-	}
-
-	.entry-list {
-		list-style: none;
-		margin: 0;
-		padding: 0;
-		display: flex;
-		flex-direction: column;
-		gap: 8px;
-	}
-
-	.entry-list a {
-		display: flex;
-		align-items: center;
-		gap: 10px;
-		text-decoration: none;
-		padding: 8px 0;
-	}
-
-	.platform-badge {
-		flex-shrink: 0;
-		padding: 3px 12px;
-		border-radius: 999px;
-		font-size: 0.75rem;
-		font-weight: 700;
-		color: #fff;
-		box-shadow: 0 2px 6px rgba(27, 34, 51, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.25);
-	}
-
-	.platform-twitch {
-		background: #9146ff;
-	}
-
-	.platform-youtube {
-		background: #ff0000;
-	}
-
-	.datetime {
-		flex-shrink: 0;
-		font-family: var(--font-number);
-		color: var(--ink-soft);
-		font-size: 0.9rem;
 	}
 
 	.no-schedule {

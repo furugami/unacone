@@ -1,0 +1,141 @@
+---
+// 配信予定の表組み表示。左列に日付（同じ日はセル結合）、右側に時間・タイトル・プラットフォームを
+// 行ごとに並べる。行・列とも罫線で区切る。/schedule/ の配信者ブロック・広域検索セクション両方で使う。
+import type { ScheduleEntry } from '../lib/schedule';
+
+interface Props {
+	entries: ScheduleEntry[];
+	showChannelName?: boolean;
+}
+
+const { entries, showChannelName = false } = Astro.props;
+
+const dateLabel = (d: Date) =>
+	d.toLocaleDateString('ja-JP', { month: 'numeric', day: 'numeric', weekday: 'short' });
+const timeLabel = (d: Date) =>
+	d.toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' });
+
+// 日付ごとにグループ化（entriesは呼び出し側で時系列ソート済みの前提）
+const groups: { date: string; items: ScheduleEntry[] }[] = [];
+for (const entry of entries) {
+	const label = dateLabel(entry.startTime);
+	const lastGroup = groups[groups.length - 1];
+	if (lastGroup && lastGroup.date === label) {
+		lastGroup.items.push(entry);
+	} else {
+		groups.push({ date: label, items: [entry] });
+	}
+}
+---
+
+<table class="schedule-table">
+	<tbody>
+		{
+			groups.map((group) =>
+				group.items.map((entry, i) => (
+					<tr>
+						{i === 0 && (
+							<td class="date-cell" rowspan={group.items.length}>
+								{group.date}
+							</td>
+						)}
+						<td class="time-cell">{timeLabel(entry.startTime)}</td>
+						<td class="title-cell">
+							<a href={entry.url} target="_blank" rel="noopener noreferrer">
+								{showChannelName && entry.channelName && (
+									<span class="channel-name">{entry.channelName}</span>
+								)}
+								<span class="entry-title">{entry.title}</span>
+								<span class={`platform-badge platform-${entry.platform}`}>
+									{entry.platform === 'twitch' ? 'Twitch' : 'YouTube'}
+								</span>
+							</a>
+						</td>
+					</tr>
+				))
+			)
+		}
+	</tbody>
+</table>
+
+<style>
+	.schedule-table {
+		width: 100%;
+		border-collapse: collapse;
+		table-layout: fixed;
+	}
+
+	.schedule-table td {
+		border: 1px solid #e5e9f2;
+		padding: 10px 12px;
+		vertical-align: middle;
+	}
+
+	.schedule-table td.date-cell {
+		width: 92px;
+		background: color-mix(in srgb, var(--blue) 8%, white);
+		color: var(--blue);
+		font-family: var(--font-number);
+		font-weight: 700;
+		font-size: 0.9rem;
+		text-align: center;
+		vertical-align: top;
+		padding-top: 14px;
+	}
+
+	.time-cell {
+		width: 72px;
+		font-family: var(--font-number);
+		font-weight: 700;
+		color: var(--ink);
+		text-align: center;
+	}
+
+	.title-cell a {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 8px;
+		text-decoration: none;
+		color: var(--ink);
+	}
+
+	.title-cell a:hover .entry-title {
+		text-decoration: underline;
+	}
+
+	.channel-name {
+		flex-shrink: 0;
+		color: var(--ink-soft);
+		font-size: 0.85rem;
+	}
+
+	.channel-name::after {
+		content: '｜';
+		margin-left: 8px;
+		color: #e5e9f2;
+	}
+
+	.entry-title {
+		flex: 1;
+		min-width: 0;
+	}
+
+	.platform-badge {
+		flex-shrink: 0;
+		padding: 3px 12px;
+		border-radius: 999px;
+		font-size: 0.75rem;
+		font-weight: 700;
+		color: #fff;
+		box-shadow: 0 2px 6px rgba(27, 34, 51, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+	}
+
+	.platform-twitch {
+		background: #9146ff;
+	}
+
+	.platform-youtube {
+		background: #ff0000;
+	}
+</style>
