@@ -57,12 +57,14 @@ for (const entry of entries) {
 						<td class="title-cell">
 							<a href={entry.url} target="_blank" rel="noopener noreferrer">
 								<span class="entry-title">{entry.title}</span>
-								<span class={`platform-badge platform-${entry.platform}`}>
-									{entry.platform === 'twitch' ? 'Twitch' : 'YouTube'}
+								<span class="badge-group">
+									<span class={`platform-badge platform-${entry.platform}`}>
+										{entry.platform === 'twitch' ? 'Twitch' : 'YouTube'}
+									</span>
+									{detectStreamTags(entry.title).map((tag) => (
+										<span class="field-label">{tag}</span>
+									))}
 								</span>
-								{detectStreamTags(entry.title).map((tag) => (
-									<span class="field-label">{tag}</span>
-								))}
 							</a>
 						</td>
 					</tr>
@@ -109,9 +111,19 @@ for (const entry of entries) {
 		display: flex;
 		align-items: center;
 		flex-wrap: wrap;
-		gap: 8px;
+		gap: 10px;
 		text-decoration: none;
 		color: var(--ink);
+	}
+
+	.badge-group {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		flex-shrink: 0;
+		gap: 8px;
+		padding-left: 10px;
+		border-left: 1.5px solid #e5e9f2;
 	}
 
 	.title-cell a:hover .entry-title {

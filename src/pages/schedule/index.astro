@@ -50,7 +50,7 @@ const discoveredEntries = (await fetchYoutubeUpcomingByKeyword('ポケモンユ�
 	<h1>配信スケジュール</h1>
 
 	{
-		scheduleByStreamer.length > 0 ? (
+		scheduleByStreamer.length > 0 && (
 			<ul class="streamer-list">
 				{scheduleByStreamer.map(({ streamer, entries }) => (
 					<li class="streamer-block">
@@ -63,8 +63,6 @@ const discoveredEntries = (await fetchYoutubeUpcomingByKeyword('ポケモンユ�
 					</li>
 				))}
 			</ul>
-		) : (
-			<p>準備中です。もうしばらくお待ちください。</p>
 		)
 	}
 
@@ -77,6 +75,12 @@ const discoveredEntries = (await fetchYoutubeUpcomingByKeyword('ポケモンユ�
 				</p>
 				<ScheduleTable entries={discoveredEntries} showChannelName />
 			</section>
+		)
+	}
+
+	{
+		scheduleByStreamer.length === 0 && discoveredEntries.length === 0 && (
+			<p>現在、3日以内の配信予定は見つかりませんでした。</p>
 		)
 	}
 </Layout>
