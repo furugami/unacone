@@ -61,14 +61,14 @@ for (const entry of entries) {
 							<a href={entry.url} target="_blank" rel="noopener noreferrer">
 								<span class="entry-title">{entry.title}</span>
 							</a>
-						</td>
-						<td class="badge-cell">
-							<span class={`platform-badge platform-${entry.platform}`}>
-								{entry.platform === 'twitch' ? 'Twitch' : 'YouTube'}
-							</span>
-							{detectStreamTags(entry.title).map((tag) => (
-								<span class="field-label">{tag}</span>
-							))}
+							<div class="badge-row">
+								<span class={`platform-badge platform-${entry.platform}`}>
+									{entry.platform === 'twitch' ? 'Twitch' : 'YouTube'}
+								</span>
+								{detectStreamTags(entry.title).map((tag) => (
+									<span class="field-label">{tag}</span>
+								))}
+							</div>
 						</td>
 					</tr>
 				))
@@ -120,12 +120,14 @@ for (const entry of entries) {
 		text-decoration: underline;
 	}
 
-	.badge-cell {
-		width: 220px;
+	.badge-row {
 		display: flex;
 		align-items: center;
 		flex-wrap: wrap;
 		gap: 8px;
+		margin-top: 8px;
+		padding-top: 8px;
+		border-top: 1px solid #e5e9f2;
 	}
 
 	.channel-cell {
@@ -134,7 +136,7 @@ for (const entry of entries) {
 
 	.channel-cell a {
 		display: flex;
-		align-items: center;
+		align-items: flex-start;
 		gap: 8px;
 		color: var(--ink-soft);
 		font-size: 0.85rem;
@@ -154,13 +156,13 @@ for (const entry of entries) {
 	}
 
 	.channel-name-text {
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
+		display: block;
+		overflow-wrap: anywhere;
 	}
 
 	.entry-title {
 		display: block;
+		overflow-wrap: anywhere;
 	}
 
 	.platform-badge {
