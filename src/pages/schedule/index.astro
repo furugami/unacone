@@ -4,7 +4,12 @@
 // （CLAUDE-3.md「配信者カレンダー実装方針の軽量化」参照）。「配信中(LIVE)」表示はPhase 2。
 import Layout from '../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
-import { fetchTwitchSchedule, fetchYoutubeUpcoming, type ScheduleEntry } from '../../lib/schedule';
+import {
+	fetchTwitchSchedule,
+	fetchYoutubeUpcoming,
+	fetchYoutubeUpcomingByKeyword,
+	type ScheduleEntry,
+} from '../../lib/schedule';
 
 const streamers = await getCollection('streamers');
 
@@ -13,6 +18,7 @@ const streamers = await getCollection('streamers');
 const now = new Date();
 const rangeStart = new Date(now.getTime() - 60 * 60 * 1000);
 const rangeEnd = new Date(now.getTime() + 3 * 24 * 60 * 60 * 1000);
+const inRange = (entry: ScheduleEntry) => entry.startTime >= rangeStart && entry.startTime <= rangeEnd;
 
 const scheduleByStreamer = await Promise.all(
 	streamers.map(async (streamer) => {
@@ -22,11 +28,21 @@ const scheduleByStreamer = await Promise.all(
 				? await fetchYoutubeUpcoming(streamer.data.youtube_channel_id)
 				: []),
 		]
-			.filter((entry) => entry.startTime >= rangeStart && entry.startTime <= rangeEnd)
+			.filter(inRange)
 			.sort((a, b) => a.startTime.valueOf() - b.startTime.valueOf());
 		return { streamer, entries };
 	})
 );
+
+// 登録配信者に限らず、YouTubeを「ポケモンユナイト」で検索して見つかった予約配信。
+// 精度は完全ではない（無関係な動画が混ざりうる）前提の補助的な一覧。
+const registeredYoutubeChannelIds = new Set(
+	streamers.map((s) => s.data.youtube_channel_id).filter((id): id is string => Boolean(id))
+);
+const discoveredEntries = (await fetchYoutubeUpcomingByKeyword('ポケモンユナイト'))
+	.filter(inRange)
+	.filter((entry) => !entry.channelId || !registeredYoutubeChannelIds.has(entry.channelId))
+	.sort((a, b) => a.startTime.valueOf() - b.startTime.valueOf());
 ---
 
 <Layout title="配信スケジュール">
@@ -68,6 +84,38 @@ const scheduleByStreamer = await Promise.all(
 			</ul>
 		) : (
 			<p>準備中です。もうしばらくお待ちください。</p>
+		)
+	}
+
+	{
+		discoveredEntries.length > 0 && (
+			<section class="discovered-section">
+				<h2>その他のユナイト配信予定（YouTube検索）</h2>
+				<p class="discovered-note">
+					「ポケモンユナイト」でYouTubeを検索して見つかった予約配信です。無関係な動画が混ざる場合があります。
+				</p>
+				<ul class="entry-list">
+					{discoveredEntries.map((entry) => (
+						<li>
+							<a href={entry.url} target="_blank" rel="noopener noreferrer">
+								<span class="platform-badge platform-youtube">YouTube</span>
+								<span class="datetime">
+									{entry.startTime.toLocaleString('ja-JP', {
+										month: 'numeric',
+										day: 'numeric',
+										weekday: 'short',
+										hour: '2-digit',
+										minute: '2-digit',
+									})}
+								</span>
+								<span class="entry-title">
+									{entry.channelName} - {entry.title}
+								</span>
+							</a>
+						</li>
+					))}
+				</ul>
+			</section>
 		)
 	}
 </Layout>
@@ -141,5 +189,20 @@ const scheduleByStreamer = await Promise.all(
 		color: var(--ink-soft);
 		font-size: 0.9rem;
 		margin: 0;
+	}
+
+	.discovered-section {
+		margin-top: 32px;
+		padding: 20px;
+		background: var(--surface);
+		border: 1.5px solid #e5e9f2;
+		border-radius: var(--radius);
+		box-shadow: 0 2px 8px rgba(27, 34, 51, 0.07);
+	}
+
+	.discovered-note {
+		margin: 4px 0 16px;
+		color: var(--ink-soft);
+		font-size: 0.8rem;
 	}
 </style>

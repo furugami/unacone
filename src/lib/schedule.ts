@@ -11,6 +11,9 @@ export type ScheduleEntry = {
 	title: string;
 	startTime: Date;
 	url: string;
+	// キーワード検索でヒットした場合のみ設定（登録配信者ブロックでは配信者名を別で表示するため不要）。
+	channelName?: string;
+	channelId?: string;
 };
 
 async function getTwitchAppToken(clientId: string, clientSecret: string): Promise<string | null> {
@@ -100,6 +103,49 @@ export async function fetchYoutubeUpcoming(channelId: string): Promise<ScheduleE
 			}) => ({
 				platform: 'youtube' as const,
 				title: item.snippet.title,
+				startTime: new Date(item.liveStreamingDetails?.scheduledStartTime ?? item.snippet.publishedAt),
+				url: `https://www.youtube.com/watch?v=${item.id}`,
+			})
+		);
+	} catch {
+		return [];
+	}
+}
+
+// キーワードで、登録配信者に限らず広くYouTubeの予約配信を検索する（2026/08/30追加）。
+// 精度は完全ではない（無関係な動画が混ざる可能性がある）前提で、補助的な一覧として使う。
+export async function fetchYoutubeUpcomingByKeyword(
+	keyword: string,
+	maxResults = 10
+): Promise<ScheduleEntry[]> {
+	const apiKey = import.meta.env.YOUTUBE_API_KEY;
+	if (!apiKey) return [];
+
+	try {
+		const searchUrl = `https://www.googleapis.com/youtube/v3/search?key=${apiKey}&q=${encodeURIComponent(keyword)}&type=video&eventType=upcoming&order=date&part=id&maxResults=${maxResults}`;
+		const searchRes = await fetch(searchUrl);
+		if (!searchRes.ok) return [];
+		const searchData = await searchRes.json();
+		const videoIds = (searchData.items ?? [])
+			.map((item: { id: { videoId?: string } }) => item.id.videoId)
+			.filter((id: string | undefined): id is string => Boolean(id));
+		if (videoIds.length === 0) return [];
+
+		const videosUrl = `https://www.googleapis.com/youtube/v3/videos?key=${apiKey}&id=${videoIds.join(',')}&part=snippet,liveStreamingDetails`;
+		const videosRes = await fetch(videosUrl);
+		if (!videosRes.ok) return [];
+		const videosData = await videosRes.json();
+
+		return (videosData.items ?? []).map(
+			(item: {
+				id: string;
+				snippet: { title: string; channelId: string; channelTitle: string; publishedAt: string };
+				liveStreamingDetails?: { scheduledStartTime?: string };
+			}) => ({
+				platform: 'youtube' as const,
+				title: item.snippet.title,
+				channelName: item.snippet.channelTitle,
+				channelId: item.snippet.channelId,
 				startTime: new Date(item.liveStreamingDetails?.scheduledStartTime ?? item.snippet.publishedAt),
 				url: `https://www.youtube.com/watch?v=${item.id}`,
 			})
