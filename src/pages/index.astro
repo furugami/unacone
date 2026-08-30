@@ -28,7 +28,7 @@ const latestArticles = (await getCollection('articles'))
 	<section class="tier-section">
 		<div class="section-header">
 			<h2>現在のTier表</h2>
-			<a href={withBase('/pokemon/')}>図鑑をもっと見る →</a>
+			<a href={withBase('/pokemon/')}>一覧をもっと見る →</a>
 		</div>
 		{
 			tierRows.length > 0 ? (
@@ -79,7 +79,7 @@ const latestArticles = (await getCollection('articles'))
 	</section>
 
 	<section class="pokemon-cta">
-		<a class="cta-button" href={withBase('/pokemon/')}>ポケモン図鑑を見る →</a>
+		<a class="cta-button" href={withBase('/pokemon/')}>ポケモン一覧を見る →</a>
 	</section>
 </Layout>
 

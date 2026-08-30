@@ -7,14 +7,31 @@ import { ROLE_LABELS, ROLE_COLOR_VARS, ATTACK_TYPE_LABELS } from '../../lib/poke
 import { withBase } from '../../lib/url';
 
 const pokemonList = await getCollection('pokemon-jp');
+
+const roleFilters = Object.keys(ROLE_LABELS) as (keyof typeof ROLE_LABELS)[];
 ---
 
-<Layout title="図鑑">
-	<h1>ポケモン図鑑</h1>
+<Layout title="ポケモン一覧">
+	<h1>ポケモン一覧</h1>
+	<div class="role-filter" role="group" aria-label="タイプで絞り込み">
+		<button type="button" class="filter-btn is-active" data-filter="all">すべて</button>
+		{
+			roleFilters.map((role) => (
+				<button
+					type="button"
+					class="filter-btn"
+					data-filter={role}
+					style={`--filter-color: var(${ROLE_COLOR_VARS[role]})`}
+				>
+					{ROLE_LABELS[role]}
+				</button>
+			))
+		}
+	</div>
 	<ul class="pokemon-grid">
 		{
 			pokemonList.map((p) => (
-				<li>
+				<li data-role={p.data.role}>
 					<a href={withBase(`/pokemon/${p.data.slug}/`)}>
 						{p.data.icon && <img src={p.data.icon} alt="" class="icon" />}
 						<span class="badges">
@@ -34,9 +51,67 @@ const pokemonList = await getCollection('pokemon-jp');
 			))
 		}
 	</ul>
+	<p class="no-results" hidden>該当するポケモンがいません。</p>
 </Layout>
 
+<script>
+	const buttons = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+	const items = document.querySelectorAll<HTMLLIElement>('.pokemon-grid > li');
+	const noResults = document.querySelector<HTMLParagraphElement>('.no-results');
+
+	buttons.forEach((button) => {
+		button.addEventListener('click', () => {
+			buttons.forEach((b) => b.classList.remove('is-active'));
+			button.classList.add('is-active');
+
+			const filter = button.dataset.filter;
+			let visibleCount = 0;
+			items.forEach((item) => {
+				const matches = filter === 'all' || item.dataset.role === filter;
+				item.hidden = !matches;
+				if (matches) visibleCount++;
+			});
+			if (noResults) noResults.hidden = visibleCount > 0;
+		});
+	});
+</script>
+
 <style>
+	.role-filter {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+		margin-top: 16px;
+	}
+
+	.filter-btn {
+		--filter-color: var(--ink-soft);
+		font-family: var(--font-body);
+		font-weight: 700;
+		font-size: 0.85rem;
+		padding: 6px 16px;
+		border-radius: 999px;
+		border: 1.5px solid var(--filter-color);
+		background: var(--surface);
+		color: var(--filter-color);
+		cursor: pointer;
+		transition: transform 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+	}
+
+	.filter-btn:hover {
+		transform: translateY(-2px);
+	}
+
+	.filter-btn.is-active {
+		background: var(--filter-color);
+		color: #fff;
+	}
+
+	.no-results {
+		margin-top: 24px;
+		color: var(--ink-soft);
+	}
+
 	.pokemon-grid {
 		list-style: none;
 		margin: 24px 0 0;
