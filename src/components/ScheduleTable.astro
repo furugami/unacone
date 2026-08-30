@@ -10,10 +10,17 @@ interface Props {
 
 const { entries, showChannelName = false } = Astro.props;
 
+// ビルドサーバーのタイムゾーン（本番のGitHub ActionsはUTC）に依存しないよう、
+// 常に日本時間（Asia/Tokyo）で明示的にフォーマットする。
 const dateLabel = (d: Date) =>
-	d.toLocaleDateString('ja-JP', { month: 'numeric', day: 'numeric', weekday: 'short' });
+	d.toLocaleDateString('ja-JP', {
+		month: 'numeric',
+		day: 'numeric',
+		weekday: 'short',
+		timeZone: 'Asia/Tokyo',
+	});
 const timeLabel = (d: Date) =>
-	d.toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' });
+	d.toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Tokyo' });
 
 // 日付ごとにグループ化（entriesは呼び出し側で時系列ソート済みの前提）
 const groups: { date: string; items: ScheduleEntry[] }[] = [];
@@ -40,11 +47,15 @@ for (const entry of entries) {
 							</td>
 						)}
 						<td class="time-cell">{timeLabel(entry.startTime)}</td>
+						{showChannelName && (
+							<td class="channel-cell">
+								<a href={entry.url} target="_blank" rel="noopener noreferrer">
+									{entry.channelName}
+								</a>
+							</td>
+						)}
 						<td class="title-cell">
 							<a href={entry.url} target="_blank" rel="noopener noreferrer">
-								{showChannelName && entry.channelName && (
-									<span class="channel-name">{entry.channelName}</span>
-								)}
 								<span class="entry-title">{entry.title}</span>
 								<span class={`platform-badge platform-${entry.platform}`}>
 									{entry.platform === 'twitch' ? 'Twitch' : 'YouTube'}
@@ -104,16 +115,22 @@ for (const entry of entries) {
 		text-decoration: underline;
 	}
 
-	.channel-name {
-		flex-shrink: 0;
-		color: var(--ink-soft);
-		font-size: 0.85rem;
+	.channel-cell {
+		width: 140px;
 	}
 
-	.channel-name::after {
-		content: '｜';
-		margin-left: 8px;
-		color: #e5e9f2;
+	.channel-cell a {
+		display: block;
+		color: var(--ink-soft);
+		font-size: 0.85rem;
+		text-decoration: none;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.channel-cell a:hover {
+		text-decoration: underline;
 	}
 
 	.entry-title {
