@@ -238,6 +238,28 @@ collections:
       - { label: "名前", name: "name_ja", widget: "string" }
       - { label: "アイコン（任意）", name: "icon", widget: "image", required: false }
       - { label: "要約（一覧に表示）", name: "summary", widget: "text" }
+      - label: "ステータス上昇（任意、複数追加可）"
+        name: "stat_boosts"
+        widget: "list"
+        required: false
+        fields:
+          - label: "ステータス"
+            name: "stat"
+            widget: "select"
+            options:
+              - { label: "攻撃", value: "attack" }
+              - { label: "通常攻撃の速さ", value: "attack_speed" }
+              - { label: "急所率", value: "critical_hit_rate" }
+              - { label: "HP", value: "hp" }
+              - { label: "特攻", value: "sp_attack" }
+              - { label: "急所ダメージ増加", value: "critical_hit_damage" }
+              - { label: "わざの待ち時間", value: "cooldown_reduction" }
+              - { label: "特防", value: "sp_defense" }
+              - { label: "ユナイトわざゲージの溜まりやすさ", value: "unite_gauge_charge" }
+              - { label: "移動速度", value: "movement_speed" }
+              - { label: "防御", value: "defense" }
+              - { label: "HP回復", value: "hp_recovery" }
+          - { label: "数値", name: "value", widget: "number" }
       - { label: "効果の説明（本文）", name: "body", widget: "markdown" }
 
   - name: "battle-items"

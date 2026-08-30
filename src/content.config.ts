@@ -95,8 +95,7 @@ const streamers = defineCollection({
   }),
 });
 
-// もちもの（Held Items）図鑑。数値の精密な再現はせず、文章ベースの説明のみ（Phase 2でステータス
-// 計算機を検討する際に数値フィールドを追加する可能性あり）
+// もちもの（Held Items）図鑑。
 // 参照: CLAUDE-3.md「もちもの／バトルアイテム／メダル 図鑑」
 const heldItems = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/held-items' }),
@@ -105,6 +104,29 @@ const heldItems = defineCollection({
     name_ja: z.string(),
     icon: z.string().optional(),
     summary: z.string(),
+    // ステータス上昇（複数選択可）。項目名はコード内固定辞書（src/lib/stats.ts）で管理。
+    // 2026/08/30追加。
+    stat_boosts: z
+      .array(
+        z.object({
+          stat: z.enum([
+            'attack',
+            'attack_speed',
+            'critical_hit_rate',
+            'hp',
+            'sp_attack',
+            'critical_hit_damage',
+            'cooldown_reduction',
+            'sp_defense',
+            'unite_gauge_charge',
+            'movement_speed',
+            'defense',
+            'hp_recovery',
+          ]),
+          value: z.number(),
+        })
+      )
+      .optional(),
   }),
 });
 

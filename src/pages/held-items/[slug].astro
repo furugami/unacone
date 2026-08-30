@@ -3,6 +3,7 @@
 import Layout from '../../layouts/Layout.astro';
 import { getCollection, render } from 'astro:content';
 import { withBase } from '../../lib/url';
+import { STAT_LABELS } from '../../lib/stats';
 
 export async function getStaticPaths() {
 	const heldItems = await getCollection('held-items');
@@ -14,7 +15,7 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
-const { name_ja, summary, icon } = entry.data;
+const { name_ja, summary, icon, stat_boosts } = entry.data;
 ---
 
 <Layout title={name_ja}>
@@ -25,6 +26,20 @@ const { name_ja, summary, icon } = entry.data;
 			<p class="summary">{summary}</p>
 		</div>
 	</header>
+	{
+		stat_boosts && stat_boosts.length > 0 && (
+			<div class="stats-section">
+				<h2>ステータス上昇</h2>
+				<div class="stat-chips">
+					{stat_boosts.map((boost) => (
+						<span class="stat-chip">
+							{STAT_LABELS[boost.stat]} +{boost.value}
+						</span>
+					))}
+				</div>
+			</div>
+		)
+	}
 	<div class="body">
 		<Content />
 	</div>
@@ -56,5 +71,37 @@ const { name_ja, summary, icon } = entry.data;
 		box-shadow: 0 2px 8px rgba(27, 34, 51, 0.06);
 		padding: 24px;
 		line-height: 1.8;
+	}
+
+	.stats-section {
+		margin-top: 16px;
+		background: var(--surface);
+		border: 1.5px solid #e5e9f2;
+		border-radius: var(--radius);
+		box-shadow: 0 2px 8px rgba(27, 34, 51, 0.06);
+		padding: 24px;
+	}
+
+	.stats-section h2 {
+		margin: 0 0 16px;
+	}
+
+	.stat-chips {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+	}
+
+	.stat-chip {
+		display: inline-flex;
+		align-items: center;
+		padding: 4px 12px;
+		border-radius: 999px;
+		background: color-mix(in srgb, var(--blue) 10%, white);
+		border: 1.5px solid color-mix(in srgb, var(--blue) 30%, white);
+		color: var(--blue);
+		font-weight: 700;
+		font-size: 0.9rem;
+		font-family: var(--font-number);
 	}
 </style>
