@@ -14,6 +14,7 @@ export type ScheduleEntry = {
 	// キーワード検索でヒットした場合のみ設定（登録配信者ブロックでは配信者名を別で表示するため不要）。
 	channelName?: string;
 	channelId?: string;
+	channelIcon?: string;
 };
 
 // 配信タイトルのキーワードから「参加型」「ソロラン」を判定してタグ付けする。
@@ -154,25 +155,43 @@ export async function fetchYoutubeUpcomingByKeyword(
 		if (!videosRes.ok) return [];
 		const videosData = await videosRes.json();
 
-		return (videosData.items ?? [])
-			.filter(
-				(item: { liveStreamingDetails?: { scheduledStartTime?: string } }) =>
-					item.liveStreamingDetails?.scheduledStartTime
-			)
-			.map(
-				(item: {
-					id: string;
-					snippet: { title: string; channelId: string; channelTitle: string };
-					liveStreamingDetails: { scheduledStartTime: string };
-				}) => ({
-					platform: 'youtube' as const,
-					title: item.snippet.title,
-					channelName: item.snippet.channelTitle,
-					channelId: item.snippet.channelId,
-					startTime: new Date(item.liveStreamingDetails.scheduledStartTime),
-					url: `https://www.youtube.com/watch?v=${item.id}`,
-				})
-			);
+		const items = (videosData.items ?? []).filter(
+			(item: { liveStreamingDetails?: { scheduledStartTime?: string } }) =>
+				item.liveStreamingDetails?.scheduledStartTime
+		);
+
+		// チャンネルアイコンをまとめて取得（重複除去して1回のAPI呼び出しに集約）。
+		const uniqueChannelIds = [
+			...new Set(items.map((item: { snippet: { channelId: string } }) => item.snippet.channelId)),
+		];
+		const channelIcons = new Map<string, string>();
+		if (uniqueChannelIds.length > 0) {
+			const channelsUrl = `https://www.googleapis.com/youtube/v3/channels?key=${apiKey}&id=${uniqueChannelIds.join(',')}&part=snippet`;
+			const channelsRes = await fetch(channelsUrl);
+			if (channelsRes.ok) {
+				const channelsData = await channelsRes.json();
+				for (const channel of channelsData.items ?? []) {
+					const iconUrl = channel.snippet?.thumbnails?.default?.url;
+					if (iconUrl) channelIcons.set(channel.id, iconUrl);
+				}
+			}
+		}
+
+		return items.map(
+			(item: {
+				id: string;
+				snippet: { title: string; channelId: string; channelTitle: string };
+				liveStreamingDetails: { scheduledStartTime: string };
+			}) => ({
+				platform: 'youtube' as const,
+				title: item.snippet.title,
+				channelName: item.snippet.channelTitle,
+				channelId: item.snippet.channelId,
+				channelIcon: channelIcons.get(item.snippet.channelId),
+				startTime: new Date(item.liveStreamingDetails.scheduledStartTime),
+				url: `https://www.youtube.com/watch?v=${item.id}`,
+			})
+		);
 	} catch {
 		return [];
 	}
