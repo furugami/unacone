@@ -1,13 +1,23 @@
 name: Deploy to GitHub Pages
 
-# main へのpush、または手動実行（Actionsタブの "Run workflow" ボタン）でビルド＆デプロイする。
+# main へのpush、手動実行（Actionsタブの "Run workflow" ボタン）、
+# および30分おきのcronでビルド＆デプロイする。
 # 配信スケジュール用のAPIキー（Twitch/YouTube）は未設定でもビルドは失敗しない
 # （src/lib/schedule.ts がフォールバックする。CLAUDE-3.md参照）。
-# 数時間おきの自動再ビルド（cronトリガー）は、実際のAPIキーを設定してから追加する予定。
+#
+# cron間隔（30分）の根拠: YouTube Data API v3のキーワード検索
+# （fetchYoutubeUpcomingByKeyword、個別配信者検索は使わない前提）は1回のビルドで
+# 最大102ユニット消費（search.list 100 + videos.list 1 + channels.list 1）。
+# 無料枠は1日10,000ユニット。30分間隔＝48回/日で4,896ユニット（約49%）に抑え、
+# CMS編集によるpush起因ビルドやquotaリセット境界のズレ（太平洋時間基準）の
+# 安全マージンを残している。個別配信者検索を有効化する場合は消費ユニットが
+# 増えるため、間隔の再計算が必要（詳細はCLAUDE-4.md/CLAUDE-5.md参照）。
 on:
   push:
     branches: [main]
   workflow_dispatch:
+  schedule:
+    - cron: '*/30 * * * *'
 
 permissions:
   contents: read
