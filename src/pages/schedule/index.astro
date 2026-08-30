@@ -59,9 +59,6 @@ const discoveredEntries = (await fetchYoutubeUpcomingByKeyword('ポケモンユ�
 								{entries.map((entry) => (
 									<li>
 										<a href={entry.url} target="_blank" rel="noopener noreferrer">
-											<span class={`platform-badge platform-${entry.platform}`}>
-												{entry.platform === 'twitch' ? 'Twitch' : 'YouTube'}
-											</span>
 											<span class="datetime">
 												{entry.startTime.toLocaleString('ja-JP', {
 													month: 'numeric',
@@ -72,6 +69,9 @@ const discoveredEntries = (await fetchYoutubeUpcomingByKeyword('ポケモンユ�
 												})}
 											</span>
 											<span class="entry-title">{entry.title}</span>
+											<span class={`platform-badge platform-${entry.platform}`}>
+												{entry.platform === 'twitch' ? 'Twitch' : 'YouTube'}
+											</span>
 										</a>
 									</li>
 								))}
@@ -98,7 +98,6 @@ const discoveredEntries = (await fetchYoutubeUpcomingByKeyword('ポケモンユ�
 					{discoveredEntries.map((entry) => (
 						<li>
 							<a href={entry.url} target="_blank" rel="noopener noreferrer">
-								<span class="platform-badge platform-youtube">YouTube</span>
 								<span class="datetime">
 									{entry.startTime.toLocaleString('ja-JP', {
 										month: 'numeric',
@@ -111,6 +110,7 @@ const discoveredEntries = (await fetchYoutubeUpcomingByKeyword('ポケモンユ�
 								<span class="entry-title">
 									{entry.channelName} - {entry.title}
 								</span>
+								<span class="platform-badge platform-youtube">YouTube</span>
 							</a>
 						</li>
 					))}

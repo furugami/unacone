@@ -95,18 +95,23 @@ export async function fetchYoutubeUpcoming(channelId: string): Promise<ScheduleE
 		if (!videosRes.ok) return [];
 		const videosData = await videosRes.json();
 
-		return (videosData.items ?? []).map(
-			(item: {
-				id: string;
-				snippet: { title: string; publishedAt: string };
-				liveStreamingDetails?: { scheduledStartTime?: string };
-			}) => ({
-				platform: 'youtube' as const,
-				title: item.snippet.title,
-				startTime: new Date(item.liveStreamingDetails?.scheduledStartTime ?? item.snippet.publishedAt),
-				url: `https://www.youtube.com/watch?v=${item.id}`,
-			})
-		);
+		return (videosData.items ?? [])
+			.filter(
+				(item: { liveStreamingDetails?: { scheduledStartTime?: string } }) =>
+					item.liveStreamingDetails?.scheduledStartTime
+			)
+			.map(
+				(item: {
+					id: string;
+					snippet: { title: string };
+					liveStreamingDetails: { scheduledStartTime: string };
+				}) => ({
+					platform: 'youtube' as const,
+					title: item.snippet.title,
+					startTime: new Date(item.liveStreamingDetails.scheduledStartTime),
+					url: `https://www.youtube.com/watch?v=${item.id}`,
+				})
+			);
 	} catch {
 		return [];
 	}
@@ -136,20 +141,25 @@ export async function fetchYoutubeUpcomingByKeyword(
 		if (!videosRes.ok) return [];
 		const videosData = await videosRes.json();
 
-		return (videosData.items ?? []).map(
-			(item: {
-				id: string;
-				snippet: { title: string; channelId: string; channelTitle: string; publishedAt: string };
-				liveStreamingDetails?: { scheduledStartTime?: string };
-			}) => ({
-				platform: 'youtube' as const,
-				title: item.snippet.title,
-				channelName: item.snippet.channelTitle,
-				channelId: item.snippet.channelId,
-				startTime: new Date(item.liveStreamingDetails?.scheduledStartTime ?? item.snippet.publishedAt),
-				url: `https://www.youtube.com/watch?v=${item.id}`,
-			})
-		);
+		return (videosData.items ?? [])
+			.filter(
+				(item: { liveStreamingDetails?: { scheduledStartTime?: string } }) =>
+					item.liveStreamingDetails?.scheduledStartTime
+			)
+			.map(
+				(item: {
+					id: string;
+					snippet: { title: string; channelId: string; channelTitle: string };
+					liveStreamingDetails: { scheduledStartTime: string };
+				}) => ({
+					platform: 'youtube' as const,
+					title: item.snippet.title,
+					channelName: item.snippet.channelTitle,
+					channelId: item.snippet.channelId,
+					startTime: new Date(item.liveStreamingDetails.scheduledStartTime),
+					url: `https://www.youtube.com/watch?v=${item.id}`,
+				})
+			);
 	} catch {
 		return [];
 	}
