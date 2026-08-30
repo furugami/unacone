@@ -1,7 +1,7 @@
 ---
 // 配信予定の表組み表示。左列に日付（同じ日はセル結合）、右側に時間・タイトル・プラットフォームを
 // 行ごとに並べる。行・列とも罫線で区切る。/schedule/ の配信者ブロック・広域検索セクション両方で使う。
-import type { ScheduleEntry } from '../lib/schedule';
+import { detectStreamTags, type ScheduleEntry } from '../lib/schedule';
 
 interface Props {
 	entries: ScheduleEntry[];
@@ -60,6 +60,9 @@ for (const entry of entries) {
 								<span class={`platform-badge platform-${entry.platform}`}>
 									{entry.platform === 'twitch' ? 'Twitch' : 'YouTube'}
 								</span>
+								{detectStreamTags(entry.title).map((tag) => (
+									<span class="field-label">{tag}</span>
+								))}
 							</a>
 						</td>
 					</tr>

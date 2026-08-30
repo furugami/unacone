@@ -16,6 +16,19 @@ export type ScheduleEntry = {
 	channelId?: string;
 };
 
+// 配信タイトルのキーワードから「参加型」「ソロラン」を判定してタグ付けする。
+// 精度100%は狙わず、キーワードに合致しない場合はタグなしとする（2026/08/30追加）。
+const STREAM_TAG_KEYWORDS: Record<string, string[]> = {
+	参加型: ['参加型', '視聴者参加型'],
+	ソロラン: ['ソロラン', 'ソロランクマ'],
+};
+
+export function detectStreamTags(title: string): string[] {
+	return Object.entries(STREAM_TAG_KEYWORDS)
+		.filter(([, keywords]) => keywords.some((keyword) => title.includes(keyword)))
+		.map(([tag]) => tag);
+}
+
 async function getTwitchAppToken(clientId: string, clientSecret: string): Promise<string | null> {
 	try {
 		const res = await fetch('https://id.twitch.tv/oauth2/token', {
