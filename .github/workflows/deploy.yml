@@ -1,26 +1,27 @@
 name: Deploy to GitHub Pages
 
 # main へのpush、手動実行（Actionsタブの "Run workflow" ボタン）、
-# および30分おきのcronでビルド＆デプロイする。
+# および2時間おきのcronでビルド＆デプロイする。
 # 配信スケジュール用のAPIキー（Twitch/YouTube）は未設定でもビルドは失敗しない
 # （src/lib/schedule.ts がフォールバックする。CLAUDE-3.md参照）。
 #
-# cron間隔（60分、2026/08/31改訂）の根拠:
-# 当初は「1日10,000ユニット」の枠だけで試算し30分間隔にしていたが、実際には
-# YouTube Data API v3のsearch.listには単位コストとは別枠で「1日100回」という
-# 呼び出し回数そのものの上限があり、これを見落としていた（2026/08/31、
-# 本番のquotaExceededで発覚。詳細はCLAUDE-5.md/CLAUDE-6.md参照）。
-# LIVE機能追加後は1回のビルドでsearch.listを2回（予約配信用・配信中用）呼ぶため、
-# 30分間隔(48回/日)だけで最大96回とほぼ上限を使い切ってしまい、CMS編集等の
-# push起因ビルドが少し重なるだけで上限超過していた。
-# 60分間隔＝24回/日なら search.list消費は48回/日に収まり、push起因ビルド用の
-# 余裕を十分に残せる。
+# cron間隔（2時間、2026/08/31再改訂）の根拠:
+# YouTube Data API v3のsearch.listには単位コストの1万ユニット枠とは別に、
+# 「1日100回」という呼び出し回数そのものの上限がある（本番のquotaExceededで発覚。
+# 詳細はCLAUDE-5.md/CLAUDE-6.md参照）。LIVE機能により1回のビルドでsearch.listを
+# 2回（予約配信用・配信中用）呼ぶ。60分間隔（24回/日、search.list消費48回/日）に
+# 一度直したが、CMS編集等のpush起因ビルドが重なった日にまだ余裕が心許なかったため、
+# 運営者の希望でさらに安全側の2時間間隔（12回/日）に変更。
+# cron分のsearch.list消費は24回/日（上限100回の24%）に収まり、push起因ビルド用に
+# 1日あたり約76回ぶんの余裕を残せる。トレードオフとしてLIVE表示の最大ラグは
+# 目安30分→最大2時間程度に伸びる（CMS編集でのpushがあればその都度更新されるため、
+# 実際にはこれより早く反映されることが多い）。
 on:
   push:
     branches: [main]
   workflow_dispatch:
   schedule:
-    - cron: '0 * * * *'
+    - cron: '0 */2 * * *'
 
 permissions:
   contents: read
