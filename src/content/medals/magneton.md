@@ -1,6 +1,7 @@
 ---
 slug: magneton
 name_ja: レアコイル
+order: 82
 colors:
   - yellow
 ---

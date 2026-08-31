@@ -1,6 +1,7 @@
 ---
 slug: tentacool
 name_ja: メノクラゲ
+order: 72
 colors:
   - blue
 ---

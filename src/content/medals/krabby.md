@@ -1,6 +1,7 @@
 ---
 slug: krabby
 name_ja: クラブ
+order: 98
 colors:
   - blue
 ---

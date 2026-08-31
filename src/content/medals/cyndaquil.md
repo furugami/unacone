@@ -1,6 +1,7 @@
 ---
 slug: cyndaquil
 name_ja: ヒノアラシ
+order: 155
 colors:
   - red
 ---

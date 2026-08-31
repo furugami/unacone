@@ -1,6 +1,7 @@
 ---
 slug: entei
 name_ja: エンテイ
+order: 244
 colors:
   - red
 ---

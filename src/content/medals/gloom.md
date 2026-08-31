@@ -1,6 +1,7 @@
 ---
 slug: gloom
 name_ja: クサイハナ
+order: 44
 colors:
   - green
 ---

@@ -1,6 +1,7 @@
 ---
 slug: moltres
 name_ja: ファイヤー
+order: 146
 pokemon_slug: moltres
 colors:
   - red

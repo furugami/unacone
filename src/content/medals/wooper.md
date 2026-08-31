@@ -1,6 +1,7 @@
 ---
 slug: wooper
 name_ja: ウパー
+order: 194
 colors:
   - blue
 ---

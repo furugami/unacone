@@ -1,6 +1,7 @@
 ---
 slug: unown
 name_ja: アンノーン
+order: 201
 colors:
   - purple
 ---

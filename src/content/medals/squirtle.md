@@ -1,6 +1,7 @@
 ---
 slug: squirtle
 name_ja: ゼニガメ
+order: 7
 colors:
   - blue
 ---

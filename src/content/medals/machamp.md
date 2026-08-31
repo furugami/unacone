@@ -1,6 +1,7 @@
 ---
 slug: machamp
 name_ja: カイリキー
+order: 68
 pokemon_slug: machamp
 colors:
   - brown

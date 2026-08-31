@@ -1,6 +1,7 @@
 ---
 slug: noctowl
 name_ja: ヨルノズク
+order: 164
 colors:
   - white
 ---

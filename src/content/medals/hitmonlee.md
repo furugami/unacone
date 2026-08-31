@@ -1,6 +1,7 @@
 ---
 slug: hitmonlee
 name_ja: サワムラー
+order: 106
 colors:
   - brown
 ---

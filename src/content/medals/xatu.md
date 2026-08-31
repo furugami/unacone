@@ -1,6 +1,7 @@
 ---
 slug: xatu
 name_ja: ネイティオ
+order: 178
 colors:
   - purple
   - white

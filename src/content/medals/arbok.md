@@ -1,6 +1,7 @@
 ---
 slug: arbok
 name_ja: アーボック
+order: 24
 colors:
   - black
 ---

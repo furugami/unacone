@@ -1,6 +1,7 @@
 ---
 slug: seadra
 name_ja: シードラ
+order: 117
 colors:
   - blue
 ---

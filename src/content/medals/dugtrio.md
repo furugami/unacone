@@ -1,6 +1,7 @@
 ---
 slug: dugtrio
 name_ja: ダグトリオ
+order: 51
 colors:
   - brown
 ---

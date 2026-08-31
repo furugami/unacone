@@ -1,6 +1,7 @@
 ---
 slug: bellossom
 name_ja: キレイハナ
+order: 182
 colors:
   - green
 ---

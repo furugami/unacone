@@ -1,6 +1,7 @@
 ---
 slug: zubat
 name_ja: ズバット
+order: 41
 colors:
   - black
 ---

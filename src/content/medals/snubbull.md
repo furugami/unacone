@@ -1,6 +1,7 @@
 ---
 slug: snubbull
 name_ja: ブルー
+order: 209
 colors:
   - pink
 ---

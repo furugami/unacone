@@ -1,6 +1,7 @@
 ---
 slug: wigglytuff
 name_ja: プクリン
+order: 40
 pokemon_slug: wigglytuff
 colors:
   - pink

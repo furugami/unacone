@@ -1,6 +1,7 @@
 ---
 slug: bellsprout
 name_ja: マダツボミ
+order: 69
 colors:
   - green
 ---

@@ -1,6 +1,7 @@
 ---
 slug: slugma
 name_ja: マグマッグ
+order: 218
 colors:
   - red
 ---

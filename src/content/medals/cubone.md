@@ -1,6 +1,7 @@
 ---
 slug: cubone
 name_ja: カラカラ
+order: 104
 colors:
   - brown
 ---

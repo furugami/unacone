@@ -1,6 +1,7 @@
 ---
 slug: ledian
 name_ja: レディアン
+order: 166
 colors:
   - green
 ---

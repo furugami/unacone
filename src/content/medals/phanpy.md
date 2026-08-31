@@ -1,6 +1,7 @@
 ---
 slug: phanpy
 name_ja: ゴマゾウ
+order: 231
 colors:
   - brown
 ---

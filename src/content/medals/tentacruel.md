@@ -1,6 +1,7 @@
 ---
 slug: tentacruel
 name_ja: ドククラゲ
+order: 73
 colors:
   - blue
   - black

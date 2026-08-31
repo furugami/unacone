@@ -1,6 +1,7 @@
 ---
 slug: totodile
 name_ja: ワニノコ
+order: 158
 colors:
   - blue
 ---

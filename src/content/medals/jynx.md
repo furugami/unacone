@@ -1,6 +1,7 @@
 ---
 slug: jynx
 name_ja: ルージュラ
+order: 124
 colors:
   - blue
   - purple

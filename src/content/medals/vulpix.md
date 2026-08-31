@@ -1,6 +1,7 @@
 ---
 slug: vulpix
 name_ja: ロコン
+order: 37
 colors:
   - red
 ---

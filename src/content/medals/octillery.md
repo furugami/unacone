@@ -1,6 +1,7 @@
 ---
 slug: octillery
 name_ja: オクタン
+order: 224
 colors:
   - blue
 ---

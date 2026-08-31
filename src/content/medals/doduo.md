@@ -1,6 +1,7 @@
 ---
 slug: doduo
 name_ja: ドードー
+order: 84
 colors:
   - white
 ---

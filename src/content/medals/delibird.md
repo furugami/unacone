@@ -1,6 +1,7 @@
 ---
 slug: delibird
 name_ja: デリバード
+order: 225
 colors:
   - white
   - blue

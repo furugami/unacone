@@ -1,6 +1,7 @@
 ---
 slug: aerodactyl
 name_ja: プテラ
+order: 142
 colors:
   - brown
   - white

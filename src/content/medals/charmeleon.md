@@ -1,6 +1,7 @@
 ---
 slug: charmeleon
 name_ja: リザード
+order: 5
 colors:
   - red
 ---

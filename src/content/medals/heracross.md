@@ -1,6 +1,7 @@
 ---
 slug: heracross
 name_ja: ヘラクロス
+order: 214
 colors:
   - brown
 ---

@@ -1,6 +1,7 @@
 ---
 slug: meowscarada
 name_ja: マスカーニャ
+order: 255
 pokemon_slug: meowscarada
 colors:
   - green

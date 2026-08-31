@@ -1,6 +1,7 @@
 ---
 slug: golduck
 name_ja: ゴルダック
+order: 55
 colors:
   - blue
 ---

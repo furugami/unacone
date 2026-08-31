@@ -1,6 +1,7 @@
 ---
 slug: rattata
 name_ja: コラッタ
+order: 19
 colors:
   - white
 ---

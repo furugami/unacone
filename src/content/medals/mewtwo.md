@@ -1,6 +1,7 @@
 ---
 slug: mewtwo
 name_ja: ミュウツー
+order: 151
 colors:
   - purple
 ---

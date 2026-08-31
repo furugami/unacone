@@ -1,6 +1,7 @@
 ---
 slug: nidoran-f
 name_ja: ニドラン♀
+order: 29
 colors:
   - purple
 ---

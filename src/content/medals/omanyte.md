@@ -1,6 +1,7 @@
 ---
 slug: omanyte
 name_ja: オムナイト
+order: 138
 colors:
   - brown
 ---

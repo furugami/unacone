@@ -1,6 +1,7 @@
 ---
 slug: sandslash
 name_ja: サンドパン
+order: 28
 colors:
   - brown
 ---

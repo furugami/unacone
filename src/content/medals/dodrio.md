@@ -1,6 +1,7 @@
 ---
 slug: dodrio
 name_ja: ドードリオ
+order: 85
 pokemon_slug: dodrio
 colors:
   - white

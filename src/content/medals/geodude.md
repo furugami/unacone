@@ -1,6 +1,7 @@
 ---
 slug: geodude
 name_ja: イシツブテ
+order: 74
 colors:
   - brown
 ---

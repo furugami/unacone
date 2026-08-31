@@ -1,6 +1,7 @@
 ---
 slug: nidoqueen
 name_ja: ニドクイン
+order: 31
 colors:
   - purple
   - brown

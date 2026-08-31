@@ -1,6 +1,7 @@
 ---
 slug: girafarig
 name_ja: キリンリキ
+order: 203
 colors:
   - purple
 ---

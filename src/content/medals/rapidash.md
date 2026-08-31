@@ -1,6 +1,7 @@
 ---
 slug: rapidash
 name_ja: ギャロップ
+order: 78
 pokemon_slug: rapidash
 colors:
   - red

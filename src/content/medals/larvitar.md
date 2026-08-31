@@ -1,6 +1,7 @@
 ---
 slug: larvitar
 name_ja: ヨーギラス
+order: 246
 colors:
   - brown
 ---

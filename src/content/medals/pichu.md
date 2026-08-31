@@ -1,6 +1,7 @@
 ---
 slug: pichu
 name_ja: ピチュー
+order: 172
 colors:
   - yellow
 ---

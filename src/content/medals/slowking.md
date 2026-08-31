@@ -1,6 +1,7 @@
 ---
 slug: slowking
 name_ja: ヤドキング
+order: 199
 colors:
   - blue
   - purple

@@ -1,6 +1,7 @@
 ---
 slug: rhydon
 name_ja: サイドン
+order: 112
 colors:
   - brown
 ---

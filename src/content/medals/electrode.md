@@ -1,6 +1,7 @@
 ---
 slug: electrode
 name_ja: マルマイン
+order: 101
 colors:
   - yellow
 ---

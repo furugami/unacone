@@ -1,6 +1,7 @@
 ---
 slug: pidgeotto
 name_ja: ピジョン
+order: 17
 colors:
   - white
 ---

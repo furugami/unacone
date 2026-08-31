@@ -1,6 +1,7 @@
 ---
 slug: remoraid
 name_ja: テッポウオ
+order: 223
 colors:
   - blue
 ---

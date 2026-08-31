@@ -1,6 +1,7 @@
 ---
 slug: zacian
 name_ja: ザシアン
+order: 252
 pokemon_slug: zacian
 colors:
   - gray

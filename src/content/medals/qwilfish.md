@@ -1,6 +1,7 @@
 ---
 slug: qwilfish
 name_ja: ハリーセン
+order: 211
 colors:
   - black
 ---

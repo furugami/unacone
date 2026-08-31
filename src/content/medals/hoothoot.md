@@ -1,6 +1,7 @@
 ---
 slug: hoothoot
 name_ja: ホーホー
+order: 163
 colors:
   - white
 ---

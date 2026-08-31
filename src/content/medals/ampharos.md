@@ -1,6 +1,7 @@
 ---
 slug: ampharos
 name_ja: デンリュウ
+order: 181
 colors:
   - yellow
 ---

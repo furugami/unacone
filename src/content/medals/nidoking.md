@@ -1,6 +1,7 @@
 ---
 slug: nidoking
 name_ja: ニドキング
+order: 34
 colors:
   - purple
   - brown

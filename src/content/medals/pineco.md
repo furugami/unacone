@@ -1,6 +1,7 @@
 ---
 slug: pineco
 name_ja: クヌギダマ
+order: 204
 colors:
   - green
 ---

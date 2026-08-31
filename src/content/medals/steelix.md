@@ -1,6 +1,7 @@
 ---
 slug: steelix
 name_ja: ハガネール
+order: 208
 colors:
   - gray
   - brown

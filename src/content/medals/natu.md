@@ -1,6 +1,7 @@
 ---
 slug: natu
 name_ja: ネイティ
+order: 177
 colors:
   - purple
 ---

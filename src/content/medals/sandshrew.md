@@ -1,6 +1,7 @@
 ---
 slug: sandshrew
 name_ja: サンド
+order: 27
 colors:
   - brown
 ---

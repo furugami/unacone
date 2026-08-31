@@ -1,6 +1,7 @@
 ---
 slug: victreebel
 name_ja: ウツボット
+order: 71
 colors:
   - green
   - black

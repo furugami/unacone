@@ -1,6 +1,7 @@
 ---
 slug: sentret
 name_ja: オタチ
+order: 161
 colors:
   - white
 ---

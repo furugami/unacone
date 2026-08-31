@@ -1,6 +1,7 @@
 ---
 slug: dratini
 name_ja: ミニリュウ
+order: 147
 colors:
   - navy
 ---

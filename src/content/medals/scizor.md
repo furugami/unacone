@@ -1,6 +1,7 @@
 ---
 slug: scizor
 name_ja: ハッサム
+order: 212
 pokemon_slug: scizor
 colors:
   - gray

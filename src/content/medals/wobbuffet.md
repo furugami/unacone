@@ -1,6 +1,7 @@
 ---
 slug: wobbuffet
 name_ja: ソーナンス
+order: 202
 colors:
   - purple
 ---

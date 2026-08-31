@@ -1,6 +1,7 @@
 ---
 slug: murkrow
 name_ja: ヤミカラス
+order: 198
 colors:
   - black
 ---

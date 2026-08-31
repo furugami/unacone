@@ -1,6 +1,7 @@
 ---
 slug: pidgeot
 name_ja: ピジョット
+order: 18
 colors:
   - white
 ---

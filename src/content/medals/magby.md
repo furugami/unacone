@@ -1,6 +1,7 @@
 ---
 slug: magby
 name_ja: ブビィ
+order: 240
 colors:
   - red
 ---

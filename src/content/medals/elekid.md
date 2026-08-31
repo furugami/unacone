@@ -1,6 +1,7 @@
 ---
 slug: elekid
 name_ja: エレキッド
+order: 239
 colors:
   - yellow
 ---

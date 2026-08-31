@@ -1,6 +1,7 @@
 ---
 slug: ivysaur
 name_ja: フシギソウ
+order: 2
 colors:
   - green
 ---

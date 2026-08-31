@@ -1,6 +1,7 @@
 ---
 slug: graveler
 name_ja: ゴローン
+order: 75
 colors:
   - brown
 ---

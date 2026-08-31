@@ -1,6 +1,7 @@
 ---
 slug: chikorita
 name_ja: チコリータ
+order: 152
 colors:
   - green
 ---

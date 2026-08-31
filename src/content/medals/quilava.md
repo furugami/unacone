@@ -1,6 +1,7 @@
 ---
 slug: quilava
 name_ja: マグマラシ
+order: 156
 colors:
   - red
 ---

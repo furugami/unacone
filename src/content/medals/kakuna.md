@@ -1,6 +1,7 @@
 ---
 slug: kakuna
 name_ja: コクーン
+order: 14
 colors:
   - green
 ---

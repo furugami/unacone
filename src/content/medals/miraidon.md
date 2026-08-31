@@ -1,6 +1,7 @@
 ---
 slug: miraidon
 name_ja: ミライドン
+order: 256
 pokemon_slug: miraidon
 colors:
   - yellow

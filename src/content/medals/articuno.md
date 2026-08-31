@@ -1,6 +1,7 @@
 ---
 slug: articuno
 name_ja: フリーザー
+order: 144
 pokemon_slug: articuno
 colors:
   - blue

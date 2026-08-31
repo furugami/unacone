@@ -1,6 +1,7 @@
 ---
 slug: weezing
 name_ja: マタドガス
+order: 110
 colors:
   - purple
 ---

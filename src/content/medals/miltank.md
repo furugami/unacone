@@ -1,6 +1,7 @@
 ---
 slug: miltank
 name_ja: ミルタンク
+order: 241
 colors:
   - white
 ---

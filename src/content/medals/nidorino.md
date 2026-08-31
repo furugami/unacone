@@ -1,6 +1,7 @@
 ---
 slug: nidorino
 name_ja: ニドリーノ
+order: 33
 colors:
   - purple
 ---

@@ -1,6 +1,7 @@
 ---
 slug: shellder
 name_ja: シェルダー
+order: 90
 colors:
   - blue
 ---

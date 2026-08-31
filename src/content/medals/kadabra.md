@@ -1,6 +1,7 @@
 ---
 slug: kadabra
 name_ja: ユンゲラー
+order: 64
 colors:
   - purple
 ---

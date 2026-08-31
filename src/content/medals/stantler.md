@@ -1,6 +1,7 @@
 ---
 slug: stantler
 name_ja: オドシシ
+order: 234
 colors:
   - white
 ---

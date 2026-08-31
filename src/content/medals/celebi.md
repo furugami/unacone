@@ -1,6 +1,7 @@
 ---
 slug: celebi
 name_ja: セレビィ
+order: 251
 colors:
   - green
   - purple

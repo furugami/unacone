@@ -1,6 +1,7 @@
 ---
 slug: gligar
 name_ja: グライガー
+order: 207
 colors:
   - brown
 ---

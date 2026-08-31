@@ -1,6 +1,7 @@
 ---
 slug: exeggutor
 name_ja: ナッシー
+order: 103
 colors:
   - green
   - purple

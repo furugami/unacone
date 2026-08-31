@@ -1,6 +1,7 @@
 ---
 slug: houndoom
 name_ja: ヘルガー
+order: 229
 colors:
   - black
   - red

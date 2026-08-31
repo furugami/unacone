@@ -1,6 +1,7 @@
 ---
 slug: dewgong
 name_ja: ジュゴン
+order: 87
 colors:
   - blue
 ---

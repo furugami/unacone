@@ -1,6 +1,7 @@
 ---
 slug: kangaskhan
 name_ja: ガルーラ
+order: 115
 colors:
   - white
 ---

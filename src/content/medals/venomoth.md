@@ -1,6 +1,7 @@
 ---
 slug: venomoth
 name_ja: モルフォン
+order: 49
 colors:
   - green
   - black

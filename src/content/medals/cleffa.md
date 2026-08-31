@@ -1,6 +1,7 @@
 ---
 slug: cleffa
 name_ja: ピィ
+order: 173
 colors:
   - pink
 ---

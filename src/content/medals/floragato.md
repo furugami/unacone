@@ -1,6 +1,7 @@
 ---
 slug: floragato
 name_ja: ニャローテ
+order: 254
 colors:
   - green
 ---

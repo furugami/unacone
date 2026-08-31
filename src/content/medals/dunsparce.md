@@ -1,6 +1,7 @@
 ---
 slug: dunsparce
 name_ja: ノコッチ
+order: 206
 colors:
   - white
 ---

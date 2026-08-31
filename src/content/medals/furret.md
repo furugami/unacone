@@ -1,6 +1,7 @@
 ---
 slug: furret
 name_ja: オオタチ
+order: 162
 colors:
   - white
 ---

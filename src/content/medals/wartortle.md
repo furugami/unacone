@@ -1,6 +1,7 @@
 ---
 slug: wartortle
 name_ja: カメール
+order: 8
 colors:
   - blue
 ---

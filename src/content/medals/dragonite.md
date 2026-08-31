@@ -1,6 +1,7 @@
 ---
 slug: dragonite
 name_ja: カイリュー
+order: 149
 pokemon_slug: dragonite
 colors:
   - navy

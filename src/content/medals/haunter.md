@@ -1,6 +1,7 @@
 ---
 slug: haunter
 name_ja: ゴースト
+order: 93
 colors:
   - purple
 ---

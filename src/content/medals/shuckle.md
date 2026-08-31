@@ -1,6 +1,7 @@
 ---
 slug: shuckle
 name_ja: ツボツボ
+order: 213
 colors:
   - brown
 ---

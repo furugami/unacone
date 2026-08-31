@@ -1,6 +1,7 @@
 ---
 slug: porygon2
 name_ja: ポリゴン２
+order: 233
 colors:
   - white
 ---

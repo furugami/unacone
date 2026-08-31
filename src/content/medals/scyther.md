@@ -1,6 +1,7 @@
 ---
 slug: scyther
 name_ja: ストライク
+order: 123
 pokemon_slug: scyther
 colors:
   - green

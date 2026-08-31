@@ -1,6 +1,7 @@
 ---
 slug: granbull
 name_ja: グランブル
+order: 210
 colors:
   - pink
 ---

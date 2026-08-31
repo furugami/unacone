@@ -1,6 +1,7 @@
 ---
 slug: lanturn
 name_ja: ランターン
+order: 171
 colors:
   - yellow
 ---

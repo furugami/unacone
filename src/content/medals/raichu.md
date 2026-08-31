@@ -1,6 +1,7 @@
 ---
 slug: raichu
 name_ja: ライチュウ
+order: 26
 pokemon_slug: raichu
 colors:
   - yellow

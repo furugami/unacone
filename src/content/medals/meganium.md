@@ -1,6 +1,7 @@
 ---
 slug: meganium
 name_ja: メガニウム
+order: 154
 pokemon_slug: meganium
 colors:
   - green

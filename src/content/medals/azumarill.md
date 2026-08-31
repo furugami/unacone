@@ -1,6 +1,7 @@
 ---
 slug: azumarill
 name_ja: マリルリ
+order: 184
 pokemon_slug: azumarill
 colors:
   - blue

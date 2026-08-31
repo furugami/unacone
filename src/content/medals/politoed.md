@@ -1,6 +1,7 @@
 ---
 slug: politoed
 name_ja: ニョロトノ
+order: 186
 colors:
   - blue
 ---

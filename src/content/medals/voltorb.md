@@ -1,6 +1,7 @@
 ---
 slug: voltorb
 name_ja: ビリリダマ
+order: 100
 colors:
   - yellow
 ---

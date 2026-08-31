@@ -1,6 +1,7 @@
 ---
 slug: tangela
 name_ja: モンジャラ
+order: 114
 colors:
   - green
 ---

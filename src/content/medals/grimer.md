@@ -1,6 +1,7 @@
 ---
 slug: grimer
 name_ja: ベトベター
+order: 88
 colors:
   - black
 ---

@@ -1,6 +1,7 @@
 ---
 slug: mankey
 name_ja: マンキー
+order: 56
 colors:
   - brown
 ---

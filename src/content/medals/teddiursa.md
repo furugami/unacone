@@ -1,6 +1,7 @@
 ---
 slug: teddiursa
 name_ja: ヒメグマ
+order: 216
 colors:
   - white
 ---

@@ -1,6 +1,7 @@
 ---
 slug: poliwrath
 name_ja: ニョロボン
+order: 62
 colors:
   - blue
   - brown

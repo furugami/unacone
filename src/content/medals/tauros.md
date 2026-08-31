@@ -1,6 +1,7 @@
 ---
 slug: tauros
 name_ja: ケンタロス
+order: 128
 colors:
   - white
 ---

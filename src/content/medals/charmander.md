@@ -1,6 +1,7 @@
 ---
 slug: charmander
 name_ja: ヒトカゲ
+order: 4
 colors:
   - red
 ---

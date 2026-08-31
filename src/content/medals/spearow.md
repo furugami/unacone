@@ -1,6 +1,7 @@
 ---
 slug: spearow
 name_ja: オニスズメ
+order: 21
 colors:
   - white
 ---

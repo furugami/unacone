@@ -1,6 +1,7 @@
 ---
 slug: skiploom
 name_ja: ポポッコ
+order: 188
 colors:
   - green
 ---

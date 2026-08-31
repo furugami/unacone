@@ -1,6 +1,7 @@
 ---
 slug: poliwhirl
 name_ja: ニョロゾ
+order: 61
 colors:
   - blue
 ---

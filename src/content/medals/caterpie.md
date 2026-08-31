@@ -1,6 +1,7 @@
 ---
 slug: caterpie
 name_ja: キャタピー
+order: 10
 colors:
   - green
 ---

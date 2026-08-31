@@ -1,6 +1,7 @@
 ---
 slug: hitmontop
 name_ja: カポエラー
+order: 237
 colors:
   - brown
 ---

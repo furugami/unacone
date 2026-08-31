@@ -1,6 +1,7 @@
 ---
 slug: farfetchd
 name_ja: カモネギ
+order: 83
 colors:
   - white
 ---

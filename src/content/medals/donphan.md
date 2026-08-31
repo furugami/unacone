@@ -1,6 +1,7 @@
 ---
 slug: donphan
 name_ja: ドンファン
+order: 232
 colors:
   - brown
 ---

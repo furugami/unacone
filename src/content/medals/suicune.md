@@ -1,6 +1,7 @@
 ---
 slug: suicune
 name_ja: スイクン
+order: 245
 pokemon_slug: suicune
 colors:
   - blue

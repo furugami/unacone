@@ -1,6 +1,7 @@
 ---
 slug: onix
 name_ja: イワーク
+order: 95
 colors:
   - brown
 ---

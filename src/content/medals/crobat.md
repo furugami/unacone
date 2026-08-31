@@ -1,6 +1,7 @@
 ---
 slug: crobat
 name_ja: クロバット
+order: 169
 colors:
   - black
 ---

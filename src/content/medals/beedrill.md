@@ -1,6 +1,7 @@
 ---
 slug: beedrill
 name_ja: スピアー
+order: 15
 colors:
   - green
   - black

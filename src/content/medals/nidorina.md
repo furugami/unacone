@@ -1,6 +1,7 @@
 ---
 slug: nidorina
 name_ja: ニドリーナ
+order: 30
 colors:
   - purple
 ---

@@ -367,6 +367,7 @@ collections:
       - { label: "対象ポケモンのスラッグ（任意）", name: "pokemon_slug", widget: "string", required: false }
       - { label: "アイコン（任意）", name: "icon", widget: "image", required: false }
       - { label: "要約（一覧に表示、任意）", name: "summary", widget: "text", required: false }
+      - { label: "表示順（一覧での並び順、数値が小さいほど先に表示。任意）", name: "order", widget: "number", value_type: "int", required: false }
       - label: "属性色（複数選択可、任意）"
         name: "colors"
         widget: "select"

@@ -1,6 +1,7 @@
 ---
 slug: misdreavus
 name_ja: ムウマ
+order: 200
 colors:
   - purple
 ---

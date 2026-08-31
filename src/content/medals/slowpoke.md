@@ -1,6 +1,7 @@
 ---
 slug: slowpoke
 name_ja: ヤドン
+order: 79
 colors:
   - blue
 ---

@@ -1,6 +1,7 @@
 ---
 slug: ponyta
 name_ja: ポニータ
+order: 77
 colors:
   - red
 ---

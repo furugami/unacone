@@ -1,6 +1,7 @@
 ---
 slug: magikarp
 name_ja: コイキング
+order: 129
 colors:
   - blue
 ---

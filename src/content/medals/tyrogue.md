@@ -1,6 +1,7 @@
 ---
 slug: tyrogue
 name_ja: バルキー
+order: 236
 colors:
   - brown
 ---

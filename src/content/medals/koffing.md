@@ -1,6 +1,7 @@
 ---
 slug: koffing
 name_ja: ドガース
+order: 109
 colors:
   - purple
 ---

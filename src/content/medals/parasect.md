@@ -1,6 +1,7 @@
 ---
 slug: parasect
 name_ja: パラセクト
+order: 47
 colors:
   - green
 ---

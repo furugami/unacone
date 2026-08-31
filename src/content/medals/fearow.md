@@ -1,6 +1,7 @@
 ---
 slug: fearow
 name_ja: オニドリル
+order: 22
 colors:
   - white
 ---

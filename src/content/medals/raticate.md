@@ -1,6 +1,7 @@
 ---
 slug: raticate
 name_ja: ラッタ
+order: 20
 colors:
   - white
 ---

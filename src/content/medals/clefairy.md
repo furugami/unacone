@@ -1,6 +1,7 @@
 ---
 slug: clefairy
 name_ja: ピッピ
+order: 35
 colors:
   - pink
 ---

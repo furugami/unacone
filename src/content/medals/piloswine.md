@@ -1,6 +1,7 @@
 ---
 slug: piloswine
 name_ja: イノムー
+order: 221
 colors:
   - blue
   - brown

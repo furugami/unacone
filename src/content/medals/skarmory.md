@@ -1,6 +1,7 @@
 ---
 slug: skarmory
 name_ja: エアームド
+order: 227
 colors:
   - gray
 ---

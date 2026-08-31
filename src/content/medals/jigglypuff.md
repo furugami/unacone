@@ -1,6 +1,7 @@
 ---
 slug: jigglypuff
 name_ja: プリン
+order: 39
 colors:
   - pink
 ---

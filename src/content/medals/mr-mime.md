@@ -1,6 +1,7 @@
 ---
 slug: mr-mime
 name_ja: バリヤード
+order: 122
 pokemon_slug: mr-mime
 colors:
   - purple

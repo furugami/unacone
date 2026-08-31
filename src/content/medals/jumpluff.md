@@ -1,6 +1,7 @@
 ---
 slug: jumpluff
 name_ja: ワタッコ
+order: 189
 colors:
   - green
   - white

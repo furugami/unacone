@@ -1,6 +1,7 @@
 ---
 slug: kingdra
 name_ja: キングドラ
+order: 230
 colors:
   - blue
   - navy

@@ -1,6 +1,7 @@
 ---
 slug: jolteon
 name_ja: サンダース
+order: 135
 colors:
   - yellow
 ---

@@ -1,6 +1,7 @@
 ---
 slug: sunkern
 name_ja: ヒマナッツ
+order: 191
 colors:
   - green
 ---

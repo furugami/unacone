@@ -1,6 +1,7 @@
 ---
 slug: flareon
 name_ja: ブースター
+order: 136
 colors:
   - red
 ---

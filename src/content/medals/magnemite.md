@@ -1,6 +1,7 @@
 ---
 slug: magnemite
 name_ja: コイル
+order: 81
 colors:
   - yellow
 ---

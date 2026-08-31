@@ -1,6 +1,7 @@
 ---
 slug: pupitar
 name_ja: サナギラス
+order: 247
 colors:
   - brown
 ---

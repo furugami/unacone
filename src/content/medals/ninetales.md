@@ -1,6 +1,7 @@
 ---
 slug: ninetales
 name_ja: キュウコン
+order: 38
 pokemon_slug: ninetales
 colors:
   - red

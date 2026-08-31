@@ -1,6 +1,7 @@
 ---
 slug: chansey
 name_ja: ラッキー
+order: 113
 colors:
   - white
 ---

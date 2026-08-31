@@ -1,6 +1,7 @@
 ---
 slug: exeggcute
 name_ja: タマタマ
+order: 102
 colors:
   - green
 ---

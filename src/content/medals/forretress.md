@@ -1,6 +1,7 @@
 ---
 slug: forretress
 name_ja: フォレトス
+order: 205
 colors:
   - gray
 ---

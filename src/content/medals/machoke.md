@@ -1,6 +1,7 @@
 ---
 slug: machoke
 name_ja: ゴーリキー
+order: 67
 colors:
   - brown
 ---

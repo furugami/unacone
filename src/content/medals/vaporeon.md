@@ -1,6 +1,7 @@
 ---
 slug: vaporeon
 name_ja: シャワーズ
+order: 134
 pokemon_slug: vaporeon
 colors:
   - blue

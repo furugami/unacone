@@ -1,6 +1,7 @@
 ---
 slug: umbreon
 name_ja: ブラッキー
+order: 197
 pokemon_slug: umbreon
 colors:
   - black

@@ -1,6 +1,7 @@
 ---
 slug: seaking
 name_ja: アズマオウ
+order: 119
 colors:
   - blue
 ---

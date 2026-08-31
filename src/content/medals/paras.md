@@ -1,6 +1,7 @@
 ---
 slug: paras
 name_ja: パラス
+order: 46
 colors:
   - green
 ---

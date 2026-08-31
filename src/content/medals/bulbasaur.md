@@ -1,6 +1,7 @@
 ---
 slug: bulbasaur
 name_ja: フシギダネ
+order: 1
 colors:
   - green
 ---

@@ -1,6 +1,7 @@
 ---
 slug: venusaur
 name_ja: フシギバナ
+order: 3
 pokemon_slug: venusaur
 colors:
   - green

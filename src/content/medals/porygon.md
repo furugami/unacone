@@ -1,6 +1,7 @@
 ---
 slug: porygon
 name_ja: ポリゴン
+order: 137
 colors:
   - white
 ---

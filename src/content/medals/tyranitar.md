@@ -1,6 +1,7 @@
 ---
 slug: tyranitar
 name_ja: バンギラス
+order: 248
 pokemon_slug: tyranitar
 colors:
   - brown

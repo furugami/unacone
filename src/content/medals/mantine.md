@@ -1,6 +1,7 @@
 ---
 slug: mantine
 name_ja: マンタイン
+order: 226
 colors:
   - white
   - blue

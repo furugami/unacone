@@ -1,6 +1,7 @@
 ---
 slug: flaaffy
 name_ja: モココ
+order: 180
 colors:
   - yellow
 ---

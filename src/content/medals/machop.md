@@ -1,6 +1,7 @@
 ---
 slug: machop
 name_ja: ワンリキー
+order: 66
 colors:
   - brown
 ---

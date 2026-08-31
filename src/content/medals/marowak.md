@@ -1,6 +1,7 @@
 ---
 slug: marowak
 name_ja: ガラガラ
+order: 105
 colors:
   - brown
 ---

@@ -1,6 +1,7 @@
 ---
 slug: sprigatito
 name_ja: ニャオハ
+order: 253
 colors:
   - green
 ---

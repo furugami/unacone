@@ -1,6 +1,7 @@
 ---
 slug: diglett
 name_ja: ディグダ
+order: 50
 colors:
   - brown
 ---

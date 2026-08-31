@@ -1,6 +1,7 @@
 ---
 slug: ariados
 name_ja: アリアドス
+order: 168
 colors:
   - black
 ---

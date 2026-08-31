@@ -1,6 +1,7 @@
 ---
 slug: charizard
 name_ja: リザードン
+order: 6
 pokemon_slug: charizard
 colors:
   - red

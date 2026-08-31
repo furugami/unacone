@@ -1,6 +1,7 @@
 ---
 slug: hypno
 name_ja: スリーパー
+order: 97
 colors:
   - purple
 ---

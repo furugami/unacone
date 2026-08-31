@@ -1,6 +1,7 @@
 ---
 slug: arcanine
 name_ja: ウィンディ
+order: 59
 colors:
   - red
 ---

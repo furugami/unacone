@@ -1,6 +1,7 @@
 ---
 slug: sunflora
 name_ja: キマワリ
+order: 192
 colors:
   - green
 ---

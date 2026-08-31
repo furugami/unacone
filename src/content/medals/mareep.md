@@ -1,6 +1,7 @@
 ---
 slug: mareep
 name_ja: メリープ
+order: 179
 colors:
   - yellow
 ---

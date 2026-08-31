@@ -1,6 +1,7 @@
 ---
 slug: sneasel
 name_ja: ニューラ
+order: 215
 colors:
   - black
 ---

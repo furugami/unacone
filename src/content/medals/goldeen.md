@@ -1,6 +1,7 @@
 ---
 slug: goldeen
 name_ja: トサキント
+order: 118
 colors:
   - blue
 ---

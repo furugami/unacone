@@ -1,6 +1,7 @@
 ---
 slug: gastly
 name_ja: ゴース
+order: 92
 colors:
   - purple
 ---

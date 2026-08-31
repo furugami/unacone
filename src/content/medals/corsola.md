@@ -1,6 +1,7 @@
 ---
 slug: corsola
 name_ja: サニーゴ
+order: 222
 colors:
   - blue
 ---

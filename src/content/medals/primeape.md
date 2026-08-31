@@ -1,6 +1,7 @@
 ---
 slug: primeape
 name_ja: オコリザル
+order: 57
 colors:
   - brown
 ---

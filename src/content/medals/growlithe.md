@@ -1,6 +1,7 @@
 ---
 slug: growlithe
 name_ja: ガーディ
+order: 58
 colors:
   - red
 ---

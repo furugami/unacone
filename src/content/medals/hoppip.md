@@ -1,6 +1,7 @@
 ---
 slug: hoppip
 name_ja: ハネッコ
+order: 187
 colors:
   - green
 ---

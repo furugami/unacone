@@ -1,6 +1,7 @@
 ---
 slug: butterfree
 name_ja: バタフリー
+order: 12
 colors:
   - green
   - white

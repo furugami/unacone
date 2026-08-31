@@ -1,6 +1,7 @@
 ---
 slug: lickitung
 name_ja: ベロリンガ
+order: 108
 colors:
   - white
 ---

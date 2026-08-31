@@ -1,6 +1,7 @@
 ---
 slug: golem
 name_ja: ゴローニャ
+order: 76
 colors:
   - brown
 ---

@@ -1,6 +1,7 @@
 ---
 slug: persian
 name_ja: ペルシアン
+order: 53
 colors:
   - white
 ---

@@ -1,6 +1,7 @@
 ---
 slug: igglybuff
 name_ja: ププリン
+order: 174
 colors:
   - pink
 ---

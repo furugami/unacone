@@ -1,6 +1,7 @@
 ---
 slug: cloyster
 name_ja: パルシェン
+order: 91
 colors:
   - blue
 ---

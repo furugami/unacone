@@ -1,6 +1,7 @@
 ---
 slug: zapdos
 name_ja: サンダー
+order: 145
 pokemon_slug: zapdos
 colors:
   - yellow

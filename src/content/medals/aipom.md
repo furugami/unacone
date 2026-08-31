@@ -1,6 +1,7 @@
 ---
 slug: aipom
 name_ja: エイパム
+order: 190
 colors:
   - white
 ---

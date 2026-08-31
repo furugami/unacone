@@ -1,6 +1,7 @@
 ---
 slug: venonat
 name_ja: コンパン
+order: 48
 colors:
   - green
 ---

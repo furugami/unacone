@@ -1,6 +1,7 @@
 ---
 slug: marill
 name_ja: マリル
+order: 183
 colors:
   - pink
 ---

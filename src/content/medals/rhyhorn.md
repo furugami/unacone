@@ -1,6 +1,7 @@
 ---
 slug: rhyhorn
 name_ja: サイホーン
+order: 111
 colors:
   - brown
 ---

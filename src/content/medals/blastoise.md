@@ -1,6 +1,7 @@
 ---
 slug: blastoise
 name_ja: カメックス
+order: 9
 pokemon_slug: blastoise
 colors:
   - blue

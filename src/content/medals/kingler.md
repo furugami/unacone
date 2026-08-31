@@ -1,6 +1,7 @@
 ---
 slug: kingler
 name_ja: キングラー
+order: 99
 colors:
   - blue
 ---

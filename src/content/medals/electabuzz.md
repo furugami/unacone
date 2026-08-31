@@ -1,6 +1,7 @@
 ---
 slug: electabuzz
 name_ja: エレブー
+order: 125
 colors:
   - yellow
 ---

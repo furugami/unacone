@@ -1,6 +1,7 @@
 ---
 slug: abra
 name_ja: ケーシィ
+order: 63
 colors:
   - purple
 ---

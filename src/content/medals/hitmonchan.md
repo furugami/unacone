@@ -1,6 +1,7 @@
 ---
 slug: hitmonchan
 name_ja: エビワラー
+order: 107
 colors:
   - brown
 ---

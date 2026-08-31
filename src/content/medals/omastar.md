@@ -1,6 +1,7 @@
 ---
 slug: omastar
 name_ja: オムスター
+order: 139
 colors:
   - brown
   - blue

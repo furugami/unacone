@@ -1,6 +1,7 @@
 ---
 slug: sudowoodo
 name_ja: ウソッキー
+order: 185
 colors:
   - brown
 ---

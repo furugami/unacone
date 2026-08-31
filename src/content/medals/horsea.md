@@ -1,6 +1,7 @@
 ---
 slug: horsea
 name_ja: タッツー
+order: 116
 colors:
   - blue
 ---

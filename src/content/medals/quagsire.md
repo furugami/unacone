@@ -1,6 +1,7 @@
 ---
 slug: quagsire
 name_ja: ヌオー
+order: 195
 colors:
   - blue
   - brown

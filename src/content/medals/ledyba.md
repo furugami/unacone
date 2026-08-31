@@ -1,6 +1,7 @@
 ---
 slug: ledyba
 name_ja: レディバ
+order: 165
 colors:
   - green
 ---

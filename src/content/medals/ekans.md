@@ -1,6 +1,7 @@
 ---
 slug: ekans
 name_ja: アーボ
+order: 23
 colors:
   - black
 ---

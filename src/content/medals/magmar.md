@@ -1,6 +1,7 @@
 ---
 slug: magmar
 name_ja: ブーバー
+order: 126
 colors:
   - red
 ---

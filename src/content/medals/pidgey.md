@@ -1,6 +1,7 @@
 ---
 slug: pidgey
 name_ja: ポッポ
+order: 16
 colors:
   - white
 ---

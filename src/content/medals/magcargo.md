@@ -1,6 +1,7 @@
 ---
 slug: magcargo
 name_ja: マグカルゴ
+order: 219
 colors:
   - red
 ---

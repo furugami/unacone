@@ -1,6 +1,7 @@
 ---
 slug: ursaring
 name_ja: リングマ
+order: 217
 colors:
   - white
 ---

@@ -1,6 +1,7 @@
 ---
 slug: smeargle
 name_ja: ドーブル
+order: 235
 colors:
   - white
 ---

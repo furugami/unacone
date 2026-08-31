@@ -1,6 +1,7 @@
 ---
 slug: dragonair
 name_ja: ハクリュー
+order: 148
 colors:
   - navy
 ---

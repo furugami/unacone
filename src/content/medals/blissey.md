@@ -1,6 +1,7 @@
 ---
 slug: blissey
 name_ja: ハピナス
+order: 242
 pokemon_slug: blissey
 colors:
   - white

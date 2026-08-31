@@ -1,6 +1,7 @@
 ---
 slug: togepi
 name_ja: トゲピー
+order: 175
 colors:
   - pink
 ---

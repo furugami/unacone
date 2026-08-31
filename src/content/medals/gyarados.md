@@ -1,6 +1,7 @@
 ---
 slug: gyarados
 name_ja: ギャラドス
+order: 130
 pokemon_slug: gyarados
 colors:
   - blue

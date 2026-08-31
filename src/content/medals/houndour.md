@@ -1,6 +1,7 @@
 ---
 slug: houndour
 name_ja: デルビル
+order: 228
 colors:
   - red
 ---

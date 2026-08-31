@@ -1,6 +1,7 @@
 ---
 slug: alakazam
 name_ja: フーディン
+order: 65
 colors:
   - purple
 ---

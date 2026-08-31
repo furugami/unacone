@@ -1,6 +1,7 @@
 ---
 slug: metapod
 name_ja: トランセル
+order: 11
 colors:
   - green
 ---

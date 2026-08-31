@@ -1,6 +1,7 @@
 ---
 slug: meowth
 name_ja: ニャース
+order: 52
 pokemon_slug: meowth
 colors:
   - white

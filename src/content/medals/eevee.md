@@ -1,6 +1,7 @@
 ---
 slug: eevee
 name_ja: イーブイ
+order: 133
 colors:
   - white
 ---

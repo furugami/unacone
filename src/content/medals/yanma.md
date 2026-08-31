@@ -1,6 +1,7 @@
 ---
 slug: yanma
 name_ja: ヤンヤンマ
+order: 193
 colors:
   - green
 ---

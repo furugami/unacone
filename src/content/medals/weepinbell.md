@@ -1,6 +1,7 @@
 ---
 slug: weepinbell
 name_ja: ウツドン
+order: 70
 colors:
   - green
 ---

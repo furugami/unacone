@@ -1,6 +1,7 @@
 ---
 slug: bayleef
 name_ja: ベイリーフ
+order: 153
 colors:
   - green
 ---

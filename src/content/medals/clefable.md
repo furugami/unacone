@@ -1,6 +1,7 @@
 ---
 slug: clefable
 name_ja: ピクシー
+order: 36
 pokemon_slug: clefable
 colors:
   - pink

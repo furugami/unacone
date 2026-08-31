@@ -1,6 +1,7 @@
 ---
 slug: kabuto
 name_ja: カブト
+order: 140
 colors:
   - brown
 ---

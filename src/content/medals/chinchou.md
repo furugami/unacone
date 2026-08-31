@@ -1,6 +1,7 @@
 ---
 slug: chinchou
 name_ja: チョンチー
+order: 170
 colors:
   - yellow
 ---

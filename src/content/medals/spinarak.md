@@ -1,6 +1,7 @@
 ---
 slug: spinarak
 name_ja: イトマル
+order: 167
 colors:
   - green
 ---

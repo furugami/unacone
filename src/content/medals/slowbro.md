@@ -1,6 +1,7 @@
 ---
 slug: slowbro
 name_ja: ヤドラン
+order: 80
 pokemon_slug: slowbro
 colors:
   - blue

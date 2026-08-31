@@ -1,6 +1,7 @@
 ---
 slug: raikou
 name_ja: ライコウ
+order: 243
 colors:
   - yellow
 ---

@@ -1,6 +1,7 @@
 ---
 slug: staryu
 name_ja: ヒトデマン
+order: 120
 colors:
   - blue
 ---

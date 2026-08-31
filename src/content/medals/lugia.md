@@ -1,6 +1,7 @@
 ---
 slug: lugia
 name_ja: ルギア
+order: 249
 colors:
   - green
   - white

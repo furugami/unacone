@@ -1,6 +1,7 @@
 ---
 slug: espeon
 name_ja: エーフィ
+order: 196
 pokemon_slug: espeon
 colors:
   - purple

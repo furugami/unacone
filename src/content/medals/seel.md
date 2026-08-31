@@ -1,6 +1,7 @@
 ---
 slug: seel
 name_ja: パウワウ
+order: 86
 colors:
   - blue
 ---

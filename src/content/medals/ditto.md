@@ -1,6 +1,7 @@
 ---
 slug: ditto
 name_ja: メタモン
+order: 132
 colors:
   - white
 ---

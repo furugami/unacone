@@ -1,6 +1,7 @@
 ---
 slug: muk
 name_ja: ベトベトン
+order: 89
 colors:
   - black
 ---

@@ -1,6 +1,7 @@
 ---
 slug: snorlax
 name_ja: カビゴン
+order: 143
 pokemon_slug: snorlax
 colors:
   - white

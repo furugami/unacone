@@ -1,6 +1,7 @@
 ---
 slug: golbat
 name_ja: ゴルバット
+order: 42
 colors:
   - black
 ---

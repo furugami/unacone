@@ -1,6 +1,7 @@
 ---
 slug: typhlosion
 name_ja: バクフーン
+order: 157
 pokemon_slug: typhlosion
 colors:
   - red

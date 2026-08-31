@@ -1,6 +1,7 @@
 ---
 slug: pikachu
 name_ja: ピカチュウ
+order: 25
 pokemon_slug: pikachu
 colors:
   - yellow

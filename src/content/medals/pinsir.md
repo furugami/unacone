@@ -1,6 +1,7 @@
 ---
 slug: pinsir
 name_ja: カイロス
+order: 127
 colors:
   - green
 ---

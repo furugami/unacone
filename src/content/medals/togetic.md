@@ -1,6 +1,7 @@
 ---
 slug: togetic
 name_ja: トゲチック
+order: 176
 colors:
   - pink
   - white

@@ -1,6 +1,7 @@
 ---
 slug: swinub
 name_ja: ウリムー
+order: 220
 colors:
   - blue
 ---
