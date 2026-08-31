@@ -153,6 +153,47 @@ const timeLabel = (d: Date) =>
 		overflow-wrap: anywhere;
 	}
 
+	/* 広い画面では「時刻/LIVE」「チャンネル名」を固定幅にしてタイトルの開始位置を揃え、
+	   はみ出す分は省略記号（…）で1行に切る。スマホ幅は折り返しレイアウトのまま
+	   （狭い画面で固定幅にすると窮屈になるため、あえて表示を分けている）。 */
+	@media (min-width: 640px) {
+		.entry-row {
+			flex-wrap: nowrap;
+		}
+
+		.entry-time,
+		.live-badge {
+			width: 64px;
+			justify-content: center;
+			text-align: center;
+		}
+
+		.entry-channel {
+			flex: 0 0 160px;
+			width: 160px;
+			max-width: 160px;
+			overflow: hidden;
+		}
+
+		.channel-name-text {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			display: block;
+		}
+
+		.entry-main {
+			flex: 1 1 auto;
+			min-width: 0;
+		}
+
+		.entry-title {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+	}
+
 	.platform-badge {
 		flex-shrink: 0;
 		padding: 3px 12px;
