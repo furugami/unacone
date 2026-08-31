@@ -4,6 +4,7 @@
 import Layout from '../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 import { withBase } from '../../lib/url';
+import { MEDAL_COLOR_LABELS, MEDAL_COLOR_ORDER, MEDAL_COLOR_SWATCH } from '../../lib/medals';
 
 const medals = (await getCollection('medals')).sort((a, b) =>
 	a.data.name_ja.localeCompare(b.data.name_ja, 'ja')
@@ -16,6 +17,10 @@ const medalSetEntry = (await getCollection('medal-set'))[0];
 const recommendedMedals = (medalSetEntry?.data.medals ?? [])
 	.map((slug) => medalBySlug.get(slug))
 	.filter((m): m is NonNullable<typeof m> => Boolean(m));
+
+// 属性色フィルタ（2026/08/31追加）。実際に使われている色だけボタンを出す。
+const usedColors = new Set(medals.flatMap((m) => m.data.colors ?? []));
+const colorFilters = MEDAL_COLOR_ORDER.filter((c) => usedColors.has(c));
 ---
 
 <Layout title="メダル">
@@ -31,6 +36,17 @@ const recommendedMedals = (medalSetEntry?.data.medals ?? [])
 							<a href={withBase(`/medals/${item.data.slug}/`)}>
 								{item.data.icon && <img src={item.data.icon} alt="" class="icon" />}
 								<span class="name">{item.data.name_ja}</span>
+								{item.data.colors && item.data.colors.length > 0 && (
+									<span class="color-dots">
+										{item.data.colors.map((c) => (
+											<span
+												class="dot"
+												style={`background:${MEDAL_COLOR_SWATCH[c]}`}
+												title={MEDAL_COLOR_LABELS[c]}
+											/>
+										))}
+									</span>
+								)}
 							</a>
 						</li>
 					))}
@@ -39,24 +55,147 @@ const recommendedMedals = (medalSetEntry?.data.medals ?? [])
 		)
 	}
 
-	<ul class="item-grid">
+	{
+		colorFilters.length > 0 && (
+			<div class="color-filter" role="group" aria-label="属性色で絞り込み">
+				<button type="button" class="filter-btn is-active" data-filter="all">
+					すべて
+				</button>
+				{colorFilters.map((color) => (
+					<button
+						type="button"
+						class="filter-btn"
+						data-filter={color}
+						style={`--filter-color: ${MEDAL_COLOR_SWATCH[color]}`}
+					>
+						<span class="filter-dot" style={`background:${MEDAL_COLOR_SWATCH[color]}`} />
+						{MEDAL_COLOR_LABELS[color]}
+					</button>
+				))}
+			</div>
+		)
+	}
+
+	<ul class="item-grid" id="medal-list">
 		{
 			medals.map((item) => (
-				<li>
+				<li data-colors={(item.data.colors ?? []).join(' ')}>
 					<a href={withBase(`/medals/${item.data.slug}/`)}>
 						{item.data.icon && <img src={item.data.icon} alt="" class="icon" />}
 						<span class="name">{item.data.name_ja}</span>
+						{item.data.colors && item.data.colors.length > 0 && (
+							<span class="color-dots">
+								{item.data.colors.map((c) => (
+									<span
+										class="dot"
+										style={`background:${MEDAL_COLOR_SWATCH[c]}`}
+										title={MEDAL_COLOR_LABELS[c]}
+									/>
+								))}
+							</span>
+						)}
 					</a>
 				</li>
 			))
 		}
 	</ul>
+	<p class="no-results" hidden>
+		該当するメダルがありません。
+	</p>
 	{medals.length === 0 && <p>準備中です。もうしばらくお待ちください。</p>}
 </Layout>
+
+<script>
+	// 属性色フィルタ（複数選択可、OR条件）。ポケモン一覧の絞り込みと違い、
+	// メダルは1件で複数の色を持てるため「すべて」以外は複数同時選択できるトグル式にしている。
+	const buttons = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+	const allButton = document.querySelector<HTMLButtonElement>('.filter-btn[data-filter="all"]');
+	const items = document.querySelectorAll<HTMLLIElement>('#medal-list > li');
+	const noResults = document.querySelector<HTMLParagraphElement>('.no-results');
+	const selectedColors = new Set<string>();
+
+	function applyFilter() {
+		let visibleCount = 0;
+		items.forEach((item) => {
+			const colors = (item.dataset.colors ?? '').split(' ').filter(Boolean);
+			const matches = selectedColors.size === 0 || colors.some((c) => selectedColors.has(c));
+			item.hidden = !matches;
+			if (matches) visibleCount++;
+		});
+		if (noResults) noResults.hidden = visibleCount > 0;
+	}
+
+	buttons.forEach((button) => {
+		button.addEventListener('click', () => {
+			const filter = button.dataset.filter;
+			if (filter === 'all') {
+				selectedColors.clear();
+				buttons.forEach((b) => b.classList.remove('is-active'));
+				allButton?.classList.add('is-active');
+			} else if (filter) {
+				if (selectedColors.has(filter)) {
+					selectedColors.delete(filter);
+					button.classList.remove('is-active');
+				} else {
+					selectedColors.add(filter);
+					button.classList.add('is-active');
+				}
+				allButton?.classList.toggle('is-active', selectedColors.size === 0);
+			}
+			applyFilter();
+		});
+	});
+</script>
 
 <style>
 	.recommended-section {
 		margin-bottom: 32px;
+	}
+
+	.color-filter {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+		margin-top: 16px;
+	}
+
+	.filter-btn {
+		--filter-color: var(--ink-soft);
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		font-family: var(--font-body);
+		font-weight: 700;
+		font-size: 0.85rem;
+		padding: 6px 14px;
+		border-radius: 999px;
+		border: 1.5px solid var(--filter-color);
+		background: var(--surface);
+		color: var(--ink);
+		cursor: pointer;
+		transition: transform 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+	}
+
+	.filter-btn:hover {
+		transform: translateY(-2px);
+	}
+
+	.filter-btn.is-active {
+		background: color-mix(in srgb, var(--filter-color) 18%, white);
+		border-color: var(--filter-color);
+	}
+
+	.filter-dot {
+		width: 10px;
+		height: 10px;
+		border-radius: 50%;
+		flex-shrink: 0;
+		border: 1px solid rgba(27, 34, 51, 0.15);
+	}
+
+	.no-results {
+		margin-top: 24px;
+		color: var(--ink-soft);
 	}
 
 	.item-grid {
@@ -99,5 +238,20 @@ const recommendedMedals = (medalSetEntry?.data.medals ?? [])
 	.name {
 		font-family: var(--font-heading);
 		font-weight: 700;
+	}
+
+	.color-dots {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 4px;
+	}
+
+	.dot {
+		width: 10px;
+		height: 10px;
+		border-radius: 50%;
+		flex-shrink: 0;
+		border: 1px solid rgba(27, 34, 51, 0.15);
 	}
 </style>
