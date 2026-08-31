@@ -1,7 +1,9 @@
 ---
 s_tier:
   - zeraora
-a_tier: []
+  - armarouge
+a_tier:
+  - blastoise
 b_tier: []
 c_tier: []
 ---
