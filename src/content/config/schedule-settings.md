@@ -1,4 +1,3 @@
 ---
-excluded_channel_names:
-  - ｄｄｄ
+excluded_channel_names: []
 ---
