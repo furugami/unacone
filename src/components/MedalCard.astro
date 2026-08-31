@@ -1,0 +1,80 @@
+---
+// メダル1件ぶんのカード。メダル一覧・おすすめメダルセットの両方から共通利用する。
+import { withBase } from '../lib/url';
+import { MEDAL_COLOR_LABELS, MEDAL_COLOR_SWATCH } from '../lib/medals';
+
+interface Props {
+	slug: string;
+	nameJa: string;
+	icon?: string;
+	colors?: string[];
+}
+
+const { slug, nameJa, icon, colors } = Astro.props;
+---
+
+<li data-colors={(colors ?? []).join(' ')}>
+	<a href={withBase(`/medals/${slug}/`)}>
+		{icon && <img src={icon} alt="" class="icon" />}
+		<span class="name">{nameJa}</span>
+		{
+			colors && colors.length > 0 && (
+				<span class="color-dots">
+					{colors.map((c) => (
+						<span class="dot" style={`background:${MEDAL_COLOR_SWATCH[c]}`} title={MEDAL_COLOR_LABELS[c]} />
+					))}
+				</span>
+			)
+		}
+	</a>
+</li>
+
+<style>
+	li a {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+		gap: 6px;
+		padding: 16px 12px;
+		height: 100%;
+		background: var(--surface);
+		border: 1.5px solid #e5e9f2;
+		border-radius: var(--radius);
+		text-decoration: none;
+		box-shadow: 0 2px 8px rgba(27, 34, 51, 0.07);
+		transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+	}
+
+	li a:hover {
+		transform: translateY(-3px);
+		box-shadow: 0 10px 20px rgba(76, 111, 255, 0.15);
+		border-color: var(--blue);
+	}
+
+	.icon {
+		width: 48px;
+		height: 48px;
+		object-fit: contain;
+	}
+
+	.name {
+		font-family: var(--font-heading);
+		font-weight: 700;
+	}
+
+	.color-dots {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 4px;
+	}
+
+	.dot {
+		width: 10px;
+		height: 10px;
+		border-radius: 50%;
+		flex-shrink: 0;
+		border: 1px solid rgba(27, 34, 51, 0.15);
+	}
+</style>

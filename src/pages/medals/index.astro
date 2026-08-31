@@ -3,8 +3,8 @@
 // 参照: CLAUDE-3.md「もちもの／バトルアイテム／メダル 図鑑」
 import Layout from '../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
-import { withBase } from '../../lib/url';
 import { MEDAL_COLOR_LABELS, MEDAL_COLOR_ORDER, MEDAL_COLOR_SWATCH } from '../../lib/medals';
+import MedalCard from '../../components/MedalCard.astro';
 
 // 表示順は order（小さい順）を優先する。CMSでorder未設定のもの（今後追加分など）は
 // 末尾にまとめ、その中では五十音順にフォールバックする（2026/08/31追加）。
@@ -14,14 +14,16 @@ const medals = (await getCollection('medals')).sort((a, b) => {
 	if (orderA !== orderB) return orderA - orderB;
 	return a.data.name_ja.localeCompare(b.data.name_ja, 'ja');
 });
-
-// おすすめメダルセット（CMSの「おすすめメダルセット」から編集、最大10個。2026/08/31追加）。
-// 一覧ページ上部に表示する。
 const medalBySlug = new Map(medals.map((m) => [m.data.slug, m]));
-const medalSetEntry = (await getCollection('medal-set'))[0];
-const recommendedMedals = (medalSetEntry?.data.medals ?? [])
-	.map((slug) => medalBySlug.get(slug))
-	.filter((m): m is NonNullable<typeof m> => Boolean(m));
+
+// おすすめメダルセット（2026/08/31、複数セットを作れる仕様に変更）。
+// 1セット＝メダル図鑑から最大10個組み合わせたもの。セット数の制限はない。
+const medalSets = (await getCollection('medal-sets')).map((set) => ({
+	title: set.data.title,
+	medals: set.data.medals
+		.map((slug) => medalBySlug.get(slug))
+		.filter((m): m is NonNullable<typeof m> => Boolean(m)),
+}));
 
 // 属性色フィルタ（2026/08/31追加）。実際に使われている色だけボタンを出す。
 const usedColors = new Set(medals.flatMap((m) => m.data.colors ?? []));
@@ -32,30 +34,24 @@ const colorFilters = MEDAL_COLOR_ORDER.filter((c) => usedColors.has(c));
 	<h1>メダル</h1>
 
 	{
-		recommendedMedals.length > 0 && (
+		medalSets.length > 0 && (
 			<section class="recommended-section">
 				<h2>おすすめメダルセット</h2>
-				<ul class="item-grid">
-					{recommendedMedals.map((item) => (
-						<li>
-							<a href={withBase(`/medals/${item.data.slug}/`)}>
-								{item.data.icon && <img src={item.data.icon} alt="" class="icon" />}
-								<span class="name">{item.data.name_ja}</span>
-								{item.data.colors && item.data.colors.length > 0 && (
-									<span class="color-dots">
-										{item.data.colors.map((c) => (
-											<span
-												class="dot"
-												style={`background:${MEDAL_COLOR_SWATCH[c]}`}
-												title={MEDAL_COLOR_LABELS[c]}
-											/>
-										))}
-									</span>
-								)}
-							</a>
-						</li>
-					))}
-				</ul>
+				{medalSets.map((set) => (
+					<div class="medal-set">
+						<h3>{set.title}</h3>
+						<ul class="item-grid">
+							{set.medals.map((item) => (
+								<MedalCard
+									slug={item.data.slug}
+									nameJa={item.data.name_ja}
+									icon={item.data.icon}
+									colors={item.data.colors}
+								/>
+							))}
+						</ul>
+					</div>
+				))}
 			</section>
 		)
 	}
@@ -84,23 +80,12 @@ const colorFilters = MEDAL_COLOR_ORDER.filter((c) => usedColors.has(c));
 	<ul class="item-grid" id="medal-list">
 		{
 			medals.map((item) => (
-				<li data-colors={(item.data.colors ?? []).join(' ')}>
-					<a href={withBase(`/medals/${item.data.slug}/`)}>
-						{item.data.icon && <img src={item.data.icon} alt="" class="icon" />}
-						<span class="name">{item.data.name_ja}</span>
-						{item.data.colors && item.data.colors.length > 0 && (
-							<span class="color-dots">
-								{item.data.colors.map((c) => (
-									<span
-										class="dot"
-										style={`background:${MEDAL_COLOR_SWATCH[c]}`}
-										title={MEDAL_COLOR_LABELS[c]}
-									/>
-								))}
-							</span>
-						)}
-					</a>
-				</li>
+				<MedalCard
+					slug={item.data.slug}
+					nameJa={item.data.name_ja}
+					icon={item.data.icon}
+					colors={item.data.colors}
+				/>
 			))
 		}
 	</ul>
@@ -157,6 +142,15 @@ const colorFilters = MEDAL_COLOR_ORDER.filter((c) => usedColors.has(c));
 		margin-bottom: 32px;
 	}
 
+	.medal-set + .medal-set {
+		margin-top: 24px;
+	}
+
+	.medal-set h3 {
+		margin: 16px 0 0;
+		font-size: 1rem;
+	}
+
 	.color-filter {
 		display: flex;
 		flex-wrap: wrap;
@@ -210,53 +204,5 @@ const colorFilters = MEDAL_COLOR_ORDER.filter((c) => usedColors.has(c));
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
 		gap: 12px;
-	}
-
-	.item-grid a {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		text-align: center;
-		gap: 6px;
-		padding: 16px 12px;
-		height: 100%;
-		background: var(--surface);
-		border: 1.5px solid #e5e9f2;
-		border-radius: var(--radius);
-		text-decoration: none;
-		box-shadow: 0 2px 8px rgba(27, 34, 51, 0.07);
-		transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
-	}
-
-	.item-grid a:hover {
-		transform: translateY(-3px);
-		box-shadow: 0 10px 20px rgba(76, 111, 255, 0.15);
-		border-color: var(--blue);
-	}
-
-	.icon {
-		width: 48px;
-		height: 48px;
-		object-fit: contain;
-	}
-
-	.name {
-		font-family: var(--font-heading);
-		font-weight: 700;
-	}
-
-	.color-dots {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-		gap: 4px;
-	}
-
-	.dot {
-		width: 10px;
-		height: 10px;
-		border-radius: 50%;
-		flex-shrink: 0;
-		border: 1px solid rgba(27, 34, 51, 0.15);
 	}
 </style>

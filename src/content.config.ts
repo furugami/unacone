@@ -189,12 +189,16 @@ const medals = defineCollection({
   }),
 });
 
-// おすすめメダルセット（単一ファイル）。メダル図鑑のslugを最大10個まで選び、
-// メダル一覧ページ（/medals/）の上部に表示する（2026/08/31追加、運営者要望）。
-const medalSet = defineCollection({
-  loader: glob({ pattern: 'medal-set.md', base: './src/content/config' }),
+// おすすめメダルセット。1セット＝メダル図鑑のslugを最大10個組み合わせたもの。
+// セット自体の数に制限はなく、いくつでも作成できる（2026/08/31、当初「単一セット」で
+// 実装したが運営者要望により「複数セットを作れる」仕様に作り直した）。
+// メダル一覧ページ（/medals/）の上部に、セットごとに表示する。
+const medalSets = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/medal-sets' }),
   schema: z.object({
-    medals: z.array(z.string()).max(10).optional(),
+    slug: z.string(),
+    title: z.string(),
+    medals: z.array(z.string()).max(10),
   }),
 });
 
@@ -229,7 +233,7 @@ export const collections = {
   'held-items': heldItems,
   'battle-items': battleItems,
   medals,
-  'medal-set': medalSet,
+  'medal-sets': medalSets,
   'tier-list': tierList,
   'schedule-settings': scheduleSettings,
 };
