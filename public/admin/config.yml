@@ -361,6 +361,10 @@ collections:
     identifier_field: "name_ja"
     media_folder: "/public/images/uploads/medals"
     public_folder: "/unacone/images/uploads/medals"
+    # 「表示順」列でソートできるようにする（2026/08/31追加）。Decap CMSには
+    # 初期表示順を固定する機能が無いため、開いた時点では自動でorder順にはならず、
+    # 一覧画面でこの列を毎回クリックして並び替える必要がある点に注意。
+    sortable_fields: ["order", "name_ja"]
     fields:
       - { label: "スラッグ", name: "slug", widget: "string" }
       - { label: "名前", name: "name_ja", widget: "string" }
