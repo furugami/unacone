@@ -30,8 +30,13 @@ const sections = ARTICLE_CATEGORY_ORDER.map((category) => {
 					{section.articlesInCategory.map((article) => (
 						<li>
 							<a href={withBase(`/articles/${article.data.slug}/`)}>
-								<span class="title">{article.data.title}</span>
-								<span class="excerpt">{article.data.excerpt}</span>
+								{article.data.thumbnail && (
+									<img src={article.data.thumbnail} alt="" class="thumbnail" />
+								)}
+								<span class="text">
+									<span class="title">{article.data.title}</span>
+									<span class="excerpt">{article.data.excerpt}</span>
+								</span>
 							</a>
 						</li>
 					))}
@@ -60,7 +65,9 @@ const sections = ARTICLE_CATEGORY_ORDER.map((category) => {
 	}
 
 	.article-list a {
-		display: block;
+		display: flex;
+		align-items: center;
+		gap: 16px;
 		padding: 16px;
 		background: var(--surface);
 		border: 1.5px solid #e5e9f2;
@@ -74,6 +81,19 @@ const sections = ARTICLE_CATEGORY_ORDER.map((category) => {
 		transform: translateY(-3px);
 		box-shadow: 0 10px 20px rgba(76, 111, 255, 0.15);
 		border-color: var(--blue);
+	}
+
+	.thumbnail {
+		flex-shrink: 0;
+		width: 96px;
+		height: 96px;
+		object-fit: cover;
+		border-radius: calc(var(--radius) - 4px);
+	}
+
+	.text {
+		display: block;
+		min-width: 0;
 	}
 
 	.title {
