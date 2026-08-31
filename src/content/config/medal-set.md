@@ -1,4 +1,5 @@
 ---
 medals:
-  - abra
+  - aipom
+  - aerodactyl
 ---
