@@ -3,6 +3,7 @@
 import Layout from '../../layouts/Layout.astro';
 import { getCollection, render } from 'astro:content';
 import { withBase } from '../../lib/url';
+import { MEDAL_COLOR_LABELS, MEDAL_COLOR_SWATCH, MEDAL_COLOR_TEXT } from '../../lib/medals';
 
 export async function getStaticPaths() {
 	const medals = await getCollection('medals');
@@ -14,7 +15,7 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
-const { name_ja, summary, pokemon_slug, icon } = entry.data;
+const { name_ja, summary, pokemon_slug, icon, colors } = entry.data;
 
 let relatedPokemonName: string | undefined;
 if (pokemon_slug) {
@@ -29,6 +30,20 @@ if (pokemon_slug) {
 		<div>
 			<h1>{name_ja}</h1>
 			<p class="summary">{summary}</p>
+			{
+				colors && colors.length > 0 && (
+					<p class="color-badges">
+						{colors.map((color) => (
+							<span
+								class="color-badge"
+								style={`background:${MEDAL_COLOR_SWATCH[color]}; color:${MEDAL_COLOR_TEXT[color]};`}
+							>
+								{MEDAL_COLOR_LABELS[color]}
+							</span>
+						))}
+					</p>
+				)
+			}
 			{
 				pokemon_slug && relatedPokemonName && (
 					<p class="related-pokemon">
@@ -60,6 +75,24 @@ if (pokemon_slug) {
 
 	.summary {
 		color: var(--ink-soft);
+	}
+
+	.color-badges {
+		margin: 8px 0 0;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 6px;
+	}
+
+	.color-badge {
+		display: inline-flex;
+		align-items: center;
+		padding: 3px 12px;
+		border: 1px solid rgba(27, 34, 51, 0.15);
+		border-radius: 999px;
+		font-size: 0.8rem;
+		font-weight: 700;
+		box-shadow: 0 2px 6px rgba(27, 34, 51, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2);
 	}
 
 	.related-pokemon {

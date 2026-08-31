@@ -367,6 +367,23 @@ collections:
       - { label: "対象ポケモンのスラッグ（任意）", name: "pokemon_slug", widget: "string", required: false }
       - { label: "アイコン（任意）", name: "icon", widget: "image", required: false }
       - { label: "要約（一覧に表示）", name: "summary", widget: "text" }
+      - label: "属性色（複数選択可、任意）"
+        name: "colors"
+        widget: "select"
+        multiple: true
+        required: false
+        options:
+          - { label: "ホワイト", value: "white" }
+          - { label: "ブルー", value: "blue" }
+          - { label: "パープル", value: "purple" }
+          - { label: "ブラウン", value: "brown" }
+          - { label: "レッド", value: "red" }
+          - { label: "ピンク", value: "pink" }
+          - { label: "イエロー", value: "yellow" }
+          - { label: "グリーン", value: "green" }
+          - { label: "ブラック", value: "black" }
+          - { label: "ネイビー", value: "navy" }
+          - { label: "グレー", value: "gray" }
       - { label: "入手条件・効果の説明（本文）", name: "body", widget: "markdown" }
 
   - name: "medal-set"

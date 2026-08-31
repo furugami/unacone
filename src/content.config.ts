@@ -163,6 +163,24 @@ const medals = defineCollection({
     pokemon_slug: z.string().optional(),
     icon: z.string().optional(),
     summary: z.string(),
+    // メダルの属性色（複数選択可）。src/lib/medals.tsのMEDAL_COLOR_LABELS参照。2026/08/31追加。
+    colors: z
+      .array(
+        z.enum([
+          'white',
+          'blue',
+          'purple',
+          'brown',
+          'red',
+          'pink',
+          'yellow',
+          'green',
+          'black',
+          'navy',
+          'gray',
+        ])
+      )
+      .optional(),
   }),
 });
 
