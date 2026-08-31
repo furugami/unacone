@@ -1,14 +1,18 @@
 ---
 // 配信スケジュールページ（/schedule/）。データは配信者ごとにTwitch/YouTube公式APIから
 // ビルド時に取得する（CMS管理はしない）。実装は最小限のシンプルなリスト表示に留める方針
-// （CLAUDE-3.md「配信者カレンダー実装方針の軽量化」参照）。「配信中(LIVE)」表示はPhase 2。
+// （CLAUDE-3.md「配信者カレンダー実装方針の軽量化」参照）。
+// 「配信中(LIVE)」表示は、cronを30分間隔に変更しラグが許容範囲になったため2026/08/31に対応。
 import Layout from '../../layouts/Layout.astro';
 import ScheduleTable from '../../components/ScheduleTable.astro';
 import { getCollection } from 'astro:content';
 import {
 	fetchTwitchSchedule,
+	fetchTwitchLive,
 	fetchYoutubeUpcoming,
+	fetchYoutubeLive,
 	fetchYoutubeUpcomingByKeyword,
+	fetchYoutubeLiveByKeyword,
 	type ScheduleEntry,
 } from '../../lib/schedule';
 
@@ -20,8 +24,8 @@ const excludedChannelNames = new Set(
 	(scheduleSettings?.data.excluded_channel_names ?? []).map((name) => name.trim())
 );
 
-// 表示するのは「現在〜3日後」の予定のみ（配信中の見逃し防止に1時間分だけ過去も含める）。
-// 更新頻度（cronでの再ビルド間隔）は別途検討のため、ここでは範囲の絞り込みだけを行う。
+// 予約配信の表示範囲は「現在〜3日後」のみ（配信中の見逃し防止に1時間分だけ過去も含める）。
+// 配信中(isLive)のエントリはこの範囲チェックの対象外（配信が長時間になっても表示し続けるため）。
 const now = new Date();
 const rangeStart = new Date(now.getTime() - 60 * 60 * 1000);
 const rangeEnd = new Date(now.getTime() + 3 * 24 * 60 * 60 * 1000);
@@ -29,6 +33,14 @@ const inRange = (entry: ScheduleEntry) => entry.startTime >= rangeStart && entry
 
 const scheduleByStreamer = await Promise.all(
 	streamers.map(async (streamer) => {
+		const liveEntries: ScheduleEntry[] = [
+			...(streamer.data.twitch_channel
+				? await fetchTwitchLive(streamer.data.twitch_channel).then((e) => (e ? [e] : []))
+				: []),
+			...(streamer.data.youtube_channel_id
+				? await fetchYoutubeLive(streamer.data.youtube_channel_id)
+				: []),
+		];
 		const entries: ScheduleEntry[] = [
 			...(streamer.data.twitch_channel ? await fetchTwitchSchedule(streamer.data.twitch_channel) : []),
 			...(streamer.data.youtube_channel_id
@@ -37,19 +49,25 @@ const scheduleByStreamer = await Promise.all(
 		]
 			.filter(inRange)
 			.sort((a, b) => a.startTime.valueOf() - b.startTime.valueOf());
-		return { streamer, entries };
+		return { streamer, liveEntries, entries };
 	})
 );
 
-// 登録配信者に限らず、YouTubeを「ポケモンユナイト」で検索して見つかった予約配信。
+// 登録配信者に限らず、YouTubeを「ポケモンユナイト」で検索して見つかった配信。
 // 精度は完全ではない（無関係な動画が混ざりうる）前提の補助的な一覧。
 const registeredYoutubeChannelIds = new Set(
 	streamers.map((s) => s.data.youtube_channel_id).filter((id): id is string => Boolean(id))
 );
+const notDuplicateOrExcluded = (entry: ScheduleEntry) =>
+	(!entry.channelId || !registeredYoutubeChannelIds.has(entry.channelId)) &&
+	(!entry.channelName || !excludedChannelNames.has(entry.channelName.trim()));
+
+const discoveredLiveEntries = (await fetchYoutubeLiveByKeyword('ポケモンユナイト'))
+	.filter(notDuplicateOrExcluded)
+	.sort((a, b) => a.startTime.valueOf() - b.startTime.valueOf());
 const discoveredEntries = (await fetchYoutubeUpcomingByKeyword('ポケモンユナイト'))
 	.filter(inRange)
-	.filter((entry) => !entry.channelId || !registeredYoutubeChannelIds.has(entry.channelId))
-	.filter((entry) => !entry.channelName || !excludedChannelNames.has(entry.channelName.trim()))
+	.filter(notDuplicateOrExcluded)
 	.sort((a, b) => a.startTime.valueOf() - b.startTime.valueOf());
 ---
 
@@ -59,13 +77,14 @@ const discoveredEntries = (await fetchYoutubeUpcomingByKeyword('ポケモンユ�
 	{
 		scheduleByStreamer.length > 0 && (
 			<ul class="streamer-list">
-				{scheduleByStreamer.map(({ streamer, entries }) => (
+				{scheduleByStreamer.map(({ streamer, liveEntries, entries }) => (
 					<li class="streamer-block">
 						<h2>{streamer.data.name}</h2>
-						{entries.length > 0 ? (
-							<ScheduleTable entries={entries} />
-						) : (
+						{liveEntries.length === 0 && entries.length === 0 && (
 							<p class="no-schedule">現在配信予定が確認できません。予定は配信者のSNS等でご確認ください。</p>
+						)}
+						{(liveEntries.length > 0 || entries.length > 0) && (
+							<ScheduleTable liveEntries={liveEntries} entries={entries} />
 						)}
 					</li>
 				))}
@@ -74,21 +93,21 @@ const discoveredEntries = (await fetchYoutubeUpcomingByKeyword('ポケモンユ�
 	}
 
 	{
-		discoveredEntries.length > 0 && (
+		(discoveredLiveEntries.length > 0 || discoveredEntries.length > 0) && (
 			<section class="discovered-section">
-				<h2>その他のユナイト配信予定（YouTube検索）</h2>
+				<h2>その他のユナイト配信（YouTube検索）</h2>
 				<p class="discovered-note">
-					「ポケモンユナイト」でYouTubeを検索して見つかった予約配信です。無関係な動画が混ざる場合があります。
+					「ポケモンユナイト」でYouTubeを検索して見つかった配信です。無関係な動画が混ざる場合があります。
 				</p>
-				<ScheduleTable entries={discoveredEntries} showChannelName />
+				<ScheduleTable liveEntries={discoveredLiveEntries} entries={discoveredEntries} showChannelName />
 			</section>
 		)
 	}
 
 	{
-		scheduleByStreamer.length === 0 && discoveredEntries.length === 0 && (
-			<p>現在、3日以内の配信予定は見つかりませんでした。</p>
-		)
+		scheduleByStreamer.length === 0 &&
+			discoveredLiveEntries.length === 0 &&
+			discoveredEntries.length === 0 && <p>現在、3日以内の配信予定は見つかりませんでした。</p>
 	}
 </Layout>
 

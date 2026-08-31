@@ -15,6 +15,9 @@ export type ScheduleEntry = {
 	channelName?: string;
 	channelId?: string;
 	channelIcon?: string;
+	// 配信中かどうか（2026/08/31追加）。trueの場合startTimeは実際の配信開始時刻を表す。
+	// cronの更新間隔（30分程度）ぶんのラグは許容する前提。
+	isLive?: boolean;
 };
 
 // 配信タイトルのキーワードから「参加型」「ソロラン」を判定してタグ付けする。
@@ -90,14 +93,50 @@ export async function fetchTwitchSchedule(login: string): Promise<ScheduleEntry[
 	}
 }
 
-// YouTubeの予約配信（upcoming live）を取得する。search.listで動画IDを探し、
-// videos.listで正確な予定開始時刻（liveStreamingDetails.scheduledStartTime）を取得する2段階構成。
-export async function fetchYoutubeUpcoming(channelId: string): Promise<ScheduleEntry[]> {
+// Twitchで現在配信中かどうかを取得する（2026/08/31追加）。Get Streamsは1日あたりの
+// ユニット制限が無く、レート制限も緩いためコストはほぼ気にしなくてよい。
+export async function fetchTwitchLive(login: string): Promise<ScheduleEntry | null> {
+	const clientId = import.meta.env.TWITCH_CLIENT_ID;
+	const clientSecret = import.meta.env.TWITCH_CLIENT_SECRET;
+	if (!clientId || !clientSecret) return null;
+
+	const token = await getTwitchAppToken(clientId, clientSecret);
+	if (!token) return null;
+
+	try {
+		const headers = { 'Client-Id': clientId, Authorization: `Bearer ${token}` };
+		const res = await fetch(
+			`https://api.twitch.tv/helix/streams?user_login=${encodeURIComponent(login)}&type=live`,
+			{ headers }
+		);
+		if (!res.ok) return null;
+		const data = await res.json();
+		const stream = data.data?.[0];
+		if (!stream) return null;
+
+		return {
+			platform: 'twitch',
+			title: stream.title,
+			startTime: new Date(stream.started_at),
+			url: `https://twitch.tv/${login}`,
+			isLive: true,
+		};
+	} catch {
+		return null;
+	}
+}
+
+// YouTubeの予約配信・配信中を、特定チャンネルについて取得する共通処理。
+// search.listで動画IDを探し、videos.listで正確な時刻（liveStreamingDetails）を取得する2段階構成。
+async function fetchYoutubeByChannel(
+	channelId: string,
+	eventType: 'upcoming' | 'live'
+): Promise<ScheduleEntry[]> {
 	const apiKey = import.meta.env.YOUTUBE_API_KEY;
 	if (!apiKey) return [];
 
 	try {
-		const searchUrl = `https://www.googleapis.com/youtube/v3/search?key=${apiKey}&channelId=${channelId}&type=video&eventType=upcoming&order=date&part=id`;
+		const searchUrl = `https://www.googleapis.com/youtube/v3/search?key=${apiKey}&channelId=${channelId}&type=video&eventType=${eventType}&order=date&part=id`;
 		const searchRes = await fetch(searchUrl);
 		if (!searchRes.ok) return [];
 		const searchData = await searchRes.json();
@@ -111,21 +150,25 @@ export async function fetchYoutubeUpcoming(channelId: string): Promise<ScheduleE
 		if (!videosRes.ok) return [];
 		const videosData = await videosRes.json();
 
+		// 予約配信は予定時刻(scheduledStartTime)、配信中は実際の開始時刻(actualStartTime)を見る。
+		const timeField = eventType === 'live' ? 'actualStartTime' : 'scheduledStartTime';
+
 		return (videosData.items ?? [])
 			.filter(
-				(item: { liveStreamingDetails?: { scheduledStartTime?: string } }) =>
-					item.liveStreamingDetails?.scheduledStartTime
+				(item: { liveStreamingDetails?: Record<string, string | undefined> }) =>
+					item.liveStreamingDetails?.[timeField]
 			)
 			.map(
 				(item: {
 					id: string;
 					snippet: { title: string };
-					liveStreamingDetails: { scheduledStartTime: string };
+					liveStreamingDetails: Record<string, string>;
 				}) => ({
 					platform: 'youtube' as const,
 					title: item.snippet.title,
-					startTime: new Date(item.liveStreamingDetails.scheduledStartTime),
+					startTime: new Date(item.liveStreamingDetails[timeField]),
 					url: `https://www.youtube.com/watch?v=${item.id}`,
+					isLive: eventType === 'live',
 				})
 			);
 	} catch {
@@ -133,17 +176,28 @@ export async function fetchYoutubeUpcoming(channelId: string): Promise<ScheduleE
 	}
 }
 
-// キーワードで、登録配信者に限らず広くYouTubeの予約配信を検索する（2026/08/30追加）。
+export function fetchYoutubeUpcoming(channelId: string): Promise<ScheduleEntry[]> {
+	return fetchYoutubeByChannel(channelId, 'upcoming');
+}
+
+// YouTubeで現在配信中かどうかを取得する（2026/08/31追加）。登録配信者1人あたり
+// search.list 100 + videos.list 1 ユニット消費（予約配信取得と同じコスト）。
+export function fetchYoutubeLive(channelId: string): Promise<ScheduleEntry[]> {
+	return fetchYoutubeByChannel(channelId, 'live');
+}
+
+// キーワードで、登録配信者に限らず広くYouTubeの予約配信・配信中を検索する共通処理。
 // 精度は完全ではない（無関係な動画が混ざる可能性がある）前提で、補助的な一覧として使う。
-export async function fetchYoutubeUpcomingByKeyword(
+async function fetchYoutubeByKeyword(
 	keyword: string,
-	maxResults = 10
+	eventType: 'upcoming' | 'live',
+	maxResults: number
 ): Promise<ScheduleEntry[]> {
 	const apiKey = import.meta.env.YOUTUBE_API_KEY;
 	if (!apiKey) return [];
 
 	try {
-		const searchUrl = `https://www.googleapis.com/youtube/v3/search?key=${apiKey}&q=${encodeURIComponent(keyword)}&type=video&eventType=upcoming&order=date&part=id&maxResults=${maxResults}`;
+		const searchUrl = `https://www.googleapis.com/youtube/v3/search?key=${apiKey}&q=${encodeURIComponent(keyword)}&type=video&eventType=${eventType}&order=date&part=id&maxResults=${maxResults}`;
 		const searchRes = await fetch(searchUrl);
 		if (!searchRes.ok) return [];
 		const searchData = await searchRes.json();
@@ -157,9 +211,10 @@ export async function fetchYoutubeUpcomingByKeyword(
 		if (!videosRes.ok) return [];
 		const videosData = await videosRes.json();
 
+		const timeField = eventType === 'live' ? 'actualStartTime' : 'scheduledStartTime';
 		const items = (videosData.items ?? []).filter(
-			(item: { liveStreamingDetails?: { scheduledStartTime?: string } }) =>
-				item.liveStreamingDetails?.scheduledStartTime
+			(item: { liveStreamingDetails?: Record<string, string | undefined> }) =>
+				item.liveStreamingDetails?.[timeField]
 		);
 
 		// チャンネルアイコンをまとめて取得（重複除去して1回のAPI呼び出しに集約）。
@@ -183,18 +238,30 @@ export async function fetchYoutubeUpcomingByKeyword(
 			(item: {
 				id: string;
 				snippet: { title: string; channelId: string; channelTitle: string };
-				liveStreamingDetails: { scheduledStartTime: string };
+				liveStreamingDetails: Record<string, string>;
 			}) => ({
 				platform: 'youtube' as const,
 				title: item.snippet.title,
 				channelName: item.snippet.channelTitle,
 				channelId: item.snippet.channelId,
 				channelIcon: channelIcons.get(item.snippet.channelId),
-				startTime: new Date(item.liveStreamingDetails.scheduledStartTime),
+				startTime: new Date(item.liveStreamingDetails[timeField]),
 				url: `https://www.youtube.com/watch?v=${item.id}`,
+				isLive: eventType === 'live',
 			})
 		);
 	} catch {
 		return [];
 	}
+}
+
+export function fetchYoutubeUpcomingByKeyword(keyword: string, maxResults = 10): Promise<ScheduleEntry[]> {
+	return fetchYoutubeByKeyword(keyword, 'upcoming', maxResults);
+}
+
+// キーワードで現在配信中のものを広く検索する（2026/08/31追加）。
+// search.list 100 + videos.list 1 + channels.list 1 ≒ 102ユニット、既存のfetchYoutubeUpcomingByKeyword
+// と同じコストが上乗せされる。
+export function fetchYoutubeLiveByKeyword(keyword: string, maxResults = 10): Promise<ScheduleEntry[]> {
+	return fetchYoutubeByKeyword(keyword, 'live', maxResults);
 }

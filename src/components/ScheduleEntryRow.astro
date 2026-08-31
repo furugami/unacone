@@ -1,0 +1,173 @@
+---
+// 配信予定・配信中エントリ1件ぶんのカード行。ScheduleTable.astroから
+// （日付グループ内・配信中セクションの両方で）共通利用する。
+import { detectStreamTags, type ScheduleEntry } from '../lib/schedule';
+
+interface Props {
+	entry: ScheduleEntry;
+	showChannelName?: boolean;
+}
+
+const { entry, showChannelName = false } = Astro.props;
+
+const timeLabel = (d: Date) =>
+	d.toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Tokyo' });
+---
+
+<li class:list={['entry-row', { live: entry.isLive }]}>
+	{
+		entry.isLive ? (
+			<span class="live-badge">LIVE</span>
+		) : (
+			<span class="entry-time">{timeLabel(entry.startTime)}</span>
+		)
+	}
+	{
+		showChannelName && (
+			<a
+				class="entry-channel"
+				href={entry.channelId ? `https://www.youtube.com/channel/${entry.channelId}` : entry.url}
+				target="_blank"
+				rel="noopener noreferrer"
+			>
+				{entry.channelIcon && <img src={entry.channelIcon} alt="" class="channel-icon" />}
+				<span class="channel-name-text">{entry.channelName}</span>
+			</a>
+		)
+	}
+	<div class="entry-main">
+		<a href={entry.url} target="_blank" rel="noopener noreferrer">
+			<span class="entry-title">{entry.title}</span>
+		</a>
+		<div class="badge-row">
+			<span class={`platform-badge platform-${entry.platform}`}>
+				{entry.platform === 'twitch' ? 'Twitch' : 'YouTube'}
+			</span>
+			{detectStreamTags(entry.title).map((tag) => (
+				<span class="field-label">{tag}</span>
+			))}
+		</div>
+	</div>
+</li>
+
+<style>
+	.entry-row {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 6px 16px;
+		padding: 12px 14px;
+		border: 1px solid #e5e9f2;
+		border-radius: var(--radius);
+		background: var(--surface);
+	}
+
+	.entry-row.live {
+		border-color: color-mix(in srgb, #e6484f 40%, white);
+		background: color-mix(in srgb, #e6484f 5%, white);
+	}
+
+	.entry-time {
+		flex-shrink: 0;
+		width: 52px;
+		font-family: var(--font-number);
+		font-weight: 700;
+		color: var(--ink);
+	}
+
+	.live-badge {
+		flex-shrink: 0;
+		display: inline-flex;
+		align-items: center;
+		gap: 4px;
+		padding: 3px 10px;
+		border-radius: 999px;
+		background: #e6484f;
+		color: #fff;
+		font-weight: 700;
+		font-size: 0.75rem;
+		letter-spacing: 0.03em;
+		box-shadow: 0 2px 6px rgba(230, 72, 79, 0.35);
+	}
+
+	.live-badge::before {
+		content: '';
+		width: 6px;
+		height: 6px;
+		border-radius: 50%;
+		background: #fff;
+	}
+
+	.entry-main {
+		flex: 1 1 200px;
+		min-width: 200px;
+	}
+
+	.entry-main > a {
+		display: block;
+		text-decoration: none;
+		color: var(--ink);
+	}
+
+	.entry-main > a:hover .entry-title {
+		text-decoration: underline;
+	}
+
+	.entry-title {
+		display: block;
+		overflow-wrap: anywhere;
+	}
+
+	.badge-row {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 8px;
+		margin-top: 6px;
+	}
+
+	.entry-channel {
+		flex-shrink: 0;
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		max-width: 100%;
+		color: var(--ink-soft);
+		font-size: 0.85rem;
+		text-decoration: none;
+	}
+
+	.entry-channel:hover .channel-name-text {
+		text-decoration: underline;
+	}
+
+	.channel-icon {
+		flex-shrink: 0;
+		width: 22px;
+		height: 22px;
+		border-radius: 50%;
+		object-fit: cover;
+	}
+
+	.channel-name-text {
+		overflow-wrap: anywhere;
+	}
+
+	.platform-badge {
+		flex-shrink: 0;
+		padding: 3px 12px;
+		border-radius: 999px;
+		font-size: 0.75rem;
+		font-weight: 700;
+		color: #fff;
+		box-shadow: 0 2px 6px rgba(27, 34, 51, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+	}
+
+	.platform-twitch {
+		background: #9146ff;
+	}
+
+	.platform-youtube {
+		background: #ff0000;
+	}
+</style>
