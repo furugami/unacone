@@ -20,8 +20,6 @@ const pokemonJp = defineCollection({
     name_ja: z.string(),
     icon: z.string().optional(),
     role: z.enum(['attacker', 'speedster', 'defender', 'supporter', 'allrounder']),
-    // 人力・主観のTier評価。UniteAPI等の数値データとは無関係（CLAUDE-3.md「ポケモンTier表」参照）
-    tier: z.enum(['S', 'A', 'B', 'C']).optional(),
     // 攻撃分類（物理攻撃寄り/特殊攻撃寄り）。2026/08/29追加、運営者要望。
     attack_type: z.enum(['physical', 'special']).optional(),
     // 使用難易度（このポケモンを使いこなす難易度。記事のカテゴリとは別軸）。2026/08/29追加。
@@ -168,6 +166,20 @@ const medals = defineCollection({
   }),
 });
 
+// ポケモンTier表（単一ファイル）。tierは頻繁なメタ変動でポケモンに固定の属性ではないため、
+// pokemon-jp側の個別フィールドではなく、ここでTierごとの掲載ポケモン一覧として一元管理する
+// （2026/08/31、運営者要望で「tier編集ページ」として独立させた）。
+// 全ポケモンを網羅する必要はなく、各Tierに掲載したいポケモンのslugだけを入れる。
+const tierList = defineCollection({
+  loader: glob({ pattern: 'tier-list.md', base: './src/content/config' }),
+  schema: z.object({
+    s_tier: z.array(z.string()).optional(),
+    a_tier: z.array(z.string()).optional(),
+    b_tier: z.array(z.string()).optional(),
+    c_tier: z.array(z.string()).optional(),
+  }),
+});
+
 // 配信スケジュールページの設定（単一ファイル）。YouTube広域検索で見つかっても一覧に載せたくない
 // チャンネルを、名前でまとめて除外できるようにする（2026/08/30追加）。
 const scheduleSettings = defineCollection({
@@ -185,5 +197,6 @@ export const collections = {
   'held-items': heldItems,
   'battle-items': battleItems,
   medals,
+  'tier-list': tierList,
   'schedule-settings': scheduleSettings,
 };

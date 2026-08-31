@@ -8,10 +8,24 @@ import { ROLE_COLOR_VARS, TIER_ORDER } from '../lib/pokemon';
 import { withBase } from '../lib/url';
 
 const pokemonList = await getCollection('pokemon-jp');
+const pokemonBySlug = new Map(pokemonList.map((p) => [p.data.slug, p]));
+
+// Tierは頻繁なメタ変動でポケモンに固定の属性ではないため、pokemon-jp側ではなく
+// tier-list（単一ファイル、CMSの「各種設定→ポケモンTier表編集」）で一元管理している。
+// 全ポケモン分登録する必要はなく、各Tierに掲載したいポケモンのslugだけが入る想定。
+const tierListEntry = (await getCollection('tier-list'))[0];
+const slugsByTier: Record<(typeof TIER_ORDER)[number], string[] | undefined> = {
+	S: tierListEntry?.data.s_tier,
+	A: tierListEntry?.data.a_tier,
+	B: tierListEntry?.data.b_tier,
+	C: tierListEntry?.data.c_tier,
+};
 
 const tierRows = TIER_ORDER.map((tier) => ({
 	tier,
-	pokemon: pokemonList.filter((p) => p.data.tier === tier),
+	pokemon: (slugsByTier[tier] ?? [])
+		.map((slug) => pokemonBySlug.get(slug))
+		.filter((p): p is NonNullable<typeof p> => Boolean(p)),
 })).filter((row) => row.pokemon.length > 0);
 
 const latestArticles = (await getCollection('articles'))

@@ -29,7 +29,7 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
-const { name_ja, icon, role, tier, attack_type, difficulty, abilities, moves, builds } = entry.data;
+const { name_ja, icon, role, attack_type, difficulty, abilities, moves, builds } = entry.data;
 
 // movesオブジェクトのうち、実際に値が入っている項目だけを表示順に並べる
 const moveEntries = moves
@@ -68,7 +68,6 @@ const resolvedBuilds = (builds ?? []).map((build) => ({
 			{ROLE_LABELS[role]}
 		</span>
 		{attack_type && <span class="attack-type-badge">{ATTACK_TYPE_LABELS[attack_type]}</span>}
-		{tier && <span class="tier-badge">Tier {tier}</span>}
 		{difficulty && <span class="difficulty-badge">{DIFFICULTY_LABELS[difficulty]}</span>}
 	</header>
 
@@ -239,7 +238,6 @@ const resolvedBuilds = (builds ?? []).map((build) => ({
 	}
 
 	.role-badge,
-	.tier-badge,
 	.attack-type-badge,
 	.difficulty-badge {
 		padding: 4px 12px;
@@ -248,11 +246,6 @@ const resolvedBuilds = (builds ?? []).map((build) => ({
 		font-weight: 700;
 		color: #fff;
 		box-shadow: 0 2px 6px rgba(27, 34, 51, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.25);
-	}
-
-	.tier-badge {
-		background: var(--amber);
-		font-family: var(--font-number);
 	}
 
 	.attack-type-badge,

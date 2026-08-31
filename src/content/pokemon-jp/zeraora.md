@@ -3,7 +3,6 @@ slug: zeraora
 name_ja: ゼラオラ
 role: speedster
 attack_type: physical
-tier: S
 abilities:
   combat: 4.5
   durability: 2
