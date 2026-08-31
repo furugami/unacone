@@ -253,13 +253,18 @@ collections:
     fields:
       - { label: "スラッグ", name: "slug", widget: "string" }
       - { label: "タイトル", name: "title", widget: "string" }
-      - label: "難易度カテゴリ"
+      - label: "難易度カテゴリ（必須）"
         name: "category"
         widget: "select"
         options:
           - { label: "初心者向け", value: "beginner" }
           - { label: "中級者向け", value: "intermediate" }
           - { label: "上級者向け", value: "advanced" }
+      - label: "内容タグ（任意、複数追加可。例: 上ルート、中央ルート、スピード型）"
+        name: "tags"
+        widget: "list"
+        required: false
+        field: { label: "タグ", name: "tag", widget: "string" }
       - { label: "公開日", name: "publish_date", widget: "datetime" }
       - { label: "要約（一覧カードに表示）", name: "excerpt", widget: "text" }
       - { label: "サムネイル（任意）", name: "thumbnail", widget: "image", required: false }

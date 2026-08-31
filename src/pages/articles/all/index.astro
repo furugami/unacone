@@ -1,0 +1,271 @@
+---
+// セオリー解説記事の全件フィルタページ（/articles/all/）。
+// /articles/ の各カテゴリセクションの「すべて表示」リンク、および記事カード内のタグクリックの
+// 遷移先。難易度カテゴリ（単一選択）・内容タグ（複数選択可）で絞り込め、結果はページ分割して
+// 表示する（2026/08/31追加）。
+// 静的サイト（GitHub Pages）のため、絞り込み・ページ分割はすべてクライアント側JSで行う。
+// URLクエリ（?category=beginner や ?tag=上ルート）で初期状態を指定できる。
+import Layout from '../../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import { ARTICLE_CATEGORY_LABELS, ARTICLE_CATEGORY_ORDER } from '../../../lib/articles';
+import ArticleCard from '../../../components/ArticleCard.astro';
+
+const allArticles = (await getCollection('articles')).sort(
+	(a, b) => b.data.publish_date.valueOf() - a.data.publish_date.valueOf()
+);
+
+// 実際に使われているタグだけをボタンとして出す。
+const usedTags = [...new Set(allArticles.flatMap((a) => a.data.tags ?? []))].sort((a, b) =>
+	a.localeCompare(b, 'ja')
+);
+---
+
+<Layout title="セオリー解説記事一覧">
+	<h1>セオリー解説記事一覧</h1>
+
+	<div class="filter-group">
+		<span class="filter-label">難易度</span>
+		<div class="filter-row" role="group" aria-label="難易度で絞り込み">
+			<button type="button" class="filter-btn is-active" data-category-filter="all">
+				すべて
+			</button>
+			{
+				ARTICLE_CATEGORY_ORDER.map((category) => (
+					<button type="button" class="filter-btn" data-category-filter={category}>
+						{ARTICLE_CATEGORY_LABELS[category]}
+					</button>
+				))
+			}
+		</div>
+	</div>
+
+	{
+		usedTags.length > 0 && (
+			<div class="filter-group">
+				<span class="filter-label">タグ</span>
+				<div class="filter-row" role="group" aria-label="タグで絞り込み">
+					<button type="button" class="filter-btn is-active" data-tag-filter="all">
+						すべて
+					</button>
+					{usedTags.map((tag) => (
+						<button type="button" class="filter-btn" data-tag-filter={tag}>
+							{tag}
+						</button>
+					))}
+				</div>
+			</div>
+		)
+	}
+
+	<ul class="article-grid" id="article-list">
+		{
+			allArticles.map((article) => (
+				<ArticleCard
+					slug={article.data.slug}
+					title={article.data.title}
+					excerpt={article.data.excerpt}
+					category={article.data.category}
+					tags={article.data.tags}
+					thumbnail={article.data.thumbnail}
+				/>
+			))
+		}
+	</ul>
+	<p class="no-results" hidden>
+		該当する記事がありません。
+	</p>
+	<nav class="pagination" id="pagination"></nav>
+</Layout>
+
+<script>
+	const PAGE_SIZE = 12; // 3列×4段ぶん
+
+	const categoryButtons = document.querySelectorAll<HTMLButtonElement>('[data-category-filter]');
+	const tagButtons = document.querySelectorAll<HTMLButtonElement>('[data-tag-filter]');
+	const items = document.querySelectorAll<HTMLLIElement>('#article-list > li');
+	const noResults = document.querySelector<HTMLParagraphElement>('.no-results');
+	const pagination = document.querySelector<HTMLElement>('#pagination');
+
+	let selectedCategory: string | null = null;
+	const selectedTags = new Set<string>();
+	let currentPage = 1;
+
+	function render() {
+		const matched = Array.from(items).filter((item) => {
+			const categoryOk = !selectedCategory || item.dataset.category === selectedCategory;
+			const tags = (item.dataset.tags ?? '').split('\t').filter(Boolean);
+			const tagsOk = selectedTags.size === 0 || tags.some((t) => selectedTags.has(t));
+			return categoryOk && tagsOk;
+		});
+
+		const totalPages = Math.max(1, Math.ceil(matched.length / PAGE_SIZE));
+		currentPage = Math.min(currentPage, totalPages);
+		const start = (currentPage - 1) * PAGE_SIZE;
+		const visibleSet = new Set(matched.slice(start, start + PAGE_SIZE));
+
+		items.forEach((item) => {
+			item.hidden = !visibleSet.has(item);
+		});
+
+		if (noResults) noResults.hidden = matched.length > 0;
+		renderPagination(totalPages);
+	}
+
+	function renderPagination(totalPages: number) {
+		if (!pagination) return;
+		pagination.innerHTML = '';
+		if (totalPages <= 1) return;
+
+		for (let page = 1; page <= totalPages; page++) {
+			const button = document.createElement('button');
+			button.type = 'button';
+			button.textContent = String(page);
+			button.className = 'page-btn' + (page === currentPage ? ' is-active' : '');
+			button.addEventListener('click', () => {
+				currentPage = page;
+				render();
+				pagination.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+			});
+			pagination.appendChild(button);
+		}
+	}
+
+	categoryButtons.forEach((button) => {
+		button.addEventListener('click', () => {
+			const value = button.dataset.categoryFilter;
+			selectedCategory = value === 'all' ? null : (value ?? null);
+			categoryButtons.forEach((b) => b.classList.toggle('is-active', b === button));
+			currentPage = 1;
+			render();
+		});
+	});
+
+	const tagAllButton = document.querySelector<HTMLButtonElement>('[data-tag-filter="all"]');
+	tagButtons.forEach((button) => {
+		button.addEventListener('click', () => {
+			const value = button.dataset.tagFilter;
+			if (value === 'all') {
+				selectedTags.clear();
+				tagButtons.forEach((b) => b.classList.remove('is-active'));
+				tagAllButton?.classList.add('is-active');
+			} else if (value) {
+				if (selectedTags.has(value)) {
+					selectedTags.delete(value);
+					button.classList.remove('is-active');
+				} else {
+					selectedTags.add(value);
+					button.classList.add('is-active');
+				}
+				tagAllButton?.classList.toggle('is-active', selectedTags.size === 0);
+			}
+			currentPage = 1;
+			render();
+		});
+	});
+
+	// URLクエリで初期状態を復元する（/articles/ からの「すべて表示」リンク、
+	// 記事カードのタグクリックからの遷移で使う）。
+	const params = new URLSearchParams(window.location.search);
+	const initialCategory = params.get('category');
+	const initialTag = params.get('tag');
+
+	if (initialCategory) {
+		const button = document.querySelector<HTMLButtonElement>(
+			`[data-category-filter="${CSS.escape(initialCategory)}"]`
+		);
+		button?.click();
+	}
+	if (initialTag) {
+		const button = document.querySelector<HTMLButtonElement>(`[data-tag-filter="${CSS.escape(initialTag)}"]`);
+		button?.click();
+	}
+
+	render();
+</script>
+
+<style>
+	.filter-group {
+		margin-top: 16px;
+	}
+
+	.filter-label {
+		display: block;
+		margin-bottom: 6px;
+		color: var(--ink-soft);
+		font-size: 0.8rem;
+		font-weight: 700;
+	}
+
+	.filter-row {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+	}
+
+	.filter-btn {
+		--filter-color: var(--ink-soft);
+		font-family: var(--font-body);
+		font-weight: 700;
+		font-size: 0.85rem;
+		padding: 6px 16px;
+		border-radius: 999px;
+		border: 1.5px solid var(--filter-color);
+		background: var(--surface);
+		color: var(--filter-color);
+		cursor: pointer;
+		transition: transform 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+	}
+
+	.filter-btn:hover {
+		transform: translateY(-2px);
+	}
+
+	.filter-btn.is-active {
+		background: var(--filter-color);
+		color: #fff;
+	}
+
+	.no-results {
+		margin-top: 24px;
+		color: var(--ink-soft);
+	}
+
+	.article-grid {
+		list-style: none;
+		margin: 24px 0 0;
+		padding: 0;
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+		gap: 16px;
+	}
+
+	.pagination {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 8px;
+		margin-top: 24px;
+	}
+
+	.pagination :global(.page-btn) {
+		width: 36px;
+		height: 36px;
+		border-radius: 999px;
+		border: 1.5px solid #e5e9f2;
+		background: var(--surface);
+		color: var(--ink);
+		font-weight: 700;
+		cursor: pointer;
+		transition: border-color 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+	}
+
+	.pagination :global(.page-btn:hover) {
+		border-color: var(--blue);
+	}
+
+	.pagination :global(.page-btn.is-active) {
+		background: var(--blue);
+		border-color: var(--blue);
+		color: #fff;
+	}
+</style>

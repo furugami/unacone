@@ -74,6 +74,10 @@ const articles = defineCollection({
     slug: z.string(),
     title: z.string(),
     category: z.enum(['beginner', 'intermediate', 'advanced']),
+    // 内容タグ（任意、複数）。「上ルート」「スピード型」等、難易度以外の切り口で記事を
+    // 探しやすくするための自由入力タグ。難易度（category）は引き続き必須・単一で、
+    // 一覧ページの3カテゴリ分けの主軸として使う。2026/08/31追加。
+    tags: z.array(z.string()).optional(),
     publish_date: z.date(),
     excerpt: z.string(),
     thumbnail: z.string().optional(),

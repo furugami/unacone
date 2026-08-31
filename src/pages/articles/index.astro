@@ -1,11 +1,17 @@
 ---
 // セオリー解説記事の目次ページ（/articles/）。
-// 難易度カテゴリ（初心者/中級/上級）ごとにセクション分けして表示する。
+// 難易度カテゴリ（初心者/中級/上級）ごとにセクション分けし、グリッドで表示する。
+// 各カテゴリは新しい順に2段（6件）までのプレビューに留め、それを超える分は
+// 「すべての◯◯向け記事を表示」リンクから /articles/all/（全件フィルタページ）に遷移する
+// （2026/08/31、運営者要望でグリッド化・タグ機能とあわせて改修）。
 // 参照: CLAUDE.md「セオリー解説記事 コンテンツモデル」
 import Layout from '../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 import { ARTICLE_CATEGORY_LABELS, ARTICLE_CATEGORY_ORDER } from '../../lib/articles';
 import { withBase } from '../../lib/url';
+import ArticleCard from '../../components/ArticleCard.astro';
+
+const PREVIEW_LIMIT = 6; // 3列×2段ぶん
 
 const allArticles = await getCollection('articles');
 
@@ -15,8 +21,12 @@ const sections = ARTICLE_CATEGORY_ORDER.map((category) => {
 	const articlesInCategory = allArticles
 		.filter((a) => a.data.category === category)
 		.sort((a, b) => b.data.publish_date.valueOf() - a.data.publish_date.valueOf());
-	return { category, articlesInCategory };
-}).filter((section) => section.articlesInCategory.length > 0);
+	return {
+		category,
+		preview: articlesInCategory.slice(0, PREVIEW_LIMIT),
+		hasMore: articlesInCategory.length > PREVIEW_LIMIT,
+	};
+}).filter((section) => section.preview.length > 0);
 ---
 
 <Layout title="セオリー解説記事">
@@ -26,28 +36,30 @@ const sections = ARTICLE_CATEGORY_ORDER.map((category) => {
 		sections.map((section) => (
 			<section class="category-section">
 				<h2>{ARTICLE_CATEGORY_LABELS[section.category]}</h2>
-				<ul class="article-list">
-					{section.articlesInCategory.map((article) => (
-						<li>
-							<a href={withBase(`/articles/${article.data.slug}/`)}>
-								{article.data.thumbnail && (
-									<img src={article.data.thumbnail} alt="" class="thumbnail" />
-								)}
-								<span class="text">
-									<span class="title">{article.data.title}</span>
-									<span class="excerpt">{article.data.excerpt}</span>
-								</span>
-							</a>
-						</li>
+				<ul class="article-grid">
+					{section.preview.map((article) => (
+						<ArticleCard
+							slug={article.data.slug}
+							title={article.data.title}
+							excerpt={article.data.excerpt}
+							category={article.data.category}
+							tags={article.data.tags}
+							thumbnail={article.data.thumbnail}
+						/>
 					))}
 				</ul>
+				{section.hasMore && (
+					<p class="more-link">
+						<a href={withBase(`/articles/all/?category=${section.category}`)}>
+							すべての{ARTICLE_CATEGORY_LABELS[section.category]}記事を表示 →
+						</a>
+					</p>
+				)}
 			</section>
 		))
 	}
 
-	{
-		sections.length === 0 && <p>準備中です。もうしばらくお待ちください。</p>
-	}
+	{sections.length === 0 && <p>準備中です。もうしばらくお待ちください。</p>}
 </Layout>
 
 <style>
@@ -55,57 +67,28 @@ const sections = ARTICLE_CATEGORY_ORDER.map((category) => {
 		margin-top: 32px;
 	}
 
-	.article-list {
+	.article-grid {
 		list-style: none;
 		margin: 16px 0 0;
 		padding: 0;
-		display: flex;
-		flex-direction: column;
-		gap: 12px;
-	}
-
-	.article-list a {
-		display: flex;
-		align-items: center;
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
 		gap: 16px;
-		padding: 16px;
-		background: var(--surface);
-		border: 1.5px solid #e5e9f2;
-		border-radius: var(--radius);
-		text-decoration: none;
-		box-shadow: 0 2px 8px rgba(27, 34, 51, 0.07);
-		transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
 	}
 
-	.article-list a:hover {
-		transform: translateY(-3px);
-		box-shadow: 0 10px 20px rgba(76, 111, 255, 0.15);
-		border-color: var(--blue);
+	.more-link {
+		margin: 12px 0 0;
+		text-align: right;
 	}
 
-	.thumbnail {
-		flex-shrink: 0;
-		width: 96px;
-		height: 96px;
-		object-fit: cover;
-		border-radius: calc(var(--radius) - 4px);
-	}
-
-	.text {
-		display: block;
-		min-width: 0;
-	}
-
-	.title {
-		display: block;
-		font-family: var(--font-heading);
+	.more-link a {
+		color: var(--blue);
 		font-weight: 700;
+		font-size: 0.9rem;
+		text-decoration: none;
 	}
 
-	.excerpt {
-		display: block;
-		margin-top: 4px;
-		color: var(--ink-soft);
-		font-size: 0.9rem;
+	.more-link a:hover {
+		text-decoration: underline;
 	}
 </style>

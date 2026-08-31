@@ -3,6 +3,7 @@
 import Layout from '../../layouts/Layout.astro';
 import { getCollection, render } from 'astro:content';
 import { ARTICLE_CATEGORY_LABELS } from '../../lib/articles';
+import { withBase } from '../../lib/url';
 
 export async function getStaticPaths() {
 	const allArticles = await getCollection('articles');
@@ -14,17 +15,29 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
-const { title, category, publish_date } = entry.data;
+const { title, category, tags, publish_date, thumbnail } = entry.data;
 ---
 
 <Layout title={title}>
 	<article>
 		<header class="article-header">
+			{thumbnail && <img src={thumbnail} alt="" class="thumbnail" />}
 			<span class="category-badge">{ARTICLE_CATEGORY_LABELS[category]}</span>
 			<h1>{title}</h1>
 			<p class="publish-date">
 				{publish_date.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' })}
 			</p>
+			{
+				tags && tags.length > 0 && (
+					<div class="tags">
+						{tags.map((tag) => (
+							<a href={withBase(`/articles/all/?tag=${encodeURIComponent(tag)}`)} class="tag-pill">
+								{tag}
+							</a>
+						))}
+					</div>
+				)
+			}
 		</header>
 
 		<div class="article-body">
@@ -36,6 +49,15 @@ const { title, category, publish_date } = entry.data;
 <style>
 	.article-header {
 		margin-bottom: 24px;
+	}
+
+	.thumbnail {
+		display: block;
+		width: 100%;
+		max-height: 320px;
+		object-fit: cover;
+		border-radius: var(--radius);
+		margin-bottom: 16px;
 	}
 
 	.category-badge {
@@ -52,6 +74,32 @@ const { title, category, publish_date } = entry.data;
 	.publish-date {
 		color: var(--ink-soft);
 		font-size: 0.85rem;
+	}
+
+	.tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 6px;
+		margin-top: 8px;
+	}
+
+	.tag-pill {
+		display: inline-flex;
+		align-items: center;
+		padding: 3px 12px;
+		border-radius: 999px;
+		background: color-mix(in srgb, var(--ink-soft) 10%, white);
+		border: 1.5px solid color-mix(in srgb, var(--ink-soft) 30%, white);
+		color: var(--ink-soft);
+		font-size: 0.78rem;
+		font-weight: 700;
+		text-decoration: none;
+		transition: border-color 0.15s ease, color 0.15s ease;
+	}
+
+	.tag-pill:hover {
+		border-color: var(--blue);
+		color: var(--blue);
 	}
 
 	.article-body {

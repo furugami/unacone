@@ -1,0 +1,151 @@
+---
+// セオリー解説記事のカード（グリッド用）。一覧ページ・全件フィルタページの両方で共通利用する。
+// タグはタグ絞り込みページ（/articles/all/?tag=...）へのリンクになるため、記事本体へのリンクとは
+// 別のアンカーにして入れ子のaタグを避けている。
+// data-category/data-tags は /articles/all/ の絞り込みスクリプトが参照する（他ページでは未使用）。
+import { withBase } from '../lib/url';
+import { ARTICLE_CATEGORY_LABELS } from '../lib/articles';
+
+interface Props {
+	slug: string;
+	title: string;
+	excerpt: string;
+	category: string;
+	tags?: string[];
+	thumbnail?: string;
+}
+
+const { slug, title, excerpt, category, tags = [], thumbnail } = Astro.props;
+---
+
+<li class="article-card" data-category={category} data-tags={tags.join('\t')}>
+	<a href={withBase(`/articles/${slug}/`)} class="card-link">
+		{
+			thumbnail ? (
+				<img src={thumbnail} alt="" class="thumbnail" />
+			) : (
+				<div class="thumbnail thumbnail-placeholder" />
+			)
+		}
+		<div class="body">
+			<span class="category-badge">{ARTICLE_CATEGORY_LABELS[category]}</span>
+			<span class="title">{title}</span>
+			<span class="excerpt">{excerpt}</span>
+		</div>
+	</a>
+	{
+		tags.length > 0 && (
+			<div class="tags">
+				{tags.map((tag) => (
+					<a href={withBase(`/articles/all/?tag=${encodeURIComponent(tag)}`)} class="tag-pill">
+						{tag}
+					</a>
+				))}
+			</div>
+		)
+	}
+</li>
+
+<style>
+	/* hidden属性と.article-cardのdisplay:flexが詳細度で衝突し、hidden指定が無視されるのを防ぐ
+	   （フィルタ絞り込みで使用。JS側でhidden属性をtrueにしても消えなくなる不具合の対策）。 */
+	.article-card[hidden] {
+		display: none;
+	}
+
+	.article-card {
+		display: flex;
+		flex-direction: column;
+		background: var(--surface);
+		border: 1.5px solid #e5e9f2;
+		border-radius: var(--radius);
+		box-shadow: 0 2px 8px rgba(27, 34, 51, 0.07);
+		overflow: hidden;
+		transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+	}
+
+	.article-card:has(.card-link:hover) {
+		transform: translateY(-3px);
+		box-shadow: 0 10px 20px rgba(76, 111, 255, 0.15);
+		border-color: var(--blue);
+	}
+
+	.card-link {
+		display: block;
+		text-decoration: none;
+		color: var(--ink);
+	}
+
+	.thumbnail {
+		display: block;
+		width: 100%;
+		aspect-ratio: 16 / 9;
+		object-fit: cover;
+		background: color-mix(in srgb, var(--blue) 8%, white);
+	}
+
+	.thumbnail-placeholder {
+		background: linear-gradient(135deg, color-mix(in srgb, var(--blue) 12%, white), color-mix(in srgb, var(--amber) 12%, white));
+	}
+
+	.body {
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+		padding: 14px;
+	}
+
+	.category-badge {
+		align-self: flex-start;
+		padding: 2px 10px;
+		border-radius: 999px;
+		background: var(--blue);
+		color: #fff;
+		font-weight: 700;
+		font-size: 0.72rem;
+		box-shadow: 0 2px 6px rgba(76, 111, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+	}
+
+	.title {
+		display: block;
+		font-family: var(--font-heading);
+		font-weight: 700;
+		line-height: 1.4;
+	}
+
+	.excerpt {
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+		color: var(--ink-soft);
+		font-size: 0.85rem;
+		line-height: 1.6;
+	}
+
+	.tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 6px;
+		padding: 0 14px 14px;
+	}
+
+	.tag-pill {
+		display: inline-flex;
+		align-items: center;
+		padding: 2px 10px;
+		border-radius: 999px;
+		background: color-mix(in srgb, var(--ink-soft) 10%, white);
+		border: 1.5px solid color-mix(in srgb, var(--ink-soft) 30%, white);
+		color: var(--ink-soft);
+		font-size: 0.72rem;
+		font-weight: 700;
+		text-decoration: none;
+		transition: border-color 0.15s ease, color 0.15s ease;
+	}
+
+	.tag-pill:hover {
+		border-color: var(--blue);
+		color: var(--blue);
+	}
+</style>
