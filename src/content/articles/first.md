@@ -7,5 +7,6 @@ excerpt: |-
   こんな方におすすめ！
   ポケモンユナイトを始めたい方
   始めてみたけどちんぷんかんぷんな方
+thumbnail: /unacone/images/uploads/articles/unite.jpeg
 ---
 このゲームは5vs5の対人ゲームです。
