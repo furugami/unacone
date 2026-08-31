@@ -369,6 +369,28 @@ collections:
       - { label: "要約（一覧に表示）", name: "summary", widget: "text" }
       - { label: "入手条件・効果の説明（本文）", name: "body", widget: "markdown" }
 
+  - name: "medal-set"
+    label: "おすすめメダルセット"
+    files:
+      - name: "medal-set"
+        label: "おすすめメダルセット編集"
+        file: "src/content/config/medal-set.md"
+        fields:
+          - label: "メダル（メダル図鑑から選択、最大10個）"
+            name: "medals"
+            widget: "list"
+            required: false
+            max: 10
+            field:
+              label: "メダル"
+              name: "medal"
+              widget: "relation"
+              collection: "medals"
+              search_fields: ["name_ja"]
+              value_field: "slug"
+              display_fields: ["name_ja"]
+              options_length: 999
+
   - name: "settings"
     label: "各種設定"
     files:

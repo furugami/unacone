@@ -8,20 +8,44 @@ import { withBase } from '../../lib/url';
 const medals = (await getCollection('medals')).sort((a, b) =>
 	a.data.name_ja.localeCompare(b.data.name_ja, 'ja')
 );
+
+// おすすめメダルセット（CMSの「おすすめメダルセット」から編集、最大10個。2026/08/31追加）。
+// 一覧ページ上部に表示する。
+const medalBySlug = new Map(medals.map((m) => [m.data.slug, m]));
+const medalSetEntry = (await getCollection('medal-set'))[0];
+const recommendedMedals = (medalSetEntry?.data.medals ?? [])
+	.map((slug) => medalBySlug.get(slug))
+	.filter((m): m is NonNullable<typeof m> => Boolean(m));
 ---
 
 <Layout title="メダル">
 	<h1>メダル</h1>
-	<ul class="item-list">
+
+	{
+		recommendedMedals.length > 0 && (
+			<section class="recommended-section">
+				<h2>おすすめメダルセット</h2>
+				<ul class="item-grid">
+					{recommendedMedals.map((item) => (
+						<li>
+							<a href={withBase(`/medals/${item.data.slug}/`)}>
+								{item.data.icon && <img src={item.data.icon} alt="" class="icon" />}
+								<span class="name">{item.data.name_ja}</span>
+							</a>
+						</li>
+					))}
+				</ul>
+			</section>
+		)
+	}
+
+	<ul class="item-grid">
 		{
 			medals.map((item) => (
 				<li>
 					<a href={withBase(`/medals/${item.data.slug}/`)}>
 						{item.data.icon && <img src={item.data.icon} alt="" class="icon" />}
-						<span class="text">
-							<span class="name">{item.data.name_ja}</span>
-							<span class="summary">{item.data.summary}</span>
-						</span>
+						<span class="name">{item.data.name_ja}</span>
 					</a>
 				</li>
 			))
@@ -31,20 +55,27 @@ const medals = (await getCollection('medals')).sort((a, b) =>
 </Layout>
 
 <style>
-	.item-list {
+	.recommended-section {
+		margin-bottom: 32px;
+	}
+
+	.item-grid {
 		list-style: none;
 		margin: 24px 0 0;
 		padding: 0;
-		display: flex;
-		flex-direction: column;
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
 		gap: 12px;
 	}
 
-	.item-list a {
+	.item-grid a {
 		display: flex;
+		flex-direction: column;
 		align-items: center;
-		gap: 12px;
-		padding: 16px;
+		text-align: center;
+		gap: 6px;
+		padding: 16px 12px;
+		height: 100%;
 		background: var(--surface);
 		border: 1.5px solid #e5e9f2;
 		border-radius: var(--radius);
@@ -53,34 +84,20 @@ const medals = (await getCollection('medals')).sort((a, b) =>
 		transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
 	}
 
-	.item-list a:hover {
+	.item-grid a:hover {
 		transform: translateY(-3px);
 		box-shadow: 0 10px 20px rgba(76, 111, 255, 0.15);
 		border-color: var(--blue);
 	}
 
 	.icon {
-		width: 40px;
-		height: 40px;
+		width: 48px;
+		height: 48px;
 		object-fit: contain;
-		flex-shrink: 0;
-	}
-
-	.text {
-		display: flex;
-		flex-direction: column;
 	}
 
 	.name {
-		display: block;
 		font-family: var(--font-heading);
 		font-weight: 700;
-	}
-
-	.summary {
-		display: block;
-		margin-top: 4px;
-		color: var(--ink-soft);
-		font-size: 0.9rem;
 	}
 </style>

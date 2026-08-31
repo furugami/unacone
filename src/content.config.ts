@@ -166,6 +166,15 @@ const medals = defineCollection({
   }),
 });
 
+// おすすめメダルセット（単一ファイル）。メダル図鑑のslugを最大10個まで選び、
+// メダル一覧ページ（/medals/）の上部に表示する（2026/08/31追加、運営者要望）。
+const medalSet = defineCollection({
+  loader: glob({ pattern: 'medal-set.md', base: './src/content/config' }),
+  schema: z.object({
+    medals: z.array(z.string()).max(10).optional(),
+  }),
+});
+
 // ポケモンTier表（単一ファイル）。tierは頻繁なメタ変動でポケモンに固定の属性ではないため、
 // pokemon-jp側の個別フィールドではなく、ここでTierごとの掲載ポケモン一覧として一元管理する
 // （2026/08/31、運営者要望で「tier編集ページ」として独立させた）。
@@ -197,6 +206,7 @@ export const collections = {
   'held-items': heldItems,
   'battle-items': battleItems,
   medals,
+  'medal-set': medalSet,
   'tier-list': tierList,
   'schedule-settings': scheduleSettings,
 };
