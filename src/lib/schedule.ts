@@ -255,13 +255,16 @@ async function fetchYoutubeByKeyword(
 	}
 }
 
-export function fetchYoutubeUpcomingByKeyword(keyword: string, maxResults = 10): Promise<ScheduleEntry[]> {
+// maxResultsはsearch.list APIの上限である50をデフォルトにしている。search.listのquotaコストは
+// maxResultsの値に関わらず1回100units固定（結果件数を増やしてもコスト増にはならない）ため、
+// 上限まで取得してヒット漏れを減らす（2026/08/31、10件では取りこぼしが発生したため50に変更）。
+export function fetchYoutubeUpcomingByKeyword(keyword: string, maxResults = 50): Promise<ScheduleEntry[]> {
 	return fetchYoutubeByKeyword(keyword, 'upcoming', maxResults);
 }
 
 // キーワードで現在配信中のものを広く検索する（2026/08/31追加）。
 // search.list 100 + videos.list 1 + channels.list 1 ≒ 102ユニット、既存のfetchYoutubeUpcomingByKeyword
-// と同じコストが上乗せされる。
-export function fetchYoutubeLiveByKeyword(keyword: string, maxResults = 10): Promise<ScheduleEntry[]> {
+// と同じコストが上乗せされる（maxResultsを増やしてもこのコストは変わらない）。
+export function fetchYoutubeLiveByKeyword(keyword: string, maxResults = 50): Promise<ScheduleEntry[]> {
 	return fetchYoutubeByKeyword(keyword, 'live', maxResults);
 }
