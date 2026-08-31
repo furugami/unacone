@@ -22,6 +22,8 @@ export type ScheduleEntry = {
 const STREAM_TAG_KEYWORDS: Record<string, string[]> = {
 	参加型: ['参加型', '視聴者参加型'],
 	ソロラン: ['ソロラン', 'ソロランクマ'],
+	カスタム: ['カスタム'],
+	コラボ: ['コラボ'],
 };
 
 export function detectStreamTags(title: string): string[] {
