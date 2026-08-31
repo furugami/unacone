@@ -6,6 +6,7 @@
 import Layout from '../../layouts/Layout.astro';
 import ScheduleTable from '../../components/ScheduleTable.astro';
 import { getCollection } from 'astro:content';
+import { withBase } from '../../lib/url';
 import {
 	fetchTwitchSchedule,
 	fetchTwitchLive,
@@ -13,8 +14,13 @@ import {
 	fetchYoutubeLive,
 	fetchYoutubeUpcomingByKeyword,
 	fetchYoutubeLiveByKeyword,
+	filterAndSortDiscoveredLive,
 	type ScheduleEntry,
 } from '../../lib/schedule';
+
+// トップページに表示する広域検索LIVEの最大件数。超える分は「すべてのライブ中配信を表示」
+// リンク先（/schedule/live/）でまとめて見られるようにする（2026/08/31追加、運営者要望）。
+const DISCOVERED_LIVE_LIMIT = 10;
 
 const streamers = await getCollection('streamers');
 
@@ -62,9 +68,15 @@ const notDuplicateOrExcluded = (entry: ScheduleEntry) =>
 	(!entry.channelId || !registeredYoutubeChannelIds.has(entry.channelId)) &&
 	(!entry.channelName || !excludedChannelNames.has(entry.channelName.trim()));
 
-const discoveredLiveEntries = (await fetchYoutubeLiveByKeyword('ポケモンユナイト'))
-	.filter(notDuplicateOrExcluded)
-	.sort((a, b) => a.startTime.valueOf() - b.startTime.valueOf());
+// LIVEはチャンネル登録者数が多い順に並べ、件数が多いときはトップページには上位のみ表示する。
+const discoveredLiveEntriesAll = filterAndSortDiscoveredLive(
+	await fetchYoutubeLiveByKeyword('ポケモンユナイト'),
+	registeredYoutubeChannelIds,
+	excludedChannelNames
+);
+const discoveredLiveEntries = discoveredLiveEntriesAll.slice(0, DISCOVERED_LIVE_LIMIT);
+const hasMoreDiscoveredLive = discoveredLiveEntriesAll.length > DISCOVERED_LIVE_LIMIT;
+
 const discoveredEntries = (await fetchYoutubeUpcomingByKeyword('ポケモンユナイト'))
 	.filter(inRange)
 	.filter(notDuplicateOrExcluded)
@@ -93,20 +105,25 @@ const discoveredEntries = (await fetchYoutubeUpcomingByKeyword('ポケモンユ�
 	}
 
 	{
-		(discoveredLiveEntries.length > 0 || discoveredEntries.length > 0) && (
+		(discoveredLiveEntriesAll.length > 0 || discoveredEntries.length > 0) && (
 			<section class="discovered-section">
 				<h2>その他のユナイト配信（YouTube検索）</h2>
 				<p class="discovered-note">
 					「ポケモンユナイト」でYouTubeを検索して見つかった配信です。無関係な動画が混ざる場合があります。
 				</p>
 				<ScheduleTable liveEntries={discoveredLiveEntries} entries={discoveredEntries} showChannelName />
+				{hasMoreDiscoveredLive && (
+					<p class="live-more-link">
+						<a href={withBase('/schedule/live/')}>すべてのライブ中配信を表示 →</a>
+					</p>
+				)}
 			</section>
 		)
 	}
 
 	{
 		scheduleByStreamer.length === 0 &&
-			discoveredLiveEntries.length === 0 &&
+			discoveredLiveEntriesAll.length === 0 &&
 			discoveredEntries.length === 0 && <p>現在、3日以内の配信予定は見つかりませんでした。</p>
 	}
 </Layout>
@@ -153,5 +170,21 @@ const discoveredEntries = (await fetchYoutubeUpcomingByKeyword('ポケモンユ�
 		margin: 4px 0 16px;
 		color: var(--ink-soft);
 		font-size: 0.8rem;
+	}
+
+	.live-more-link {
+		margin: 12px 0 0;
+		text-align: right;
+	}
+
+	.live-more-link a {
+		color: var(--blue);
+		font-weight: 700;
+		font-size: 0.9rem;
+		text-decoration: none;
+	}
+
+	.live-more-link a:hover {
+		text-decoration: underline;
 	}
 </style>

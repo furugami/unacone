@@ -18,6 +18,9 @@ export type ScheduleEntry = {
 	// 配信中かどうか（2026/08/31追加）。trueの場合startTimeは実際の配信開始時刻を表す。
 	// cronの更新間隔（30分程度）ぶんのラグは許容する前提。
 	isLive?: boolean;
+	// チャンネル登録者数（2026/08/31追加）。キーワード検索でヒットした場合のみ設定。
+	// 非公開設定のチャンネルでは取得できないためundefinedになりうる。
+	subscriberCount?: number;
 };
 
 // 配信タイトルのキーワードから「参加型」「ソロラン」を判定してタグ付けする。
@@ -33,6 +36,14 @@ export function detectStreamTags(title: string): string[] {
 	return Object.entries(STREAM_TAG_KEYWORDS)
 		.filter(([, keywords]) => keywords.some((keyword) => title.includes(keyword)))
 		.map(([tag]) => tag);
+}
+
+// タイトルに日本語（ひらがな・カタカナ・漢字）が含まれるかで、日本語話者向けの配信かを
+// 簡易判定する（2026/08/31追加）。detectStreamTagsと同じく精度100%は狙わない設計だが、
+// 海外配信者のタイトルは英語等のみで構成されることが多く実用上十分な精度が見込める。
+const JAPANESE_CHAR_PATTERN = /[぀-ヿ一-鿿]/;
+export function looksJapanese(title: string): boolean {
+	return JAPANESE_CHAR_PATTERN.test(title);
 }
 
 async function getTwitchAppToken(clientId: string, clientSecret: string): Promise<string | null> {
@@ -213,23 +224,28 @@ async function fetchYoutubeByKeyword(
 
 		const timeField = eventType === 'live' ? 'actualStartTime' : 'scheduledStartTime';
 		const items = (videosData.items ?? []).filter(
-			(item: { liveStreamingDetails?: Record<string, string | undefined> }) =>
-				item.liveStreamingDetails?.[timeField]
+			(item: { snippet: { title: string }; liveStreamingDetails?: Record<string, string | undefined> }) =>
+				item.liveStreamingDetails?.[timeField] && looksJapanese(item.snippet.title)
 		);
 
-		// チャンネルアイコンをまとめて取得（重複除去して1回のAPI呼び出しに集約）。
+		// チャンネルアイコン・登録者数をまとめて取得（重複除去して1回のAPI呼び出しに集約）。
 		const uniqueChannelIds = [
 			...new Set(items.map((item: { snippet: { channelId: string } }) => item.snippet.channelId)),
 		];
 		const channelIcons = new Map<string, string>();
+		const channelSubscriberCounts = new Map<string, number>();
 		if (uniqueChannelIds.length > 0) {
-			const channelsUrl = `https://www.googleapis.com/youtube/v3/channels?key=${apiKey}&id=${uniqueChannelIds.join(',')}&part=snippet`;
+			const channelsUrl = `https://www.googleapis.com/youtube/v3/channels?key=${apiKey}&id=${uniqueChannelIds.join(',')}&part=snippet,statistics`;
 			const channelsRes = await fetch(channelsUrl);
 			if (channelsRes.ok) {
 				const channelsData = await channelsRes.json();
 				for (const channel of channelsData.items ?? []) {
 					const iconUrl = channel.snippet?.thumbnails?.default?.url;
 					if (iconUrl) channelIcons.set(channel.id, iconUrl);
+					// 登録者数を非公開にしているチャンネルはsubscriberCountが返らないためスキップする。
+					if (!channel.statistics?.hiddenSubscriberCount && channel.statistics?.subscriberCount) {
+						channelSubscriberCounts.set(channel.id, Number(channel.statistics.subscriberCount));
+					}
 				}
 			}
 		}
@@ -245,6 +261,7 @@ async function fetchYoutubeByKeyword(
 				channelName: item.snippet.channelTitle,
 				channelId: item.snippet.channelId,
 				channelIcon: channelIcons.get(item.snippet.channelId),
+				subscriberCount: channelSubscriberCounts.get(item.snippet.channelId),
 				startTime: new Date(item.liveStreamingDetails[timeField]),
 				url: `https://www.youtube.com/watch?v=${item.id}`,
 				isLive: eventType === 'live',
@@ -255,16 +272,48 @@ async function fetchYoutubeByKeyword(
 	}
 }
 
+// 同じビルド内で複数ページから同じキーワード検索を呼んだ場合に、YouTube APIへの
+// 二重リクエスト（quotaの二重消費）を避けるための簡易キャッシュ（2026/08/31追加）。
+// 「/schedule/」と「/schedule/live/」の両方から同じ検索結果を使うために導入。
+const youtubeKeywordCache = new Map<string, Promise<ScheduleEntry[]>>();
+function fetchYoutubeByKeywordCached(
+	keyword: string,
+	eventType: 'upcoming' | 'live',
+	maxResults: number
+): Promise<ScheduleEntry[]> {
+	const cacheKey = `${eventType}:${keyword}:${maxResults}`;
+	if (!youtubeKeywordCache.has(cacheKey)) {
+		youtubeKeywordCache.set(cacheKey, fetchYoutubeByKeyword(keyword, eventType, maxResults));
+	}
+	return youtubeKeywordCache.get(cacheKey)!;
+}
+
 // maxResultsはsearch.list APIの上限である50をデフォルトにしている。search.listのquotaコストは
 // maxResultsの値に関わらず1回100units固定（結果件数を増やしてもコスト増にはならない）ため、
 // 上限まで取得してヒット漏れを減らす（2026/08/31、10件では取りこぼしが発生したため50に変更）。
 export function fetchYoutubeUpcomingByKeyword(keyword: string, maxResults = 50): Promise<ScheduleEntry[]> {
-	return fetchYoutubeByKeyword(keyword, 'upcoming', maxResults);
+	return fetchYoutubeByKeywordCached(keyword, 'upcoming', maxResults);
 }
 
 // キーワードで現在配信中のものを広く検索する（2026/08/31追加）。
 // search.list 100 + videos.list 1 + channels.list 1 ≒ 102ユニット、既存のfetchYoutubeUpcomingByKeyword
 // と同じコストが上乗せされる（maxResultsを増やしてもこのコストは変わらない）。
 export function fetchYoutubeLiveByKeyword(keyword: string, maxResults = 50): Promise<ScheduleEntry[]> {
-	return fetchYoutubeByKeyword(keyword, 'live', maxResults);
+	return fetchYoutubeByKeywordCached(keyword, 'live', maxResults);
+}
+
+// 広域検索（配信中）の結果から、登録配信者と重複するもの・除外リストに含まれるものを取り除き、
+// チャンネル登録者数の多い順に並べ替える（2026/08/31追加、運営者要望）。
+export function filterAndSortDiscoveredLive(
+	entries: ScheduleEntry[],
+	registeredYoutubeChannelIds: Set<string>,
+	excludedChannelNames: Set<string>
+): ScheduleEntry[] {
+	return entries
+		.filter(
+			(entry) =>
+				(!entry.channelId || !registeredYoutubeChannelIds.has(entry.channelId)) &&
+				(!entry.channelName || !excludedChannelNames.has(entry.channelName.trim()))
+		)
+		.sort((a, b) => (b.subscriberCount ?? 0) - (a.subscriberCount ?? 0));
 }

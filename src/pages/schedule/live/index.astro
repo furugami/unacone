@@ -1,0 +1,66 @@
+---
+// すべてのライブ中配信ページ（/schedule/live/）。/schedule/ のLIVE一覧が件数超過で
+// 見づらいという運営者要望により、上位10件のみ表示するトップページから
+// このページへのリンクで全件を見られるようにする（2026/08/31追加）。
+import Layout from '../../../layouts/Layout.astro';
+import ScheduleTable from '../../../components/ScheduleTable.astro';
+import { getCollection } from 'astro:content';
+import { withBase } from '../../../lib/url';
+import { fetchYoutubeLiveByKeyword, filterAndSortDiscoveredLive } from '../../../lib/schedule';
+
+const streamers = await getCollection('streamers');
+const scheduleSettings = (await getCollection('schedule-settings'))[0];
+const excludedChannelNames = new Set(
+	(scheduleSettings?.data.excluded_channel_names ?? []).map((name) => name.trim())
+);
+const registeredYoutubeChannelIds = new Set(
+	streamers.map((s) => s.data.youtube_channel_id).filter((id): id is string => Boolean(id))
+);
+
+// fetchYoutubeLiveByKeywordは/schedule/側と同じキーワード・件数で呼ぶため、
+// ビルド内キャッシュにより実際のAPIリクエストは1回にまとまる。
+const liveEntries = filterAndSortDiscoveredLive(
+	await fetchYoutubeLiveByKeyword('ポケモンユナイト'),
+	registeredYoutubeChannelIds,
+	excludedChannelNames
+);
+---
+
+<Layout title="すべてのライブ中配信">
+	<h1>すべてのライブ中配信</h1>
+	<p class="note">
+		「ポケモンユナイト」でYouTubeを検索して見つかった配信中の一覧です（チャンネル登録者数が多い順）。無関係な動画が混ざる場合があります。
+	</p>
+	{
+		liveEntries.length > 0 ? (
+			<ScheduleTable liveEntries={liveEntries} entries={[]} showChannelName />
+		) : (
+			<p>現在、配信中のものは見つかりませんでした。</p>
+		)
+	}
+	<p class="back-link">
+		<a href={withBase('/schedule/')}>← 配信スケジュールに戻る</a>
+	</p>
+</Layout>
+
+<style>
+	.note {
+		margin: 12px 0 24px;
+		color: var(--ink-soft);
+		font-size: 0.85rem;
+	}
+
+	.back-link {
+		margin-top: 24px;
+	}
+
+	.back-link a {
+		color: var(--blue);
+		font-weight: 700;
+		text-decoration: none;
+	}
+
+	.back-link a:hover {
+		text-decoration: underline;
+	}
+</style>
