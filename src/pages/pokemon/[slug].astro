@@ -172,8 +172,13 @@ const resolvedBuilds = (builds ?? []).map((build) => ({
 <style>
 	.pokemon-header {
 		display: flex;
+		flex-wrap: wrap;
 		align-items: center;
-		gap: 12px;
+		gap: 8px 12px;
+	}
+
+	.pokemon-header h1 {
+		flex-shrink: 0;
 	}
 
 	.pokemon-icon {
