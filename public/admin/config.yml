@@ -183,6 +183,66 @@ collections:
           - { label: "補足", name: "note", widget: "string", required: false }
       - { label: "立ち回り解説（本文）", name: "body", widget: "markdown" }
 
+  - name: "tier-list"
+    label: "ポケモンTier表"
+    files:
+      - name: "tier-list"
+        label: "ポケモンTier表編集"
+        file: "src/content/config/tier-list.md"
+        fields:
+          - label: "Sランク（トップページのTier表に載せたいポケモンだけ選択。全ポケモン分の登録は不要）"
+            name: "s_tier"
+            widget: "list"
+            required: false
+            field:
+              label: "ポケモン"
+              name: "pokemon"
+              widget: "relation"
+              collection: "pokemon-jp"
+              search_fields: ["name_ja"]
+              value_field: "slug"
+              display_fields: ["name_ja"]
+              options_length: 999
+          - label: "Aランク"
+            name: "a_tier"
+            widget: "list"
+            required: false
+            field:
+              label: "ポケモン"
+              name: "pokemon"
+              widget: "relation"
+              collection: "pokemon-jp"
+              search_fields: ["name_ja"]
+              value_field: "slug"
+              display_fields: ["name_ja"]
+              options_length: 999
+          - label: "Bランク"
+            name: "b_tier"
+            widget: "list"
+            required: false
+            field:
+              label: "ポケモン"
+              name: "pokemon"
+              widget: "relation"
+              collection: "pokemon-jp"
+              search_fields: ["name_ja"]
+              value_field: "slug"
+              display_fields: ["name_ja"]
+              options_length: 999
+          - label: "Cランク"
+            name: "c_tier"
+            widget: "list"
+            required: false
+            field:
+              label: "ポケモン"
+              name: "pokemon"
+              widget: "relation"
+              collection: "pokemon-jp"
+              search_fields: ["name_ja"]
+              value_field: "slug"
+              display_fields: ["name_ja"]
+              options_length: 999
+
   - name: "articles"
     label: "セオリー解説記事"
     folder: "src/content/articles"
@@ -284,6 +344,7 @@ collections:
           search_fields: ["name_ja"]
           value_field: "slug"
           display_fields: ["name_ja"]
+          options_length: 999
       - label: "よくある質問（任意）"
         name: "faq"
         widget: "list"
@@ -311,58 +372,6 @@ collections:
   - name: "settings"
     label: "各種設定"
     files:
-      - name: "tier-list"
-        label: "ポケモンTier表編集"
-        file: "src/content/config/tier-list.md"
-        fields:
-          - label: "Sランク（トップページのTier表に載せたいポケモンだけ選択。全ポケモン分の登録は不要）"
-            name: "s_tier"
-            widget: "list"
-            required: false
-            field:
-              label: "ポケモン"
-              name: "pokemon"
-              widget: "relation"
-              collection: "pokemon-jp"
-              search_fields: ["name_ja"]
-              value_field: "slug"
-              display_fields: ["name_ja"]
-          - label: "Aランク"
-            name: "a_tier"
-            widget: "list"
-            required: false
-            field:
-              label: "ポケモン"
-              name: "pokemon"
-              widget: "relation"
-              collection: "pokemon-jp"
-              search_fields: ["name_ja"]
-              value_field: "slug"
-              display_fields: ["name_ja"]
-          - label: "Bランク"
-            name: "b_tier"
-            widget: "list"
-            required: false
-            field:
-              label: "ポケモン"
-              name: "pokemon"
-              widget: "relation"
-              collection: "pokemon-jp"
-              search_fields: ["name_ja"]
-              value_field: "slug"
-              display_fields: ["name_ja"]
-          - label: "Cランク"
-            name: "c_tier"
-            widget: "list"
-            required: false
-            field:
-              label: "ポケモン"
-              name: "pokemon"
-              widget: "relation"
-              collection: "pokemon-jp"
-              search_fields: ["name_ja"]
-              value_field: "slug"
-              display_fields: ["name_ja"]
       - name: "schedule"
         label: "配信スケジュール設定"
         file: "src/content/config/schedule-settings.md"
