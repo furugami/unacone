@@ -1,0 +1,9 @@
+---
+slug: blissey
+name_ja: ハピナス
+pokemon_slug: blissey
+colors:
+  - white
+---
+
+（入手条件・効果は準備中です）

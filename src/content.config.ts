@@ -162,7 +162,9 @@ const medals = defineCollection({
     name_ja: z.string(),
     pokemon_slug: z.string().optional(),
     icon: z.string().optional(),
-    summary: z.string(),
+    // 2026/08/31、色属性のみ大量登録するケースに対応するため必須→任意化。
+    // 未入力の場合、個別ページでは要約行を表示しないフォールバックにする。
+    summary: z.string().optional(),
     // メダルの属性色（複数選択可）。src/lib/medals.tsのMEDAL_COLOR_LABELS参照。2026/08/31追加。
     colors: z
       .array(

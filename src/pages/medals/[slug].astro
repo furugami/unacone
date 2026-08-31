@@ -29,7 +29,7 @@ if (pokemon_slug) {
 		{icon && <img src={icon} alt="" class="icon" />}
 		<div>
 			<h1>{name_ja}</h1>
-			<p class="summary">{summary}</p>
+			{summary && <p class="summary">{summary}</p>}
 			{
 				colors && colors.length > 0 && (
 					<p class="color-badges">
