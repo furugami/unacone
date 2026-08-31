@@ -1,3 +1,4 @@
 ---
-medals: []
+medals:
+  - abra
 ---
