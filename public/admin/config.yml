@@ -381,3 +381,7 @@ collections:
             widget: "list"
             required: false
             hint: "配信スケジュールページに表示されているチャンネル名をそのままコピーして追加してください（完全一致で判定します）。"
+            field:
+              label: "チャンネル名"
+              name: "channel_name"
+              widget: "string"
