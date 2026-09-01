@@ -6,7 +6,10 @@ import { getCollection } from 'astro:content';
 import { ROLE_LABELS, ROLE_COLOR_VARS, ATTACK_TYPE_LABELS } from '../../lib/pokemon';
 import { withBase } from '../../lib/url';
 
-const pokemonList = await getCollection('pokemon-jp');
+const collator = new Intl.Collator('ja');
+const pokemonList = (await getCollection('pokemon-jp')).sort((a, b) =>
+	collator.compare(a.data.name_ja, b.data.name_ja)
+);
 
 const roleFilters = Object.keys(ROLE_LABELS) as (keyof typeof ROLE_LABELS)[];
 ---

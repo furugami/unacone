@@ -33,6 +33,7 @@ collections:
     identifier_field: "name_ja"
     media_folder: "/public/images/uploads/pokemon"
     public_folder: "/unacone/images/uploads/pokemon"
+    sortable_fields: ["name_ja", "role"]
     fields:
       - { label: "スラッグ（半角英数、ファイル名になる）", name: "slug", widget: "string" }
       - { label: "日本語名", name: "name_ja", widget: "string" }
