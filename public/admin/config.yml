@@ -31,8 +31,13 @@ collections:
     create: true
     slug: "{{fields.slug}}"
     identifier_field: "name_ja"
-    media_folder: "/public/images/uploads/pokemon"
-    public_folder: "/unacone/images/uploads/pokemon"
+    # ポケモンごとにサブフォルダを分ける（アイコン+わざ8種で最大9枚/匹、
+    # 99匹分がフラットな1フォルダに集まって選択しづらくなったため。2026/09/02）。
+    # {{slug}}はこのコレクションのslugテンプレート（{{fields.slug}}）で解決された値
+    # （例: absol）が入る。既存のフラットフォルダの約500枚はそのまま残し、
+    # 今後の新規アップロード分だけこの構成にする方針（運営者確認済み）。
+    media_folder: "/public/images/uploads/pokemon/{{slug}}"
+    public_folder: "/unacone/images/uploads/pokemon/{{slug}}"
     sortable_fields: ["name_ja", "role"]
     fields:
       - { label: "スラッグ（半角英数、ファイル名になる）", name: "slug", widget: "string" }
