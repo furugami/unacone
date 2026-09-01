@@ -3,12 +3,23 @@ slug: absol
 name_ja: アブソル
 icon: /unacone/images/uploads/pokemon/absol.png
 role: speedster
+attack_type: physical
+difficulty: intermediate
 abilities:
-  combat: 0.5
-  durability: 0.5
-  mobility: 0.5
-  scoring: 0.5
-  support: 0.5
+  combat: 4
+  durability: 1.5
+  mobility: 4.5
+  scoring: 2.5
+  support: 1
+usage_memo: サンプル：不意打ちからの奇襲でバーストダメージを狙う立ち回りが基本。
+counter_memo: サンプル：接近を許すと一気に削られるので、視認したら早めに距離を取る。
+builds:
+  - title: サンプルビルド（標準）
+    held_items: [kiaino-hachimaki, muscle-band, razor-claw]
+    battle_item: eject-button
+    move1_choice: upgrade_a
+    move2_choice: upgrade_b
+    note: サンプルの補足メモです。
 moves:
   ability:
     name: きょううん
@@ -35,4 +46,13 @@ moves:
     name: ダークスラッシャー
     effect: 連続でダッシュ攻撃したのち、扇状に斬撃を放つ。発動中は大きなシールドと移動速度上昇を得る。
 ---
-（解説はまだありません）
+## サンプル本文（立ち回り解説）
+
+これは表示確認用のサンプルテキストです。Markdownの見出し・**太字**・箇条書きが
+正しく表示されるか確認できます。
+
+- サンプル項目1
+- サンプル項目2
+- サンプル項目3
+
+YouTube動画も本文中に埋め込み可能です。
