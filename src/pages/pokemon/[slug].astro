@@ -113,31 +113,25 @@ const resolvedBuilds = (builds ?? []).map((build) => ({
 					<article class="build-card">
 						<h3>{build.title}</h3>
 						{
-							build.move1Selection && (
+							(build.move1Selection || build.move2Selection) && (
 								<div class="items-row">
-									<span class="field-label">わざ1</span>
 									<div class="chip-group">
-										<a href={`#move-${build.move1Selection.key}`} class="item-chip">
-											{build.move1Selection.icon && (
-												<img src={build.move1Selection.icon} alt="" class="chip-icon" />
-											)}
-											{build.move1Selection.label}: {build.move1Selection.name}
-										</a>
-									</div>
-								</div>
-							)
-						}
-						{
-							build.move2Selection && (
-								<div class="items-row">
-									<span class="field-label">わざ2</span>
-									<div class="chip-group">
-										<a href={`#move-${build.move2Selection.key}`} class="item-chip">
-											{build.move2Selection.icon && (
-												<img src={build.move2Selection.icon} alt="" class="chip-icon" />
-											)}
-											{build.move2Selection.label}: {build.move2Selection.name}
-										</a>
+										{build.move1Selection && (
+											<a href={`#move-${build.move1Selection.key}`} class="item-chip">
+												{build.move1Selection.icon && (
+													<img src={build.move1Selection.icon} alt="" class="chip-icon" />
+												)}
+												{build.move1Selection.name}
+											</a>
+										)}
+										{build.move2Selection && (
+											<a href={`#move-${build.move2Selection.key}`} class="item-chip">
+												{build.move2Selection.icon && (
+													<img src={build.move2Selection.icon} alt="" class="chip-icon" />
+												)}
+												{build.move2Selection.name}
+											</a>
+										)}
 									</div>
 								</div>
 							)
@@ -271,6 +265,19 @@ const resolvedBuilds = (builds ?? []).map((build) => ({
 
 	.items-row + .items-row {
 		margin-top: 10px;
+	}
+
+	/* おすすめビルド内の項目名（もちもの/バトルアイテム等）は、item-chipと同じ
+	   縁取りチップ見た目だと中身のアイテムと見分けづらいため、装飾のないプレーンな
+	   キャプション表示に上書きする（グローバルのfield-labelはこのファイル内でしか
+	   使っていないため、他ページ（medals/schedule）には影響しない）。 */
+	.field-label {
+		background: none;
+		border: none;
+		padding: 0;
+		border-radius: 0;
+		color: var(--ink-soft);
+		font-size: 0.78rem;
 	}
 
 	.chip-group {
