@@ -66,7 +66,7 @@ const relatedFaqs = (await getCollection('faqs')).filter(
 function resolveMoveChoice(baseKey: 'move1' | 'move2', choice: 'base' | 'upgrade_a' | 'upgrade_b' | undefined) {
 	const key = moveKeyForChoice(baseKey, choice);
 	if (!key || !moves?.[key]) return null;
-	return { key, label: MOVE_LABEL_BY_KEY[key], name: moves[key]!.name };
+	return { key, label: MOVE_LABEL_BY_KEY[key], name: moves[key]!.name, icon: moves[key]!.icon };
 }
 
 const resolvedBuilds = (builds ?? []).map((build) => ({
@@ -112,49 +112,66 @@ const resolvedBuilds = (builds ?? []).map((build) => ({
 				{resolvedBuilds.map((build) => (
 					<article class="build-card">
 						<h3>{build.title}</h3>
-						<p class="items-row">
-							<span class="field-label">もちもの</span>
-							{build.heldItemDetails.map(({ slug, item }) =>
-								item ? (
-									<a href={withBase(`/held-items/${slug}/`)} class="item-chip">
-										{item.icon && <img src={item.icon} alt="" class="chip-icon" />}
-										{item.name_ja}
-									</a>
-								) : (
-									<span class="item-chip missing">{slug}</span>
-								)
-							)}
-						</p>
-						<p class="items-row">
-							<span class="field-label">バトルアイテム</span>
-							{build.battleItemDetail.item ? (
-								<a href={withBase(`/battle-items/${build.battleItemDetail.slug}/`)} class="item-chip">
-									{build.battleItemDetail.item.icon && (
-										<img src={build.battleItemDetail.item.icon} alt="" class="chip-icon" />
-									)}
-									{build.battleItemDetail.item.name_ja}
-								</a>
-							) : (
-								<span class="item-chip missing">{build.battleItemDetail.slug}</span>
-							)}
-						</p>
 						{
-							(build.move1Selection || build.move2Selection) && (
-								<p class="items-row">
-									<span class="field-label">わざ</span>
-									{build.move1Selection && (
+							build.move1Selection && (
+								<div class="items-row">
+									<span class="field-label">わざ1</span>
+									<div class="chip-group">
 										<a href={`#move-${build.move1Selection.key}`} class="item-chip">
+											{build.move1Selection.icon && (
+												<img src={build.move1Selection.icon} alt="" class="chip-icon" />
+											)}
 											{build.move1Selection.label}: {build.move1Selection.name}
 										</a>
-									)}
-									{build.move2Selection && (
-										<a href={`#move-${build.move2Selection.key}`} class="item-chip">
-											{build.move2Selection.label}: {build.move2Selection.name}
-										</a>
-									)}
-								</p>
+									</div>
+								</div>
 							)
 						}
+						{
+							build.move2Selection && (
+								<div class="items-row">
+									<span class="field-label">わざ2</span>
+									<div class="chip-group">
+										<a href={`#move-${build.move2Selection.key}`} class="item-chip">
+											{build.move2Selection.icon && (
+												<img src={build.move2Selection.icon} alt="" class="chip-icon" />
+											)}
+											{build.move2Selection.label}: {build.move2Selection.name}
+										</a>
+									</div>
+								</div>
+							)
+						}
+						<div class="items-row">
+							<span class="field-label">もちもの</span>
+							<div class="chip-group">
+								{build.heldItemDetails.map(({ slug, item }) =>
+									item ? (
+										<a href={withBase(`/held-items/${slug}/`)} class="item-chip">
+											{item.icon && <img src={item.icon} alt="" class="chip-icon" />}
+											{item.name_ja}
+										</a>
+									) : (
+										<span class="item-chip missing">{slug}</span>
+									)
+								)}
+							</div>
+						</div>
+						<div class="items-row">
+							<span class="field-label">バトルアイテム</span>
+							<div class="chip-group">
+								{build.battleItemDetail.item ? (
+									<a href={withBase(`/battle-items/${build.battleItemDetail.slug}/`)} class="item-chip">
+										{build.battleItemDetail.item.icon && (
+											<img src={build.battleItemDetail.item.icon} alt="" class="chip-icon" />
+										)}
+										{build.battleItemDetail.item.name_ja}
+									</a>
+								) : (
+									<span class="item-chip missing">{build.battleItemDetail.slug}</span>
+								)}
+							</div>
+						</div>
 						{build.note && <p class="note">{build.note}</p>}
 					</article>
 				))}
@@ -247,7 +264,17 @@ const resolvedBuilds = (builds ?? []).map((build) => ({
 
 	.items-row {
 		display: flex;
-		align-items: center;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 6px;
+	}
+
+	.items-row + .items-row {
+		margin-top: 10px;
+	}
+
+	.chip-group {
+		display: flex;
 		flex-wrap: wrap;
 		gap: 8px;
 	}
