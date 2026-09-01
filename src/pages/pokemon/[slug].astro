@@ -31,6 +31,16 @@ const { entry } = Astro.props;
 const { Content } = await render(entry);
 const { name_ja, icon, role, attack_type, difficulty, abilities, moves, builds } = entry.data;
 
+// abilitiesは各項目が任意入力のため、5項目すべて揃っている場合のみレーダーチャートを表示する
+// （一部だけ入力された状態だとAbilityPentagonが数値前提の計算をするため描画できない）。
+const hasFullAbilities =
+	abilities !== undefined &&
+	abilities.combat !== undefined &&
+	abilities.durability !== undefined &&
+	abilities.mobility !== undefined &&
+	abilities.scoring !== undefined &&
+	abilities.support !== undefined;
+
 // movesオブジェクトのうち、実際に値が入っている項目だけを表示順に並べる
 const moveEntries = moves
 	? MOVE_SECTIONS.filter((section) => moves[section.key]).map((section) => ({
@@ -72,9 +82,17 @@ const resolvedBuilds = (builds ?? []).map((build) => ({
 	</header>
 
 	{
-		abilities && (
+		hasFullAbilities && (
 			<section class="abilities-section">
-				<AbilityPentagon abilities={abilities} />
+				<AbilityPentagon
+					abilities={{
+						combat: abilities!.combat!,
+						durability: abilities!.durability!,
+						mobility: abilities!.mobility!,
+						scoring: abilities!.scoring!,
+						support: abilities!.support!,
+					}}
+				/>
 			</section>
 		)
 	}

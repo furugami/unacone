@@ -59,11 +59,11 @@ collections:
         widget: "object"
         required: false
         fields:
-          - { label: "戦闘能力", name: "combat", widget: "number", value_type: "float", min: 0, max: 5, step: 0.5 }
-          - { label: "耐久能力", name: "durability", widget: "number", value_type: "float", min: 0, max: 5, step: 0.5 }
-          - { label: "起動能力", name: "mobility", widget: "number", value_type: "float", min: 0, max: 5, step: 0.5 }
-          - { label: "得点能力", name: "scoring", widget: "number", value_type: "float", min: 0, max: 5, step: 0.5 }
-          - { label: "補佐能力", name: "support", widget: "number", value_type: "float", min: 0, max: 5, step: 0.5 }
+          - { label: "戦闘能力", name: "combat", widget: "number", value_type: "float", min: 0, max: 5, step: 0.5, required: false }
+          - { label: "耐久能力", name: "durability", widget: "number", value_type: "float", min: 0, max: 5, step: 0.5, required: false }
+          - { label: "起動能力", name: "mobility", widget: "number", value_type: "float", min: 0, max: 5, step: 0.5, required: false }
+          - { label: "得点能力", name: "scoring", widget: "number", value_type: "float", min: 0, max: 5, step: 0.5, required: false }
+          - { label: "補佐能力", name: "support", widget: "number", value_type: "float", min: 0, max: 5, step: 0.5, required: false }
       - label: "使用難易度（任意）"
         name: "difficulty"
         widget: "select"
@@ -101,13 +101,13 @@ collections:
               - { label: "名前", name: "name", widget: "string" }
               - { label: "効果", name: "effect", widget: "text" }
               - { label: "アイコン画像（任意）", name: "icon", widget: "image", required: false }
-          - label: "わざ1派生B"
+          - label: "わざ1派生B（任意。存在しないポケモンもいる）"
             name: "move1_upgrade_b"
             widget: "object"
             required: false
             fields:
-              - { label: "名前", name: "name", widget: "string" }
-              - { label: "効果", name: "effect", widget: "text" }
+              - { label: "名前", name: "name", widget: "string", required: false }
+              - { label: "効果", name: "effect", widget: "text", required: false }
               - { label: "アイコン画像（任意）", name: "icon", widget: "image", required: false }
           - label: "わざ2"
             name: "move2"
@@ -125,13 +125,13 @@ collections:
               - { label: "名前", name: "name", widget: "string" }
               - { label: "効果", name: "effect", widget: "text" }
               - { label: "アイコン画像（任意）", name: "icon", widget: "image", required: false }
-          - label: "わざ2派生B"
+          - label: "わざ2派生B（任意。存在しないポケモンもいる）"
             name: "move2_upgrade_b"
             widget: "object"
             required: false
             fields:
-              - { label: "名前", name: "name", widget: "string" }
-              - { label: "効果", name: "effect", widget: "text" }
+              - { label: "名前", name: "name", widget: "string", required: false }
+              - { label: "効果", name: "effect", widget: "text", required: false }
               - { label: "アイコン画像（任意）", name: "icon", widget: "image", required: false }
           - label: "ユナイト技"
             name: "unite_move"

@@ -38,13 +38,15 @@ const pokemonJp = defineCollection({
       })
       .optional(),
     // 能力評価（人力・主観、5点満点0.5刻み）。5軸レーダーチャート表示用。2026/08/29追加。
+    // 各項目は任意（2026/09/01変更: データ投入がテスト段階のため、5項目揃うまでは
+    // 空のままでも保存できるようにした。表示側は5項目すべて揃った場合のみレーダーチャートを出す）。
     abilities: z
       .object({
-        combat: z.number().min(0).max(5).multipleOf(0.5), // 戦闘能力
-        durability: z.number().min(0).max(5).multipleOf(0.5), // 耐久能力
-        mobility: z.number().min(0).max(5).multipleOf(0.5), // 起動能力
-        scoring: z.number().min(0).max(5).multipleOf(0.5), // 得点能力
-        support: z.number().min(0).max(5).multipleOf(0.5), // 補佐能力
+        combat: z.number().min(0).max(5).multipleOf(0.5).optional(), // 戦闘能力
+        durability: z.number().min(0).max(5).multipleOf(0.5).optional(), // 耐久能力
+        mobility: z.number().min(0).max(5).multipleOf(0.5).optional(), // 起動能力
+        scoring: z.number().min(0).max(5).multipleOf(0.5).optional(), // 得点能力
+        support: z.number().min(0).max(5).multipleOf(0.5).optional(), // 補佐能力
       })
       .optional(),
     builds: z
