@@ -65,6 +65,10 @@ const pokemonJp = defineCollection({
         })
       )
       .optional(),
+    // 一言使い方メモ・一言対策メモ（任意、1行程度の短文想定）。表示は
+    // 立ち回り解説（本文）の直前。2026/09/01追加。
+    usage_memo: z.string().optional(),
+    counter_memo: z.string().optional(),
   }),
 });
 

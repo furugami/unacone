@@ -182,6 +182,8 @@ collections:
               - { label: "わざ2派生A", value: "upgrade_a" }
               - { label: "わざ2派生B", value: "upgrade_b" }
           - { label: "補足", name: "note", widget: "string", required: false }
+      - { label: "一言使い方メモ（任意、1行程度）", name: "usage_memo", widget: "string", required: false }
+      - { label: "一言対策メモ（任意、1行程度）", name: "counter_memo", widget: "string", required: false }
       - { label: "立ち回り解説（本文）", name: "body", widget: "markdown" }
 
   - name: "tier-list"
