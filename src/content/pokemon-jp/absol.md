@@ -1,7 +1,7 @@
 ---
 slug: absol
 name_ja: アブソル
-icon: /unacone/images/uploads/pokemon/absol.png
+icon: /unacone/images/uploads/pokemon/absol/absol.png
 role: speedster
 attack_type: physical
 abilities:
@@ -15,35 +15,35 @@ moves:
   ability:
     name: きょううん
     effect: 急所（クリティカル）が出やすくなる。
-    icon: /unacone/images/uploads/pokemon/super-luck.png
+    icon: /unacone/images/uploads/pokemon/absol/super-luck.png
   move1:
     name: フェイント
     effect: 弧を描くように移動して攻撃する。相手の防御力やシールドを無視してダメージを与える。
-    icon: /unacone/images/uploads/pokemon/feint.png
+    icon: /unacone/images/uploads/pokemon/absol/feint.png
   move1_upgrade_a:
     name: つじぎり
     effect: 2段階のダッシュ攻撃。相手の残りHPが少ないほど急所が出やすくなる。
-    icon: /unacone/images/uploads/pokemon/night-slash.png
+    icon: /unacone/images/uploads/pokemon/absol/night-slash.png
   move1_upgrade_b:
     name: おいうち
     effect: 前方へ一気に距離を詰める。相手の背後から当てるとダメージが増え、待ち時間も短くなる。
-    icon: /unacone/images/uploads/pokemon/pursuit.png
+    icon: /unacone/images/uploads/pokemon/absol/pursuit.png
   move2:
     name: きりさく
     effect: 前方をツメで斬りつけて攻撃する。急所が出やすくなる。
-    icon: /unacone/images/uploads/pokemon/sucker-punch.png
+    icon: /unacone/images/uploads/pokemon/absol/sucker-punch.png
   move2_upgrade_a:
     name: サイコカッター
     effect: 相手を減速させる飛び道具。命中させ続けるとダメージが積み重なっていく。
-    icon: /unacone/images/uploads/pokemon/psycho-cut.png
+    icon: /unacone/images/uploads/pokemon/absol/psycho-cut.png
   move2_upgrade_b:
     name: ふいうち
     effect: 対象をロックオンし、視線を外されると早めに発動する。命中させると相手をひるませてふきとばす。
-    icon: /unacone/images/uploads/pokemon/pursuit.png
+    icon: /unacone/images/uploads/pokemon/absol/pursuit.png
   unite_move:
     name: ダークスラッシャー
     effect: 連続でダッシュ攻撃したのち、扇状に斬撃を放つ。発動中は大きなシールドと移動速度上昇を得る。
-    icon: /unacone/images/uploads/pokemon/midnight-slash.png
+    icon: /unacone/images/uploads/pokemon/absol/midnight-slash.png
 builds:
   - title: サンプルビルド（標準）
     held_items:
