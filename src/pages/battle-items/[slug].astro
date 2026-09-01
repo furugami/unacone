@@ -1,6 +1,7 @@
 ---
 // バトルアイテム個別ページ（/battle-items/{slug}/）。
 import Layout from '../../layouts/Layout.astro';
+import FaqSection from '../../components/FaqSection.astro';
 import { getCollection, render } from 'astro:content';
 import { withBase } from '../../lib/url';
 
@@ -14,7 +15,13 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
-const { name_ja, icon, cooldown_seconds, unlock_level, recommended_pokemon, faq } = entry.data;
+const { name_ja, icon, cooldown_seconds, unlock_level, recommended_pokemon } = entry.data;
+
+// このバトルアイテムを対象にしているFAQだけを抽出（faqs側が対象を持つ設計。
+// src/content.config.tsの「faqs」コレクション参照）。
+const relatedFaqs = (await getCollection('faqs')).filter(
+	(f) => f.data.target_battle_item === entry.data.slug
+);
 
 // CMSで一度入力してから空欄に戻すと undefined ではなく空文字列になるため、
 // 空文字列も「未設定」として扱う。
@@ -64,30 +71,19 @@ const recommendedPokemonDetails = (recommended_pokemon ?? []).map((slug) => ({
 		)
 	}
 	{
-		faq && faq.length > 0 && (
-			<div class="faq-section">
-				<h2>よくある質問</h2>
-				{faq.map((qa) => (
-					<div class="faq-item">
-						<p class="faq-q">
-							<span class="qa-badge q">Q</span>
-							{qa.question}
-						</p>
-						<p class="faq-a">
-							<span class="qa-badge a">A</span>
-							{qa.answer}
-						</p>
-					</div>
-				))}
-			</div>
-		)
-	}
-	{
 		hasUnlockLevel && (
 			<div class="unlock-section">
 				<h2>解放条件</h2>
 				<p>{unlockLevelIsNumeric ? `トレーナーレベル ${unlock_level} で解放されます。` : unlock_level}</p>
 			</div>
+		)
+	}
+	{
+		relatedFaqs.length > 0 && (
+			<FaqSection
+				faqs={relatedFaqs.map((f) => f.data)}
+				moreHref="/faq/?target=battle-item"
+			/>
 		)
 	}
 </Layout>
@@ -153,8 +149,7 @@ const recommendedPokemonDetails = (recommended_pokemon ?? []).map((slug) => ({
 		color: var(--ink-soft);
 	}
 
-	.recommended-section,
-	.faq-section {
+	.recommended-section {
 		margin-top: 16px;
 		background: var(--surface);
 		border: 1.5px solid #e5e9f2;
@@ -163,8 +158,7 @@ const recommendedPokemonDetails = (recommended_pokemon ?? []).map((slug) => ({
 		padding: 24px;
 	}
 
-	.recommended-section h2,
-	.faq-section h2 {
+	.recommended-section h2 {
 		margin: 0 0 16px;
 	}
 
@@ -202,58 +196,5 @@ const recommendedPokemonDetails = (recommended_pokemon ?? []).map((slug) => ({
 		width: 18px;
 		height: 18px;
 		object-fit: contain;
-	}
-
-	.faq-item {
-		margin-top: 16px;
-	}
-
-	.faq-item:first-of-type {
-		margin-top: 0;
-	}
-
-	.faq-item + .faq-item {
-		padding-top: 16px;
-		border-top: 1.5px solid #e5e9f2;
-	}
-
-	.faq-q,
-	.faq-a {
-		display: flex;
-		align-items: flex-start;
-		gap: 8px;
-		margin: 0;
-		line-height: 1.6;
-	}
-
-	.faq-q {
-		font-weight: 700;
-	}
-
-	.faq-a {
-		margin-top: 6px;
-		color: var(--ink-soft);
-	}
-
-	.qa-badge {
-		flex-shrink: 0;
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		width: 22px;
-		height: 22px;
-		border-radius: 999px;
-		font-family: var(--font-number);
-		font-weight: 700;
-		font-size: 0.85rem;
-		color: #fff;
-	}
-
-	.qa-badge.q {
-		background: var(--blue);
-	}
-
-	.qa-badge.a {
-		background: var(--amber);
 	}
 </style>

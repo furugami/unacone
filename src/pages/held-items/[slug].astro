@@ -1,6 +1,7 @@
 ---
 // もちもの個別ページ（/held-items/{slug}/）。
 import Layout from '../../layouts/Layout.astro';
+import FaqSection from '../../components/FaqSection.astro';
 import { getCollection, render } from 'astro:content';
 import { withBase } from '../../lib/url';
 import { STAT_LABELS } from '../../lib/stats';
@@ -16,6 +17,12 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const { Content } = await render(entry);
 const { name_ja, summary, icon, stat_boosts } = entry.data;
+
+// このもちものを対象にしているFAQだけを抽出（faqs側が対象を持つ設計。
+// src/content.config.tsの「faqs」コレクション参照）。
+const relatedFaqs = (await getCollection('faqs')).filter(
+	(f) => f.data.target_held_item === entry.data.slug
+);
 ---
 
 <Layout title={name_ja}>
@@ -43,6 +50,11 @@ const { name_ja, summary, icon, stat_boosts } = entry.data;
 	<div class="body">
 		<Content />
 	</div>
+	{
+		relatedFaqs.length > 0 && (
+			<FaqSection faqs={relatedFaqs.map((f) => f.data)} moreHref="/faq/?target=held-item" />
+		)
+	}
 </Layout>
 
 <style>

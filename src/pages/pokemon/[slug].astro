@@ -7,6 +7,7 @@
 // ここではポケモン全件ぶんのパスを作っている。
 import Layout from '../../layouts/Layout.astro';
 import AbilityPentagon from '../../components/AbilityPentagon.astro';
+import FaqSection from '../../components/FaqSection.astro';
 import { getCollection, render } from 'astro:content';
 import {
 	ROLE_LABELS,
@@ -53,6 +54,12 @@ const moveEntries = moves
 // slugを指しているので、実際のデータ（名前・アイコン・詳細ページへのリンク）に解決する。
 const heldItemMap = new Map((await getCollection('held-items')).map((i) => [i.data.slug, i.data]));
 const battleItemMap = new Map((await getCollection('battle-items')).map((i) => [i.data.slug, i.data]));
+
+// このポケモンを対象にしているFAQだけを抽出（faqs側が対象を持つ設計。
+// src/content.config.tsの「faqs」コレクション参照）。
+const relatedFaqs = (await getCollection('faqs')).filter(
+	(f) => f.data.target_pokemon === entry.data.slug
+);
 
 // ビルドのわざ1/わざ2選択も、moves内の実データ（表示名・アンカーリンク先）に解決する。
 function resolveMoveChoice(baseKey: 'move1' | 'move2', choice: 'base' | 'upgrade_a' | 'upgrade_b' | undefined) {
@@ -184,6 +191,12 @@ const resolvedBuilds = (builds ?? []).map((build) => ({
 		<h2>立ち回り解説</h2>
 		<Content />
 	</section>
+
+	{
+		relatedFaqs.length > 0 && (
+			<FaqSection faqs={relatedFaqs.map((f) => f.data)} moreHref="/faq/?target=pokemon" />
+		)
+	}
 </Layout>
 
 <style>

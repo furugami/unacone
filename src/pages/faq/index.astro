@@ -1,0 +1,258 @@
+---
+// よくある質問 一覧ページ（/faq/）。
+// faqsコレクション全件を表示する。各詳細ページ（ポケモン/もちもの/バトルアイテム）の
+// 「よくある質問」セクションの「→すべてのよくある質問を見る」リンク先も本ページで、
+// ?target=pokemon 等のクエリで絞り込み状態を復元できる（articles/all/と同じ方式）。
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import { withBase } from '../../lib/url';
+
+const [allFaqs, pokemonList, heldItems, battleItems] = await Promise.all([
+	getCollection('faqs'),
+	getCollection('pokemon-jp'),
+	getCollection('held-items'),
+	getCollection('battle-items'),
+]);
+
+const pokemonMap = new Map(pokemonList.map((p) => [p.data.slug, p.data]));
+const heldItemMap = new Map(heldItems.map((i) => [i.data.slug, i.data]));
+const battleItemMap = new Map(battleItems.map((i) => [i.data.slug, i.data]));
+
+const TARGET_LABELS = {
+	pokemon: 'ポケモン',
+	'held-item': 'もちもの',
+	'battle-item': 'バトルアイテム',
+	general: '全般',
+} as const;
+
+const entries = allFaqs.map((f) => {
+	if (f.data.target_pokemon) {
+		const pokemon = pokemonMap.get(f.data.target_pokemon);
+		return {
+			...f.data,
+			target: 'pokemon' as const,
+			targetLabel: pokemon?.name_ja ?? f.data.target_pokemon,
+			targetHref: withBase(`/pokemon/${f.data.target_pokemon}/`),
+		};
+	}
+	if (f.data.target_held_item) {
+		const item = heldItemMap.get(f.data.target_held_item);
+		return {
+			...f.data,
+			target: 'held-item' as const,
+			targetLabel: item?.name_ja ?? f.data.target_held_item,
+			targetHref: withBase(`/held-items/${f.data.target_held_item}/`),
+		};
+	}
+	if (f.data.target_battle_item) {
+		const item = battleItemMap.get(f.data.target_battle_item);
+		return {
+			...f.data,
+			target: 'battle-item' as const,
+			targetLabel: item?.name_ja ?? f.data.target_battle_item,
+			targetHref: withBase(`/battle-items/${f.data.target_battle_item}/`),
+		};
+	}
+	return { ...f.data, target: 'general' as const, targetLabel: null, targetHref: null };
+});
+
+const targetFilters = Object.keys(TARGET_LABELS) as (keyof typeof TARGET_LABELS)[];
+---
+
+<Layout title="よくある質問">
+	<h1>よくある質問</h1>
+	<div class="target-filter" role="group" aria-label="対象で絞り込み">
+		<button type="button" class="filter-btn is-active" data-filter="all">すべて</button>
+		{
+			targetFilters.map((target) => (
+				<button type="button" class="filter-btn" data-filter={target}>
+					{TARGET_LABELS[target]}
+				</button>
+			))
+		}
+	</div>
+
+	<div class="faq-list" id="faq-list">
+		{
+			entries.map((entry) => (
+				<div class="faq-item" data-target={entry.target}>
+					<p class="faq-q">
+						<span class="qa-badge q">Q</span>
+						{entry.question}
+					</p>
+					<p class="faq-a">
+						<span class="qa-badge a">A</span>
+						{entry.answer}
+					</p>
+					{entry.targetHref && (
+						<p class="target-tag">
+							<span class="tag-label">{TARGET_LABELS[entry.target]}</span>
+							<a href={entry.targetHref}>{entry.targetLabel} →</a>
+						</p>
+					)}
+				</div>
+			))
+		}
+	</div>
+	<p class="no-results" hidden>該当するよくある質問がありません。</p>
+</Layout>
+
+<script>
+	const buttons = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+	const items = document.querySelectorAll<HTMLDivElement>('#faq-list > .faq-item');
+	const noResults = document.querySelector<HTMLParagraphElement>('.no-results');
+
+	function applyFilter(filter: string) {
+		let visibleCount = 0;
+		items.forEach((item) => {
+			const matches = filter === 'all' || item.dataset.target === filter;
+			item.hidden = !matches;
+			if (matches) visibleCount++;
+		});
+		if (noResults) noResults.hidden = visibleCount > 0;
+	}
+
+	buttons.forEach((button) => {
+		button.addEventListener('click', () => {
+			buttons.forEach((b) => b.classList.remove('is-active'));
+			button.classList.add('is-active');
+			applyFilter(button.dataset.filter ?? 'all');
+		});
+	});
+
+	// URLクエリ（?target=pokemon 等）で初期状態を復元する
+	// （各詳細ページのFAQセクションの「すべて見る」リンクから遷移してきた場合）。
+	const params = new URLSearchParams(window.location.search);
+	const initialTarget = params.get('target');
+	if (initialTarget) {
+		const button = document.querySelector<HTMLButtonElement>(
+			`[data-filter="${CSS.escape(initialTarget)}"]`
+		);
+		button?.click();
+	}
+</script>
+
+<style>
+	.target-filter {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+		margin-top: 16px;
+	}
+
+	.filter-btn {
+		--filter-color: var(--ink-soft);
+		font-family: var(--font-body);
+		font-weight: 700;
+		font-size: 0.85rem;
+		padding: 6px 16px;
+		border-radius: 999px;
+		border: 1.5px solid var(--filter-color);
+		background: var(--surface);
+		color: var(--filter-color);
+		cursor: pointer;
+		transition: transform 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+	}
+
+	.filter-btn:hover {
+		transform: translateY(-2px);
+	}
+
+	.filter-btn.is-active {
+		background: var(--filter-color);
+		color: #fff;
+	}
+
+	.no-results {
+		margin-top: 24px;
+		color: var(--ink-soft);
+	}
+
+	.faq-list {
+		margin-top: 24px;
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+	}
+
+	.faq-item {
+		background: var(--surface);
+		border: 1.5px solid #e5e9f2;
+		border-radius: var(--radius);
+		box-shadow: 0 2px 8px rgba(27, 34, 51, 0.06);
+		padding: 24px;
+	}
+
+	.faq-item[hidden] {
+		display: none;
+	}
+
+	.faq-q,
+	.faq-a {
+		display: flex;
+		align-items: flex-start;
+		gap: 8px;
+		margin: 0;
+		line-height: 1.6;
+	}
+
+	.faq-q {
+		font-weight: 700;
+	}
+
+	.faq-a {
+		margin-top: 6px;
+		color: var(--ink-soft);
+	}
+
+	.qa-badge {
+		flex-shrink: 0;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 22px;
+		height: 22px;
+		border-radius: 999px;
+		font-family: var(--font-number);
+		font-weight: 700;
+		font-size: 0.85rem;
+		color: #fff;
+	}
+
+	.qa-badge.q {
+		background: var(--blue);
+	}
+
+	.qa-badge.a {
+		background: var(--amber);
+	}
+
+	.target-tag {
+		margin: 12px 0 0;
+		padding-top: 12px;
+		border-top: 1.5px solid #e5e9f2;
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		font-size: 0.85rem;
+	}
+
+	.tag-label {
+		padding: 2px 10px;
+		border-radius: 999px;
+		background: var(--bg);
+		border: 1.5px solid #e5e9f2;
+		color: var(--ink-soft);
+		font-weight: 700;
+	}
+
+	.target-tag a {
+		color: var(--blue);
+		font-weight: 700;
+		text-decoration: none;
+	}
+
+	.target-tag a:hover {
+		text-decoration: underline;
+	}
+</style>

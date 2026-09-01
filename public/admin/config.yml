@@ -351,13 +351,41 @@ collections:
           value_field: "slug"
           display_fields: ["name_ja"]
           options_length: 999
-      - label: "よくある質問（任意）"
-        name: "faq"
-        widget: "list"
+
+  - name: "faqs"
+    label: "よくある質問"
+    folder: "src/content/faqs"
+    create: true
+    slug: "{{fields.slug}}"
+    identifier_field: "question"
+    fields:
+      - { label: "スラッグ（半角英数、ファイル名になる）", name: "slug", widget: "string" }
+      - { label: "質問", name: "question", widget: "string" }
+      - { label: "回答", name: "answer", widget: "text" }
+      - label: "対象ポケモン（任意。3つの対象欄のうちどれか1つだけ選ぶ。どれも選ばなければ「よくある質問」一覧にのみ掲載される全般FAQになる）"
+        name: "target_pokemon"
+        widget: "relation"
+        collection: "pokemon-jp"
+        search_fields: ["name_ja"]
+        value_field: "slug"
+        display_fields: ["name_ja"]
         required: false
-        fields:
-          - { label: "質問", name: "question", widget: "string" }
-          - { label: "回答", name: "answer", widget: "text" }
+      - label: "対象もちもの（任意。上と合わせて基本はどれか1つだけ）"
+        name: "target_held_item"
+        widget: "relation"
+        collection: "held-items"
+        search_fields: ["name_ja"]
+        value_field: "slug"
+        display_fields: ["name_ja"]
+        required: false
+      - label: "対象バトルアイテム（任意。上と合わせて基本はどれか1つだけ）"
+        name: "target_battle_item"
+        widget: "relation"
+        collection: "battle-items"
+        search_fields: ["name_ja"]
+        value_field: "slug"
+        display_fields: ["name_ja"]
+        required: false
 
   - name: "medals"
     label: "メダル"

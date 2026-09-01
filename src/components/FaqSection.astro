@@ -1,0 +1,127 @@
+---
+// ポケモン/もちもの/バトルアイテムの各詳細ページ下部に表示する「よくある質問」セクション。
+// faqsコレクションから対象slugで絞り込んだ結果を渡してもらう想定（絞り込み自体は呼び出し側）。
+import { withBase } from '../lib/url';
+
+interface FaqEntry {
+	question: string;
+	answer: string;
+}
+
+interface Props {
+	faqs: FaqEntry[];
+	moreHref?: string;
+}
+
+const { faqs, moreHref } = Astro.props;
+---
+
+<div class="faq-section">
+	<h2>よくある質問</h2>
+	{
+		faqs.map((qa) => (
+			<div class="faq-item">
+				<p class="faq-q">
+					<span class="qa-badge q">Q</span>
+					{qa.question}
+				</p>
+				<p class="faq-a">
+					<span class="qa-badge a">A</span>
+					{qa.answer}
+				</p>
+			</div>
+		))
+	}
+	{
+		moreHref && (
+			<p class="more-link">
+				<a href={withBase(moreHref)}>→ すべてのよくある質問を見る</a>
+			</p>
+		)
+	}
+</div>
+
+<style>
+	.faq-section {
+		margin-top: 16px;
+		background: var(--surface);
+		border: 1.5px solid #e5e9f2;
+		border-radius: var(--radius);
+		box-shadow: 0 2px 8px rgba(27, 34, 51, 0.06);
+		padding: 24px;
+	}
+
+	.faq-section h2 {
+		margin: 0 0 16px;
+	}
+
+	.faq-item {
+		margin-top: 16px;
+	}
+
+	.faq-item:first-of-type {
+		margin-top: 0;
+	}
+
+	.faq-item + .faq-item {
+		padding-top: 16px;
+		border-top: 1.5px solid #e5e9f2;
+	}
+
+	.faq-q,
+	.faq-a {
+		display: flex;
+		align-items: flex-start;
+		gap: 8px;
+		margin: 0;
+		line-height: 1.6;
+	}
+
+	.faq-q {
+		font-weight: 700;
+	}
+
+	.faq-a {
+		margin-top: 6px;
+		color: var(--ink-soft);
+	}
+
+	.qa-badge {
+		flex-shrink: 0;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 22px;
+		height: 22px;
+		border-radius: 999px;
+		font-family: var(--font-number);
+		font-weight: 700;
+		font-size: 0.85rem;
+		color: #fff;
+	}
+
+	.qa-badge.q {
+		background: var(--blue);
+	}
+
+	.qa-badge.a {
+		background: var(--amber);
+	}
+
+	.more-link {
+		margin: 16px 0 0;
+		padding-top: 16px;
+		border-top: 1.5px solid #e5e9f2;
+		text-align: right;
+	}
+
+	.more-link a {
+		color: var(--blue);
+		font-weight: 700;
+		text-decoration: none;
+	}
+
+	.more-link a:hover {
+		text-decoration: underline;
+	}
+</style>

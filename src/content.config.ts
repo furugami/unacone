@@ -148,15 +148,24 @@ const battleItems = defineCollection({
     unlock_level: z.coerce.string().optional(),
     // おすすめポケモン（pokemon-jpコレクションのslug配列）。2026/08/30追加。
     recommended_pokemon: z.array(z.string()).optional(),
-    // よくある質問（Q&Aのセット）。2026/08/30追加。
-    faq: z
-      .array(
-        z.object({
-          question: z.string(),
-          answer: z.string(),
-        })
-      )
-      .optional(),
+  }),
+});
+
+// よくある質問（FAQ）。ポケモン/もちもの/バトルアイテムの各詳細ページ下部と、
+// 一覧ページ（/faq/）の両方に表示する。件数が増えてもCMSでの選択が煩雑にならないよう、
+// 「詳細ページ側がFAQを複数選ぶ」のではなく「FAQ側が対象を1つ持つ」設計にしている
+// （medalsのpokemon_slugと同じ考え方）。対象を何も設定しなければ/faq/一覧にのみ掲載される
+// （サイト全般のFAQ用）。2026/09/01追加。
+const faqs = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/faqs' }),
+  schema: z.object({
+    slug: z.string(),
+    question: z.string(),
+    answer: z.string(),
+    // 対象は最大1つ（3つのうちどれか、または全て未設定）。
+    target_pokemon: z.string().optional(),
+    target_held_item: z.string().optional(),
+    target_battle_item: z.string().optional(),
   }),
 });
 
@@ -238,6 +247,7 @@ export const collections = {
   streamers,
   'held-items': heldItems,
   'battle-items': battleItems,
+  faqs,
   medals,
   'medal-sets': medalSets,
   'tier-list': tierList,
