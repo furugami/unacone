@@ -115,6 +115,7 @@ const resolvedBuilds = (builds ?? []).map((build) => ({
 						{
 							(build.move1Selection || build.move2Selection) && (
 								<div class="items-row">
+									<span class="field-label">わざ</span>
 									<div class="chip-group">
 										{build.move1Selection && (
 											<a href={`#move-${build.move1Selection.key}`} class="item-chip">
@@ -258,9 +259,10 @@ const resolvedBuilds = (builds ?? []).map((build) => ({
 
 	.items-row {
 		display: flex;
-		flex-direction: column;
-		align-items: flex-start;
-		gap: 6px;
+		flex-direction: row;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 8px;
 	}
 
 	.items-row + .items-row {
