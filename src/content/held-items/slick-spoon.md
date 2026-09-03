@@ -3,6 +3,12 @@ slug: slick-spoon
 name_ja: すりぬけスプーン
 icon: /unacone/images/uploads/held-items/slick-spoon.png
 summary: 説明はまだありません。
+recommended_pokemon:
+  - venusaur
+  - chandelure
+  - delphox
+  - mew
+  - yveltal
 stat_boosts:
   - stat: hp
     value: 245
