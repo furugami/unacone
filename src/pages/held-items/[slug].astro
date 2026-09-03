@@ -106,7 +106,7 @@ const relatedFaqs = (await getCollection('faqs')).filter(
 						</thead>
 						<tbody>
 							{sortedLevelStats.map((entry) => (
-								<tr>
+								<tr class:list={{ 'milestone-row': entry.level % 10 === 0 }}>
 									<td>{entry.level}</td>
 									{statKeysInLevelData.map((stat) => {
 										const found = entry.stats.find((s) => s.stat === stat);
@@ -264,6 +264,11 @@ const relatedFaqs = (await getCollection('faqs')).filter(
 
 	.level-table th {
 		color: var(--ink-soft);
+		font-weight: 700;
+	}
+
+	.level-table .milestone-row td {
+		background: color-mix(in srgb, var(--amber) 18%, white);
 		font-weight: 700;
 	}
 

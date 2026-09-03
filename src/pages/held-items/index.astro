@@ -6,9 +6,14 @@ import { getCollection } from 'astro:content';
 import { withBase } from '../../lib/url';
 import { HELD_ITEM_TAG_LABELS, HELD_ITEM_TAG_ORDER } from '../../lib/heldItemTags';
 
-const heldItems = (await getCollection('held-items')).sort((a, b) =>
-	a.data.name_ja.localeCompare(b.data.name_ja, 'ja')
-);
+// 「専用」タグが付いたアイテム（メガストーン等）は一覧の末尾にまとめる。
+// それ以外は五十音順（2026/09/03追加）。
+const heldItems = (await getCollection('held-items')).sort((a, b) => {
+	const aExclusive = a.data.tags?.includes('exclusive') ? 1 : 0;
+	const bExclusive = b.data.tags?.includes('exclusive') ? 1 : 0;
+	if (aExclusive !== bExclusive) return aExclusive - bExclusive;
+	return a.data.name_ja.localeCompare(b.data.name_ja, 'ja');
+});
 
 // 実際に使われているタグだけフィルタボタンを出す（メダルの属性色フィルタと同じ方式）。
 const usedTags = new Set(heldItems.flatMap((item) => item.data.tags ?? []));
