@@ -31,13 +31,12 @@ collections:
     create: true
     slug: "{{fields.slug}}"
     identifier_field: "name_ja"
-    # ポケモンごとにサブフォルダを分ける（アイコン+わざ8種で最大9枚/匹、
-    # 99匹分がフラットな1フォルダに集まって選択しづらくなったため。2026/09/02）。
-    # {{slug}}はこのコレクションのslugテンプレート（{{fields.slug}}）で解決された値
-    # （例: absol）が入る。既存のフラットフォルダの約500枚はそのまま残し、
-    # 今後の新規アップロード分だけこの構成にする方針（運営者確認済み）。
-    media_folder: "/public/images/uploads/pokemon/{{slug}}"
-    public_folder: "/unacone/images/uploads/pokemon/{{slug}}"
+    # ポケモンごとのサブフォルダ分け（2026/09/02導入）は、Decap CMSがmedia_folderの
+    # 絶対パスに{{slug}}テンプレートを解決できない制限（decaporg/decap-cms#6990,
+    # #3132）により機能せず、2026/09/03に他コレクションと同じ共通フォルダ構成へ差し戻した。
+    # 代わりにアップロード時のファイル名にポケモン名を含める運用（検索で絞り込む）にする。
+    media_folder: "/public/images/uploads/pokemon"
+    public_folder: "/unacone/images/uploads/pokemon"
     sortable_fields: ["name_ja", "role"]
     fields:
       - { label: "スラッグ（半角英数、ファイル名になる）", name: "slug", widget: "string" }
@@ -89,12 +88,7 @@ collections:
             fields:
               - { label: "名前", name: "name", widget: "string" }
               - { label: "効果", name: "effect", widget: "text" }
-              - label: "アイコン画像（任意）"
-                name: "icon"
-                widget: "image"
-                required: false
-                media_folder: "/public/images/uploads/pokemon/{{slug}}"
-                public_folder: "/unacone/images/uploads/pokemon/{{slug}}"
+              - { label: "アイコン画像（任意）", name: "icon", widget: "image", required: false }
           - label: "わざ1"
             name: "move1"
             widget: "object"
@@ -102,12 +96,7 @@ collections:
             fields:
               - { label: "名前", name: "name", widget: "string" }
               - { label: "効果", name: "effect", widget: "text" }
-              - label: "アイコン画像（任意）"
-                name: "icon"
-                widget: "image"
-                required: false
-                media_folder: "/public/images/uploads/pokemon/{{slug}}"
-                public_folder: "/unacone/images/uploads/pokemon/{{slug}}"
+              - { label: "アイコン画像（任意）", name: "icon", widget: "image", required: false }
           - label: "わざ1派生A"
             name: "move1_upgrade_a"
             widget: "object"
@@ -115,12 +104,7 @@ collections:
             fields:
               - { label: "名前", name: "name", widget: "string" }
               - { label: "効果", name: "effect", widget: "text" }
-              - label: "アイコン画像（任意）"
-                name: "icon"
-                widget: "image"
-                required: false
-                media_folder: "/public/images/uploads/pokemon/{{slug}}"
-                public_folder: "/unacone/images/uploads/pokemon/{{slug}}"
+              - { label: "アイコン画像（任意）", name: "icon", widget: "image", required: false }
           - label: "わざ1派生B（任意。存在しないポケモンもいる）"
             name: "move1_upgrade_b"
             widget: "object"
@@ -128,12 +112,7 @@ collections:
             fields:
               - { label: "名前", name: "name", widget: "string", required: false }
               - { label: "効果", name: "effect", widget: "text", required: false }
-              - label: "アイコン画像（任意）"
-                name: "icon"
-                widget: "image"
-                required: false
-                media_folder: "/public/images/uploads/pokemon/{{slug}}"
-                public_folder: "/unacone/images/uploads/pokemon/{{slug}}"
+              - { label: "アイコン画像（任意）", name: "icon", widget: "image", required: false }
           - label: "わざ2"
             name: "move2"
             widget: "object"
@@ -141,12 +120,7 @@ collections:
             fields:
               - { label: "名前", name: "name", widget: "string" }
               - { label: "効果", name: "effect", widget: "text" }
-              - label: "アイコン画像（任意）"
-                name: "icon"
-                widget: "image"
-                required: false
-                media_folder: "/public/images/uploads/pokemon/{{slug}}"
-                public_folder: "/unacone/images/uploads/pokemon/{{slug}}"
+              - { label: "アイコン画像（任意）", name: "icon", widget: "image", required: false }
           - label: "わざ2派生A"
             name: "move2_upgrade_a"
             widget: "object"
@@ -154,12 +128,7 @@ collections:
             fields:
               - { label: "名前", name: "name", widget: "string" }
               - { label: "効果", name: "effect", widget: "text" }
-              - label: "アイコン画像（任意）"
-                name: "icon"
-                widget: "image"
-                required: false
-                media_folder: "/public/images/uploads/pokemon/{{slug}}"
-                public_folder: "/unacone/images/uploads/pokemon/{{slug}}"
+              - { label: "アイコン画像（任意）", name: "icon", widget: "image", required: false }
           - label: "わざ2派生B（任意。存在しないポケモンもいる）"
             name: "move2_upgrade_b"
             widget: "object"
@@ -167,12 +136,7 @@ collections:
             fields:
               - { label: "名前", name: "name", widget: "string", required: false }
               - { label: "効果", name: "effect", widget: "text", required: false }
-              - label: "アイコン画像（任意）"
-                name: "icon"
-                widget: "image"
-                required: false
-                media_folder: "/public/images/uploads/pokemon/{{slug}}"
-                public_folder: "/unacone/images/uploads/pokemon/{{slug}}"
+              - { label: "アイコン画像（任意）", name: "icon", widget: "image", required: false }
           - label: "ユナイト技"
             name: "unite_move"
             widget: "object"
@@ -180,12 +144,7 @@ collections:
             fields:
               - { label: "名前", name: "name", widget: "string" }
               - { label: "効果", name: "effect", widget: "text" }
-              - label: "アイコン画像（任意）"
-                name: "icon"
-                widget: "image"
-                required: false
-                media_folder: "/public/images/uploads/pokemon/{{slug}}"
-                public_folder: "/unacone/images/uploads/pokemon/{{slug}}"
+              - { label: "アイコン画像（任意）", name: "icon", widget: "image", required: false }
       - label: "おすすめビルド"
         name: "builds"
         widget: "list"
