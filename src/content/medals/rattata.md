@@ -1,6 +1,7 @@
 ---
 slug: rattata
 name_ja: コラッタ
+icon: /unacone/images/uploads/medals/rattata.png
 order: 19
 colors:
   - white

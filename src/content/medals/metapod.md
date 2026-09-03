@@ -1,6 +1,7 @@
 ---
 slug: metapod
 name_ja: トランセル
+icon: /unacone/images/uploads/medals/metapod.png
 order: 11
 colors:
   - green

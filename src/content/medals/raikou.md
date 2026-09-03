@@ -1,6 +1,7 @@
 ---
 slug: raikou
 name_ja: ライコウ
+icon: /unacone/images/uploads/medals/raikou.png
 order: 243
 colors:
   - yellow

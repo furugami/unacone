@@ -1,6 +1,7 @@
 ---
 slug: quagsire
 name_ja: ヌオー
+icon: /unacone/images/uploads/medals/quagsire.png
 order: 195
 colors:
   - blue

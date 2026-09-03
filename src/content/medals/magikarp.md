@@ -1,6 +1,7 @@
 ---
 slug: magikarp
 name_ja: コイキング
+icon: /unacone/images/uploads/medals/magikarp.png
 order: 129
 colors:
   - blue

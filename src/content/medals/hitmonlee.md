@@ -1,6 +1,7 @@
 ---
 slug: hitmonlee
 name_ja: サワムラー
+icon: /unacone/images/uploads/medals/hitmonlee.png
 order: 106
 colors:
   - brown

@@ -1,6 +1,7 @@
 ---
 slug: ninetales
 name_ja: キュウコン
+icon: /unacone/images/uploads/medals/ninetales.png
 order: 38
 pokemon_slug: ninetales
 colors:

@@ -1,6 +1,7 @@
 ---
 slug: rhyhorn
 name_ja: サイホーン
+icon: /unacone/images/uploads/medals/rhyhorn.png
 order: 111
 colors:
   - brown

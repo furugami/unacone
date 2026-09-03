@@ -1,6 +1,7 @@
 ---
 slug: jumpluff
 name_ja: ワタッコ
+icon: /unacone/images/uploads/medals/jumpluff.png
 order: 189
 colors:
   - green

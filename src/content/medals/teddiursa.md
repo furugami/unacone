@@ -1,6 +1,7 @@
 ---
 slug: teddiursa
 name_ja: ヒメグマ
+icon: /unacone/images/uploads/medals/teddiursa.png
 order: 216
 colors:
   - white

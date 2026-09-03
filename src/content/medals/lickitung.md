@@ -1,6 +1,7 @@
 ---
 slug: lickitung
 name_ja: ベロリンガ
+icon: /unacone/images/uploads/medals/lickitung.png
 order: 108
 colors:
   - white

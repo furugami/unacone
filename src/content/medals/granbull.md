@@ -1,6 +1,7 @@
 ---
 slug: granbull
 name_ja: グランブル
+icon: /unacone/images/uploads/medals/granbull.png
 order: 210
 colors:
   - pink

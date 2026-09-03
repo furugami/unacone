@@ -1,6 +1,7 @@
 ---
 slug: tentacruel
 name_ja: ドククラゲ
+icon: /unacone/images/uploads/medals/tentacruel.png
 order: 73
 colors:
   - blue

@@ -1,6 +1,7 @@
 ---
 slug: wooper
 name_ja: ウパー
+icon: /unacone/images/uploads/medals/wooper.png
 order: 194
 colors:
   - blue

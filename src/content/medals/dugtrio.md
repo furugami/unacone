@@ -1,6 +1,7 @@
 ---
 slug: dugtrio
 name_ja: ダグトリオ
+icon: /unacone/images/uploads/medals/dugtrio.png
 order: 51
 colors:
   - brown

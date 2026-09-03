@@ -1,6 +1,7 @@
 ---
 slug: sunkern
 name_ja: ヒマナッツ
+icon: /unacone/images/uploads/medals/sunkern.png
 order: 191
 colors:
   - green

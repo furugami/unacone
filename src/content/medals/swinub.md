@@ -1,6 +1,7 @@
 ---
 slug: swinub
 name_ja: ウリムー
+icon: /unacone/images/uploads/medals/swinub.png
 order: 220
 colors:
   - blue

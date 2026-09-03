@@ -1,6 +1,7 @@
 ---
 slug: venomoth
 name_ja: モルフォン
+icon: /unacone/images/uploads/medals/venomoth.png
 order: 49
 colors:
   - green

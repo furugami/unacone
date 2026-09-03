@@ -1,6 +1,7 @@
 ---
 slug: ivysaur
 name_ja: フシギソウ
+icon: /unacone/images/uploads/medals/ivysaur.png
 order: 2
 colors:
   - green

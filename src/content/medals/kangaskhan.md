@@ -1,6 +1,7 @@
 ---
 slug: kangaskhan
 name_ja: ガルーラ
+icon: /unacone/images/uploads/medals/kangaskhan.png
 order: 115
 colors:
   - white

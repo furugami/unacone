@@ -1,6 +1,7 @@
 ---
 slug: dratini
 name_ja: ミニリュウ
+icon: /unacone/images/uploads/medals/dratini.png
 order: 147
 colors:
   - navy

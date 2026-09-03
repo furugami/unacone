@@ -1,6 +1,7 @@
 ---
 slug: omastar
 name_ja: オムスター
+icon: /unacone/images/uploads/medals/omastar.png
 order: 139
 colors:
   - brown

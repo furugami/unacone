@@ -1,6 +1,7 @@
 ---
 slug: yanma
 name_ja: ヤンヤンマ
+icon: /unacone/images/uploads/medals/yanma.png
 order: 193
 colors:
   - green

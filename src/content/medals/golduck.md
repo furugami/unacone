@@ -1,6 +1,7 @@
 ---
 slug: golduck
 name_ja: ゴルダック
+icon: /unacone/images/uploads/medals/golduck.png
 order: 55
 colors:
   - blue

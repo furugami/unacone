@@ -1,6 +1,7 @@
 ---
 slug: bellsprout
 name_ja: マダツボミ
+icon: /unacone/images/uploads/medals/bellsprout.png
 order: 69
 colors:
   - green

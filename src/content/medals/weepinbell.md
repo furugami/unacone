@@ -1,6 +1,7 @@
 ---
 slug: weepinbell
 name_ja: ウツドン
+icon: /unacone/images/uploads/medals/weepinbell.png
 order: 70
 colors:
   - green

@@ -1,6 +1,7 @@
 ---
 slug: quilava
 name_ja: マグマラシ
+icon: /unacone/images/uploads/medals/quilava.png
 order: 156
 colors:
   - red

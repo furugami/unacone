@@ -1,6 +1,7 @@
 ---
 slug: kingdra
 name_ja: キングドラ
+icon: /unacone/images/uploads/medals/kingdra.png
 order: 230
 colors:
   - blue

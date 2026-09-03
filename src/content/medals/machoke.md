@@ -1,6 +1,7 @@
 ---
 slug: machoke
 name_ja: ゴーリキー
+icon: /unacone/images/uploads/medals/machoke.png
 order: 67
 colors:
   - brown

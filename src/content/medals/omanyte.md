@@ -1,6 +1,7 @@
 ---
 slug: omanyte
 name_ja: オムナイト
+icon: /unacone/images/uploads/medals/omanyte.png
 order: 138
 colors:
   - brown

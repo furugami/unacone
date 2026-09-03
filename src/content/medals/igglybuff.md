@@ -1,6 +1,7 @@
 ---
 slug: igglybuff
 name_ja: ププリン
+icon: /unacone/images/uploads/medals/igglybuff.png
 order: 174
 colors:
   - pink

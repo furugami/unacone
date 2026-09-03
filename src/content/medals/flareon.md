@@ -1,6 +1,7 @@
 ---
 slug: flareon
 name_ja: ブースター
+icon: /unacone/images/uploads/medals/flareon.png
 order: 136
 colors:
   - red

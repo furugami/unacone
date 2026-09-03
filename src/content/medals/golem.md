@@ -1,6 +1,7 @@
 ---
 slug: golem
 name_ja: ゴローニャ
+icon: /unacone/images/uploads/medals/golem.png
 order: 76
 colors:
   - brown

@@ -1,6 +1,7 @@
 ---
 slug: beedrill
 name_ja: スピアー
+icon: /unacone/images/uploads/medals/beedrill.png
 order: 15
 colors:
   - green

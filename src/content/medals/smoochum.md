@@ -1,6 +1,7 @@
 ---
 slug: smoochum
 name_ja: ムチュール
+icon: /unacone/images/uploads/medals/smoochum.png
 order: 238
 colors:
   - purple

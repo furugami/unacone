@@ -1,6 +1,7 @@
 ---
 slug: hypno
 name_ja: スリーパー
+icon: /unacone/images/uploads/medals/hypno.png
 order: 97
 colors:
   - purple

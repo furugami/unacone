@@ -1,6 +1,7 @@
 ---
 slug: onix
 name_ja: イワーク
+icon: /unacone/images/uploads/medals/onix.png
 order: 95
 colors:
   - brown

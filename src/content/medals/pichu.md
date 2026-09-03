@@ -1,6 +1,7 @@
 ---
 slug: pichu
 name_ja: ピチュー
+icon: /unacone/images/uploads/medals/pichu.png
 order: 172
 colors:
   - yellow

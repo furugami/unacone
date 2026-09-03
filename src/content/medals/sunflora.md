@@ -1,6 +1,7 @@
 ---
 slug: sunflora
 name_ja: キマワリ
+icon: /unacone/images/uploads/medals/sunflora.png
 order: 192
 colors:
   - green

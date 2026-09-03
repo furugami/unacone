@@ -1,6 +1,7 @@
 ---
 slug: azumarill
 name_ja: マリルリ
+icon: /unacone/images/uploads/medals/azumarill.png
 order: 184
 pokemon_slug: azumarill
 colors:

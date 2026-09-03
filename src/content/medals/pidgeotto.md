@@ -1,6 +1,7 @@
 ---
 slug: pidgeotto
 name_ja: ピジョン
+icon: /unacone/images/uploads/medals/pidgeotto.png
 order: 17
 colors:
   - white

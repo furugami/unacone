@@ -1,6 +1,7 @@
 ---
 slug: doduo
 name_ja: ドードー
+icon: /unacone/images/uploads/medals/doduo.png
 order: 84
 colors:
   - white

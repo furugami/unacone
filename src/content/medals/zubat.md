@@ -1,6 +1,7 @@
 ---
 slug: zubat
 name_ja: ズバット
+icon: /unacone/images/uploads/medals/zubat.png
 order: 41
 colors:
   - black

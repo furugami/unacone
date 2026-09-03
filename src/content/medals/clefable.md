@@ -1,6 +1,7 @@
 ---
 slug: clefable
 name_ja: ピクシー
+icon: /unacone/images/uploads/medals/clefable.png
 order: 36
 pokemon_slug: clefable
 colors:

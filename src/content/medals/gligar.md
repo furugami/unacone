@@ -1,6 +1,7 @@
 ---
 slug: gligar
 name_ja: グライガー
+icon: /unacone/images/uploads/medals/gligar.png
 order: 207
 colors:
   - brown

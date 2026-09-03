@@ -1,6 +1,7 @@
 ---
 slug: drowzee
 name_ja: スリープ
+icon: /unacone/images/uploads/medals/drowzee.png
 order: 96
 colors:
   - purple

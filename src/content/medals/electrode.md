@@ -1,6 +1,7 @@
 ---
 slug: electrode
 name_ja: マルマイン
+icon: /unacone/images/uploads/medals/electrode.png
 order: 101
 colors:
   - yellow

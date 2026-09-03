@@ -1,6 +1,7 @@
 ---
 slug: smeargle
 name_ja: ドーブル
+icon: /unacone/images/uploads/medals/smeargle.png
 order: 235
 colors:
   - white

@@ -1,6 +1,7 @@
 ---
 slug: diglett
 name_ja: ディグダ
+icon: /unacone/images/uploads/medals/diglett.png
 order: 50
 colors:
   - brown

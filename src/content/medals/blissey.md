@@ -1,6 +1,7 @@
 ---
 slug: blissey
 name_ja: ハピナス
+icon: /unacone/images/uploads/medals/blissey.png
 order: 242
 pokemon_slug: blissey
 colors:

@@ -1,6 +1,7 @@
 ---
 slug: dragonite
 name_ja: カイリュー
+icon: /unacone/images/uploads/medals/dragonite.png
 order: 149
 pokemon_slug: dragonite
 colors:

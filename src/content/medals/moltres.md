@@ -1,6 +1,7 @@
 ---
 slug: moltres
 name_ja: ファイヤー
+icon: /unacone/images/uploads/medals/moltres.png
 order: 146
 pokemon_slug: moltres
 colors:

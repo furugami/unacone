@@ -1,6 +1,7 @@
 ---
 slug: kadabra
 name_ja: ユンゲラー
+icon: /unacone/images/uploads/medals/kadabra.png
 order: 64
 colors:
   - purple

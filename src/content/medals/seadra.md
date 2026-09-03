@@ -1,6 +1,7 @@
 ---
 slug: seadra
 name_ja: シードラ
+icon: /unacone/images/uploads/medals/seadra.png
 order: 117
 colors:
   - blue

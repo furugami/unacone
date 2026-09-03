@@ -1,6 +1,7 @@
 ---
 slug: octillery
 name_ja: オクタン
+icon: /unacone/images/uploads/medals/octillery.png
 order: 224
 colors:
   - blue

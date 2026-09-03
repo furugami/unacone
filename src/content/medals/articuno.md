@@ -1,6 +1,7 @@
 ---
 slug: articuno
 name_ja: フリーザー
+icon: /unacone/images/uploads/medals/articuno.png
 order: 144
 pokemon_slug: articuno
 colors:

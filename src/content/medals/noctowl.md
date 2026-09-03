@@ -1,6 +1,7 @@
 ---
 slug: noctowl
 name_ja: ヨルノズク
+icon: /unacone/images/uploads/medals/noctowl.png
 order: 164
 colors:
   - white

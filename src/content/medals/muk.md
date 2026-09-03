@@ -1,6 +1,7 @@
 ---
 slug: muk
 name_ja: ベトベトン
+icon: /unacone/images/uploads/medals/muk.png
 order: 89
 colors:
   - black

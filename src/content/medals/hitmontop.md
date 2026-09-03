@@ -1,6 +1,7 @@
 ---
 slug: hitmontop
 name_ja: カポエラー
+icon: /unacone/images/uploads/medals/hitmontop.png
 order: 237
 colors:
   - brown

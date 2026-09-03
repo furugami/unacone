@@ -1,6 +1,7 @@
 ---
 slug: ditto
 name_ja: メタモン
+icon: /unacone/images/uploads/medals/ditto.png
 order: 132
 colors:
   - white

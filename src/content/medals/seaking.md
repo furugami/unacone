@@ -1,6 +1,7 @@
 ---
 slug: seaking
 name_ja: アズマオウ
+icon: /unacone/images/uploads/medals/seaking.png
 order: 119
 colors:
   - blue

@@ -1,6 +1,7 @@
 ---
 slug: nidorino
 name_ja: ニドリーノ
+icon: /unacone/images/uploads/medals/nidorino.png
 order: 33
 colors:
   - purple

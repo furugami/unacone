@@ -1,6 +1,7 @@
 ---
 slug: koffing
 name_ja: ドガース
+icon: /unacone/images/uploads/medals/koffing.png
 order: 109
 colors:
   - purple

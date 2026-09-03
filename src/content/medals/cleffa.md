@@ -1,6 +1,7 @@
 ---
 slug: cleffa
 name_ja: ピィ
+icon: /unacone/images/uploads/medals/cleffa.png
 order: 173
 colors:
   - pink

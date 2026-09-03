@@ -1,6 +1,7 @@
 ---
 slug: lanturn
 name_ja: ランターン
+icon: /unacone/images/uploads/medals/lanturn.png
 order: 171
 colors:
   - yellow

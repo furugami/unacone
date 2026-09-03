@@ -1,6 +1,7 @@
 ---
 slug: umbreon
 name_ja: ブラッキー
+icon: /unacone/images/uploads/medals/umbreon.png
 order: 197
 pokemon_slug: umbreon
 colors:

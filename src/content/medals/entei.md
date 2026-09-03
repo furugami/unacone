@@ -1,6 +1,7 @@
 ---
 slug: entei
 name_ja: エンテイ
+icon: /unacone/images/uploads/medals/entei.png
 order: 244
 colors:
   - red

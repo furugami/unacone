@@ -1,6 +1,7 @@
 ---
 slug: vileplume
 name_ja: ラフレシア
+icon: /unacone/images/uploads/medals/vileplume.png
 order: 45
 colors:
   - green

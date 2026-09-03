@@ -1,6 +1,7 @@
 ---
 slug: tauros
 name_ja: ケンタロス
+icon: /unacone/images/uploads/medals/tauros.png
 order: 128
 colors:
   - white

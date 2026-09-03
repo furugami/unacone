@@ -1,6 +1,7 @@
 ---
 slug: furret
 name_ja: オオタチ
+icon: /unacone/images/uploads/medals/furret.png
 order: 162
 colors:
   - white

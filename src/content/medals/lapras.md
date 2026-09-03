@@ -1,6 +1,7 @@
 ---
 slug: lapras
 name_ja: ラプラス
+icon: /unacone/images/uploads/medals/lapras.png
 order: 131
 pokemon_slug: lapras
 colors:

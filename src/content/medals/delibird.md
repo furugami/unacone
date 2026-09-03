@@ -1,6 +1,7 @@
 ---
 slug: delibird
 name_ja: デリバード
+icon: /unacone/images/uploads/medals/delibird.png
 order: 225
 colors:
   - white

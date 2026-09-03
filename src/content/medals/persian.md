@@ -1,6 +1,7 @@
 ---
 slug: persian
 name_ja: ペルシアン
+icon: /unacone/images/uploads/medals/persian.png
 order: 53
 colors:
   - white

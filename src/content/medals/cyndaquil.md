@@ -1,6 +1,7 @@
 ---
 slug: cyndaquil
 name_ja: ヒノアラシ
+icon: /unacone/images/uploads/medals/cyndaquil.png
 order: 155
 colors:
   - red

@@ -1,6 +1,7 @@
 ---
 slug: arcanine
 name_ja: ウィンディ
+icon: /unacone/images/uploads/medals/arcanine.png
 order: 59
 colors:
   - red

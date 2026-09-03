@@ -1,6 +1,7 @@
 ---
 slug: togetic
 name_ja: トゲチック
+icon: /unacone/images/uploads/medals/togetic.png
 order: 176
 colors:
   - pink

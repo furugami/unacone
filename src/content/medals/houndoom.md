@@ -1,6 +1,7 @@
 ---
 slug: houndoom
 name_ja: ヘルガー
+icon: /unacone/images/uploads/medals/houndoom.png
 order: 229
 colors:
   - black

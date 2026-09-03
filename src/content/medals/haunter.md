@@ -1,6 +1,7 @@
 ---
 slug: haunter
 name_ja: ゴースト
+icon: /unacone/images/uploads/medals/haunter.png
 order: 93
 colors:
   - purple

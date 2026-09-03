@@ -1,6 +1,7 @@
 ---
 slug: dragonair
 name_ja: ハクリュー
+icon: /unacone/images/uploads/medals/dragonair.png
 order: 148
 colors:
   - navy

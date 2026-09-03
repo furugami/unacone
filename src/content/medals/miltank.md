@@ -1,6 +1,7 @@
 ---
 slug: miltank
 name_ja: ミルタンク
+icon: /unacone/images/uploads/medals/miltank.png
 order: 241
 colors:
   - white

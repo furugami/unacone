@@ -1,6 +1,7 @@
 ---
 slug: squirtle
 name_ja: ゼニガメ
+icon: /unacone/images/uploads/medals/squirtle.png
 order: 7
 colors:
   - blue

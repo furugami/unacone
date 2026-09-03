@@ -1,6 +1,7 @@
 ---
 slug: fearow
 name_ja: オニドリル
+icon: /unacone/images/uploads/medals/fearow.png
 order: 22
 colors:
   - white

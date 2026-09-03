@@ -1,6 +1,7 @@
 ---
 slug: clefairy
 name_ja: ピッピ
+icon: /unacone/images/uploads/medals/clefairy.png
 order: 35
 colors:
   - pink

@@ -1,6 +1,7 @@
 ---
 slug: hoppip
 name_ja: ハネッコ
+icon: /unacone/images/uploads/medals/hoppip.png
 order: 187
 colors:
   - green

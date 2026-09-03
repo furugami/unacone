@@ -1,6 +1,7 @@
 ---
 slug: phanpy
 name_ja: ゴマゾウ
+icon: /unacone/images/uploads/medals/phanpy.png
 order: 231
 colors:
   - brown

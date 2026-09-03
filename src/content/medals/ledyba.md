@@ -1,6 +1,7 @@
 ---
 slug: ledyba
 name_ja: レディバ
+icon: /unacone/images/uploads/medals/ledyba.png
 order: 165
 colors:
   - green

@@ -1,6 +1,7 @@
 ---
 slug: ampharos
 name_ja: デンリュウ
+icon: /unacone/images/uploads/medals/ampharos.png
 order: 181
 colors:
   - yellow

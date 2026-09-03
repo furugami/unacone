@@ -1,6 +1,7 @@
 ---
 slug: feraligatr
 name_ja: オーダイル
+icon: /unacone/images/uploads/medals/feraligatr.png
 order: 160
 pokemon_slug: feraligatr
 colors:

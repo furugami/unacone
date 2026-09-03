@@ -1,6 +1,7 @@
 ---
 slug: geodude
 name_ja: イシツブテ
+icon: /unacone/images/uploads/medals/geodude.png
 order: 74
 colors:
   - brown

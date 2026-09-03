@@ -1,6 +1,7 @@
 ---
 slug: parasect
 name_ja: パラセクト
+icon: /unacone/images/uploads/medals/parasect.png
 order: 47
 colors:
   - green

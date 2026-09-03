@@ -1,6 +1,7 @@
 ---
 slug: oddish
 name_ja: ナゾノクサ
+icon: /unacone/images/uploads/medals/oddish.png
 order: 43
 colors:
   - green

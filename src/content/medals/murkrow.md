@@ -1,6 +1,7 @@
 ---
 slug: murkrow
 name_ja: ヤミカラス
+icon: /unacone/images/uploads/medals/murkrow.png
 order: 198
 colors:
   - black

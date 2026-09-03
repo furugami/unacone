@@ -1,6 +1,7 @@
 ---
 slug: sandslash
 name_ja: サンドパン
+icon: /unacone/images/uploads/medals/sandslash.png
 order: 28
 colors:
   - brown

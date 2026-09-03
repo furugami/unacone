@@ -1,6 +1,7 @@
 ---
 slug: piloswine
 name_ja: イノムー
+icon: /unacone/images/uploads/medals/piloswine.png
 order: 221
 colors:
   - blue

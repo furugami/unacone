@@ -1,6 +1,7 @@
 ---
 slug: pidgeot
 name_ja: ピジョット
+icon: /unacone/images/uploads/medals/pidgeot.png
 order: 18
 colors:
   - white

@@ -1,6 +1,7 @@
 ---
 slug: spearow
 name_ja: オニスズメ
+icon: /unacone/images/uploads/medals/spearow.png
 order: 21
 colors:
   - white

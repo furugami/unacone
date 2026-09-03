@@ -1,6 +1,7 @@
 ---
 slug: shellder
 name_ja: シェルダー
+icon: /unacone/images/uploads/medals/shellder.png
 order: 90
 colors:
   - blue

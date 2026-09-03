@@ -1,6 +1,7 @@
 ---
 slug: celebi
 name_ja: セレビィ
+icon: /unacone/images/uploads/medals/celebi.png
 order: 251
 colors:
   - green

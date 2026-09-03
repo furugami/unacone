@@ -1,6 +1,7 @@
 ---
 slug: arbok
 name_ja: アーボック
+icon: /unacone/images/uploads/medals/arbok.png
 order: 24
 colors:
   - black

@@ -1,6 +1,7 @@
 ---
 slug: forretress
 name_ja: フォレトス
+icon: /unacone/images/uploads/medals/forretress.png
 order: 205
 colors:
   - gray

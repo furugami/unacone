@@ -1,6 +1,7 @@
 ---
 slug: exeggutor
 name_ja: ナッシー
+icon: /unacone/images/uploads/medals/exeggutor.png
 order: 103
 colors:
   - green

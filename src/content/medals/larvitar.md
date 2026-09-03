@@ -1,6 +1,7 @@
 ---
 slug: larvitar
 name_ja: ヨーギラス
+icon: /unacone/images/uploads/medals/larvitar.png
 order: 246
 colors:
   - brown

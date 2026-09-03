@@ -1,6 +1,7 @@
 ---
 slug: kabuto
 name_ja: カブト
+icon: /unacone/images/uploads/medals/kabuto.png
 order: 140
 colors:
   - brown

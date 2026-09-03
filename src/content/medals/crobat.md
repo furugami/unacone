@@ -1,6 +1,7 @@
 ---
 slug: crobat
 name_ja: クロバット
+icon: /unacone/images/uploads/medals/crobat.png
 order: 169
 colors:
   - black

@@ -1,6 +1,7 @@
 ---
 slug: exeggcute
 name_ja: タマタマ
+icon: /unacone/images/uploads/medals/exeggcute.png
 order: 102
 colors:
   - green

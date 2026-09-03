@@ -1,6 +1,7 @@
 ---
 slug: golbat
 name_ja: ゴルバット
+icon: /unacone/images/uploads/medals/golbat.png
 order: 42
 colors:
   - black

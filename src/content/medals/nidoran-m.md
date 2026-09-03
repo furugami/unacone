@@ -1,6 +1,7 @@
 ---
 slug: nidoran-m
 name_ja: ニドラン♂
+icon: /unacone/images/uploads/medals/nidoran-m.png
 order: 32
 colors:
   - purple

@@ -1,6 +1,7 @@
 ---
 slug: magcargo
 name_ja: マグカルゴ
+icon: /unacone/images/uploads/medals/magcargo.png
 order: 219
 colors:
   - red

@@ -1,6 +1,7 @@
 ---
 slug: espeon
 name_ja: エーフィ
+icon: /unacone/images/uploads/medals/espeon.png
 order: 196
 pokemon_slug: espeon
 colors:

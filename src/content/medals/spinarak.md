@@ -1,6 +1,7 @@
 ---
 slug: spinarak
 name_ja: イトマル
+icon: /unacone/images/uploads/medals/spinarak.png
 order: 167
 colors:
   - green

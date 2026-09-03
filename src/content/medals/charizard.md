@@ -1,6 +1,7 @@
 ---
 slug: charizard
 name_ja: リザードン
+icon: /unacone/images/uploads/medals/charizard.png
 order: 6
 pokemon_slug: charizard
 colors:

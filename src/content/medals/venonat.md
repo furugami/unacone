@@ -1,6 +1,7 @@
 ---
 slug: venonat
 name_ja: コンパン
+icon: /unacone/images/uploads/medals/venonat.png
 order: 48
 colors:
   - green

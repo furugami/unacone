@@ -1,6 +1,7 @@
 ---
 slug: machamp
 name_ja: カイリキー
+icon: /unacone/images/uploads/medals/machamp.png
 order: 68
 pokemon_slug: machamp
 colors:

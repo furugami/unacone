@@ -1,6 +1,7 @@
 ---
 slug: porygon
 name_ja: ポリゴン
+icon: /unacone/images/uploads/medals/porygon.png
 order: 137
 colors:
   - white

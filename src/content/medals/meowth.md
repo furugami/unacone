@@ -1,6 +1,7 @@
 ---
 slug: meowth
 name_ja: ニャース
+icon: /unacone/images/uploads/medals/meowth.png
 order: 52
 pokemon_slug: meowth
 colors:

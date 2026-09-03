@@ -1,6 +1,7 @@
 ---
 slug: cubone
 name_ja: カラカラ
+icon: /unacone/images/uploads/medals/cubone.png
 order: 104
 colors:
   - brown

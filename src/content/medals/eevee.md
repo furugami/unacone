@@ -1,6 +1,7 @@
 ---
 slug: eevee
 name_ja: イーブイ
+icon: /unacone/images/uploads/medals/eevee.png
 order: 133
 colors:
   - white

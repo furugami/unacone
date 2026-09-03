@@ -1,6 +1,7 @@
 ---
 slug: gastly
 name_ja: ゴース
+icon: /unacone/images/uploads/medals/gastly.png
 order: 92
 colors:
   - purple

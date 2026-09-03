@@ -1,6 +1,7 @@
 ---
 slug: flaaffy
 name_ja: モココ
+icon: /unacone/images/uploads/medals/flaaffy.png
 order: 180
 colors:
   - yellow

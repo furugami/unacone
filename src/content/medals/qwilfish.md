@@ -1,6 +1,7 @@
 ---
 slug: qwilfish
 name_ja: ハリーセン
+icon: /unacone/images/uploads/medals/qwilfish.png
 order: 211
 colors:
   - black

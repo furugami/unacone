@@ -1,6 +1,7 @@
 ---
 slug: ledian
 name_ja: レディアン
+icon: /unacone/images/uploads/medals/ledian.png
 order: 166
 colors:
   - green

@@ -1,6 +1,7 @@
 ---
 slug: heracross
 name_ja: ヘラクロス
+icon: /unacone/images/uploads/medals/heracross.png
 order: 214
 colors:
   - brown

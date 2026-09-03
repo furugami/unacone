@@ -1,6 +1,7 @@
 ---
 slug: bulbasaur
 name_ja: フシギダネ
+icon: /unacone/images/uploads/medals/bulbasaur.png
 order: 1
 colors:
   - green

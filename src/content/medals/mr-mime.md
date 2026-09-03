@@ -1,6 +1,7 @@
 ---
 slug: mr-mime
 name_ja: バリヤード
+icon: /unacone/images/uploads/medals/mr-mime.png
 order: 122
 pokemon_slug: mr-mime
 colors:

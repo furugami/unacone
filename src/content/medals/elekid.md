@@ -1,6 +1,7 @@
 ---
 slug: elekid
 name_ja: エレキッド
+icon: /unacone/images/uploads/medals/elekid.png
 order: 239
 colors:
   - yellow

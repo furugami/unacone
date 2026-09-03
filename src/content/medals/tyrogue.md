@@ -1,6 +1,7 @@
 ---
 slug: tyrogue
 name_ja: バルキー
+icon: /unacone/images/uploads/medals/tyrogue.png
 order: 236
 colors:
   - brown

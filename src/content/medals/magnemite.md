@@ -1,6 +1,7 @@
 ---
 slug: magnemite
 name_ja: コイル
+icon: /unacone/images/uploads/medals/magnemite.png
 order: 81
 colors:
   - yellow

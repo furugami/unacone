@@ -1,6 +1,7 @@
 ---
 slug: marowak
 name_ja: ガラガラ
+icon: /unacone/images/uploads/medals/marowak.png
 order: 105
 colors:
   - brown

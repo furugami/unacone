@@ -1,6 +1,7 @@
 ---
 slug: marill
 name_ja: マリル
+icon: /unacone/images/uploads/medals/marill.png
 order: 183
 colors:
   - pink

@@ -1,6 +1,7 @@
 ---
 slug: primeape
 name_ja: オコリザル
+icon: /unacone/images/uploads/medals/primeape.png
 order: 57
 colors:
   - brown

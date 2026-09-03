@@ -1,6 +1,7 @@
 ---
 slug: togepi
 name_ja: トゲピー
+icon: /unacone/images/uploads/medals/togepi.png
 order: 175
 colors:
   - pink

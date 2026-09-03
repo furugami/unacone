@@ -1,6 +1,7 @@
 ---
 slug: slowking
 name_ja: ヤドキング
+icon: /unacone/images/uploads/medals/slowking.png
 order: 199
 colors:
   - blue

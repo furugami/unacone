@@ -1,6 +1,7 @@
 ---
 slug: raichu
 name_ja: ライチュウ
+icon: /unacone/images/uploads/medals/raichu.png
 order: 26
 pokemon_slug: raichu
 colors:

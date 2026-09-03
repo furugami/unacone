@@ -1,6 +1,7 @@
 ---
 slug: mew
 name_ja: ミュウ
+icon: /unacone/images/uploads/medals/mew.png
 order: 150
 pokemon_slug: mew
 colors:

@@ -1,6 +1,7 @@
 ---
 slug: politoed
 name_ja: ニョロトノ
+icon: /unacone/images/uploads/medals/politoed.png
 order: 186
 colors:
   - blue

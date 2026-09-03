@@ -1,6 +1,7 @@
 ---
 slug: unown
 name_ja: アンノーン
+icon: /unacone/images/uploads/medals/unown.png
 order: 201
 colors:
   - purple

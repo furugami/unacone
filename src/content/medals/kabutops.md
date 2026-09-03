@@ -1,6 +1,7 @@
 ---
 slug: kabutops
 name_ja: カブトプス
+icon: /unacone/images/uploads/medals/kabutops.png
 order: 141
 colors:
   - brown

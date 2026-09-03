@@ -1,6 +1,7 @@
 ---
 slug: dunsparce
 name_ja: ノコッチ
+icon: /unacone/images/uploads/medals/dunsparce.png
 order: 206
 colors:
   - white

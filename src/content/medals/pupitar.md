@@ -1,6 +1,7 @@
 ---
 slug: pupitar
 name_ja: サナギラス
+icon: /unacone/images/uploads/medals/pupitar.png
 order: 247
 colors:
   - brown

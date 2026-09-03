@@ -1,6 +1,7 @@
 ---
 slug: abra
 name_ja: ケーシィ
+icon: /unacone/images/uploads/medals/abra.png
 order: 63
 colors:
   - purple

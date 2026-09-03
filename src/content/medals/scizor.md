@@ -1,6 +1,7 @@
 ---
 slug: scizor
 name_ja: ハッサム
+icon: /unacone/images/uploads/medals/scizor.png
 order: 212
 pokemon_slug: scizor
 colors:

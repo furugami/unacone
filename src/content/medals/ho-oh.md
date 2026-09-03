@@ -1,6 +1,7 @@
 ---
 slug: ho-oh
 name_ja: ホウオウ
+icon: /unacone/images/uploads/medals/ho-oh.png
 order: 250
 pokemon_slug: ho-oh
 colors:

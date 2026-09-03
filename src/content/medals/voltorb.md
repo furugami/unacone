@@ -1,6 +1,7 @@
 ---
 slug: voltorb
 name_ja: ビリリダマ
+icon: /unacone/images/uploads/medals/voltorb.png
 order: 100
 colors:
   - yellow

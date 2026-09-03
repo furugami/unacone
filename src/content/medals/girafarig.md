@@ -1,6 +1,7 @@
 ---
 slug: girafarig
 name_ja: キリンリキ
+icon: /unacone/images/uploads/medals/girafarig.png
 order: 203
 colors:
   - purple

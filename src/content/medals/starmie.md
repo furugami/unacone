@@ -1,6 +1,7 @@
 ---
 slug: starmie
 name_ja: スターミー
+icon: /unacone/images/uploads/medals/starmie.png
 order: 121
 colors:
   - blue

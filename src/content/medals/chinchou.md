@@ -1,6 +1,7 @@
 ---
 slug: chinchou
 name_ja: チョンチー
+icon: /unacone/images/uploads/medals/chinchou.png
 order: 170
 colors:
   - yellow

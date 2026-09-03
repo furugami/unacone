@@ -1,6 +1,7 @@
 ---
 slug: staryu
 name_ja: ヒトデマン
+icon: /unacone/images/uploads/medals/staryu.png
 order: 120
 colors:
   - blue

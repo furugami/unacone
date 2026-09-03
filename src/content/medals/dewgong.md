@@ -1,6 +1,7 @@
 ---
 slug: dewgong
 name_ja: ジュゴン
+icon: /unacone/images/uploads/medals/dewgong.png
 order: 87
 colors:
   - blue

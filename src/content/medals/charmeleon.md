@@ -1,6 +1,7 @@
 ---
 slug: charmeleon
 name_ja: リザード
+icon: /unacone/images/uploads/medals/charmeleon.png
 order: 5
 colors:
   - red

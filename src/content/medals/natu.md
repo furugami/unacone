@@ -1,6 +1,7 @@
 ---
 slug: natu
 name_ja: ネイティ
+icon: /unacone/images/uploads/medals/natu.png
 order: 177
 colors:
   - purple

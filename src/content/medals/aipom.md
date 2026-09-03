@@ -1,6 +1,7 @@
 ---
 slug: aipom
 name_ja: エイパム
+icon: /unacone/images/uploads/medals/aipom.png
 order: 190
 colors:
   - white

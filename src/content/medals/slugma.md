@@ -1,6 +1,7 @@
 ---
 slug: slugma
 name_ja: マグマッグ
+icon: /unacone/images/uploads/medals/slugma.png
 order: 218
 colors:
   - red
