@@ -8,5 +8,55 @@
 	<body>
 		<!-- config.yml を同じフォルダから自動で読み込む -->
 		<script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+		<script>
+			// ポケモン図鑑のプレビュー画面をカスタマイズ。おすすめビルドの「わざ1/わざ2の選択」欄
+			// （わざ1派生A/Bのような固定ラベルしか出せない）を選ぶ際に、実際の技名を確認しやすいよう、
+			// プレビュー最上部に「わざ派生 名前早見表」を常に表示する。それ以外の項目は通常通り
+			// widgetFor()でデフォルト表示のまま並べる（2026/09/03追加）。
+			var PokemonPreview = createClass({
+				render: function () {
+					var entry = this.props.entry;
+					var getMoveName = function (key) {
+						var name = entry.getIn(['data', 'moves', key, 'name']);
+						return name || '（未設定）';
+					};
+					return h(
+						'div',
+						{},
+						h(
+							'div',
+							{
+								style: {
+									padding: '12px 16px',
+									marginBottom: '20px',
+									background: '#eef2ff',
+									border: '1px solid #c7d2fe',
+									borderRadius: '8px',
+									fontFamily: 'sans-serif',
+									lineHeight: '1.8',
+								},
+							},
+							h('strong', {}, 'わざ派生 名前早見表'),
+							h('div', {}, 'わざ1派生A: ' + getMoveName('move1_upgrade_a')),
+							h('div', {}, 'わざ1派生B: ' + getMoveName('move1_upgrade_b')),
+							h('div', {}, 'わざ2派生A: ' + getMoveName('move2_upgrade_a')),
+							h('div', {}, 'わざ2派生B: ' + getMoveName('move2_upgrade_b'))
+						),
+						this.props.widgetFor('name_ja'),
+						this.props.widgetFor('icon'),
+						this.props.widgetFor('role'),
+						this.props.widgetFor('attack_type'),
+						this.props.widgetFor('abilities'),
+						this.props.widgetFor('difficulty'),
+						this.props.widgetFor('builds'),
+						this.props.widgetFor('usage_memo'),
+						this.props.widgetFor('counter_memo'),
+						this.props.widgetFor('body'),
+						this.props.widgetFor('moves')
+					);
+				},
+			});
+			CMS.registerPreviewTemplate('pokemon-jp', PokemonPreview);
+		</script>
 	</body>
 </html>
