@@ -3,6 +3,8 @@ slug: big-root
 name_ja: おおきなねっこ
 icon: /unacone/images/uploads/held-items/big-root.png
 summary: 説明はまだありません。
+recommended_pokemon:
+  - venusaur
 stat_boosts:
   - stat: hp
     value: 525
