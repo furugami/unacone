@@ -3,6 +3,43 @@ slug: kiaino-hachimaki
 name_ja: きあいのハチマキ
 icon: /unacone/images/uploads/held-items/kiai.png
 summary: 攻撃・特攻を強化する、サンプルデータのため内容は仮です。
+recommended_pokemon:
+  - articuno
+  - azumarill
+  - blastoise
+  - clefable
+  - blaziken
+  - crustle
+  - dhelmise
+  - dragonite
+  - empoleon
+  - falinks
+  - garchomp
+  - goodra
+  - greedent
+  - ho-oh
+  - lapras
+  - lucario
+  - mamoswine
+  - mega-lucario
+  - meganium
+  - metagross
+  - mewtwo-x
+  - mr-mime
+  - palkia
+  - pawmot
+  - psyduck
+  - scizor
+  - sirfetchd
+  - slowbro
+  - snorlax
+  - suicune
+  - trevenant
+  - tyranitar
+  - umbreon
+  - vaporeon
+  - venusaur
+  - wigglytuff
 stat_boosts:
   - stat: defense
     value: 35
