@@ -20,6 +20,8 @@ builds:
     battle_item: full-heal
     move1_choice: upgrade_b
     move2_choice: upgrade_a
+    other_recommended_held_items:
+      - accel-bracer
 usage_memo: 難しいのでコンボを練習してから使おう
 counter_memo: 相手のわざを避けてからその隙を狙おう
 moves:
