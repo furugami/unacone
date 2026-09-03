@@ -1,5 +1,5 @@
 ---
-slug: whimsicott
+slug: eldegoss
 name_ja: ワタシラガ
 role: supporter
 moves:
