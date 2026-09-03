@@ -329,8 +329,8 @@ const resolvedBuilds = (builds ?? []).map((build) => ({
 
 <style>
 	.hero-row {
-		display: flex;
-		flex-wrap: wrap;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
 		align-items: center;
 		gap: 24px;
 	}
@@ -340,7 +340,6 @@ const resolvedBuilds = (builds ?? []).map((build) => ({
 		flex-direction: column;
 		align-items: center;
 		gap: 10px;
-		flex: 0 1 auto;
 	}
 
 	.hero-left h1 {
@@ -356,10 +355,9 @@ const resolvedBuilds = (builds ?? []).map((build) => ({
 	}
 
 	.hero-right {
-		flex: 1 1 280px;
 		display: flex;
-		justify-content: flex-end;
-		min-width: 280px;
+		justify-content: center;
+		min-width: 0;
 	}
 
 	.pokemon-icon {
