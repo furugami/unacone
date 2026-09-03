@@ -3,6 +3,14 @@ slug: venusaur
 name_ja: フシギバナ
 icon: /unacone/images/uploads/pokemon/venusaur_venusaur.png
 role: attacker
+attack_type: special
+abilities:
+  combat: 2
+  durability: 0.5
+  mobility: 0.5
+  scoring: 1.5
+  support: 2
+difficulty: beginner
 moves:
   ability:
     name: しんりょく
@@ -36,5 +44,10 @@ moves:
     name: グリーンレイジ
     effect: 指定した場所に巨大なタネを放つ。着弾後に分裂し、範囲内の相手の移動速度を下げてダメージを与える。
     icon: /unacone/images/uploads/pokemon/venusaur_verdant-anger.png
+builds:
+  - battle_item: eject-button
+    move1_choice: upgrade_a
+    move2_choice: upgrade_a
+    title: 空日
 ---
 （解説はまだありません）
