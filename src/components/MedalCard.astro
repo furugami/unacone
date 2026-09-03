@@ -36,25 +36,20 @@ const { slug, nameJa, icon, colors } = Astro.props;
 		align-items: center;
 		text-align: center;
 		gap: 6px;
-		padding: 16px 12px;
+		padding: 12px;
 		height: 100%;
-		background: var(--surface);
-		border: 1.5px solid #e5e9f2;
-		border-radius: var(--radius);
 		text-decoration: none;
-		box-shadow: 0 2px 8px rgba(27, 34, 51, 0.07);
-		transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+		transition: transform 0.15s ease, opacity 0.15s ease;
 	}
 
 	li a:hover {
 		transform: translateY(-3px);
-		box-shadow: 0 10px 20px rgba(76, 111, 255, 0.15);
-		border-color: var(--blue);
+		opacity: 0.8;
 	}
 
 	.icon {
-		width: 48px;
-		height: 48px;
+		width: 76px;
+		height: 76px;
 		object-fit: contain;
 	}
 
