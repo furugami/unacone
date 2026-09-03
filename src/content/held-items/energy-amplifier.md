@@ -3,6 +3,9 @@ slug: energy-amplifier
 name_ja: エナジーアンプ
 icon: /unacone/images/uploads/held-items/energy-amplifier.png
 summary: 説明はまだありません。
+recommended_pokemon:
+  - delphox
+  - venusaur
 stat_boosts:
   - stat: unite_gauge_charge
     value: 7
