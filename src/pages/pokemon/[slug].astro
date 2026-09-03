@@ -263,7 +263,7 @@ const resolvedBuilds = (builds ?? []).map((build) => ({
 				{usage_memo && (
 					<p class="memo-row">
 						<span class="field-label">一言使い方メモ</span>
-						{usage_memo}
+						<span class="memo-text">{usage_memo}</span>
 					</p>
 				)}
 				{counter_memo && (
@@ -484,6 +484,10 @@ const resolvedBuilds = (builds ?? []).map((build) => ({
 		gap: 8px;
 		margin: 0;
 		line-height: 1.6;
+	}
+
+	.memo-text {
+		white-space: pre-wrap;
 	}
 
 	.external-link-card {
