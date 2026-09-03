@@ -142,6 +142,34 @@ const heldItems = defineCollection({
         })
       )
       .optional(),
+    // レベル別ステータス（任意、最大40レベル）。stat_boostsが「最大値のみ」なのに対し、
+    // こちらはレベル1〜40の推移を持つ。個別ページのスライダー表示用。2026/09/03追加。
+    level_stats: z
+      .array(
+        z.object({
+          level: z.number(),
+          stats: z.array(
+            z.object({
+              stat: z.enum([
+                'attack',
+                'attack_speed',
+                'critical_hit_rate',
+                'hp',
+                'sp_attack',
+                'critical_hit_damage',
+                'cooldown_reduction',
+                'sp_defense',
+                'unite_gauge_charge',
+                'movement_speed',
+                'defense',
+                'hp_recovery',
+              ]),
+              value: z.number(),
+            })
+          ),
+        })
+      )
+      .optional(),
   }),
 });
 

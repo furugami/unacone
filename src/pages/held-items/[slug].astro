@@ -16,7 +16,16 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
-const { name_ja, summary, icon, stat_boosts } = entry.data;
+const { name_ja, summary, icon, stat_boosts, level_stats } = entry.data;
+
+// レベル別データはlevelの昇順に並べておく（CMS入力順に依存しないように）。
+const sortedLevelStats = level_stats ? [...level_stats].sort((a, b) => a.level - b.level) : null;
+const minLevel = sortedLevelStats?.[0]?.level ?? 1;
+const maxLevel = sortedLevelStats?.[sortedLevelStats.length - 1]?.level ?? 1;
+// このもちものが持つステータスの種類一覧（表の列見出し用）。
+const statKeysInLevelData = sortedLevelStats
+	? [...new Set(sortedLevelStats.flatMap((l) => l.stats.map((s) => s.stat)))]
+	: [];
 
 // このもちものを対象にしているFAQだけを抽出（faqs側が対象を持つ設計。
 // src/content.config.tsの「faqs」コレクション参照）。
@@ -34,28 +43,123 @@ const relatedFaqs = (await getCollection('faqs')).filter(
 		</div>
 	</header>
 	{
-		stat_boosts && stat_boosts.length > 0 && (
+		sortedLevelStats && sortedLevelStats.length > 0 ? (
 			<div class="stats-section">
 				<h2>ステータス上昇</h2>
-				<div class="stat-chips">
-					{stat_boosts.map((boost) => (
-						<span class="stat-chip">
-							{STAT_LABELS[boost.stat]} +{boost.value}
-						</span>
-					))}
+				<div class="level-slider">
+					<label for="level-range">
+						レベル <output id="level-output" for="level-range">{maxLevel}</output>
+					</label>
+					<input
+						type="range"
+						id="level-range"
+						min={minLevel}
+						max={maxLevel}
+						step="1"
+						value={maxLevel}
+					/>
+					<div class="stat-chips" id="level-stat-chips" />
 				</div>
+				<script
+					type="application/json"
+					id="level-stats-data"
+					set:html={JSON.stringify(sortedLevelStats)}
+				/>
+				<script
+					type="application/json"
+					id="stat-labels-data"
+					set:html={JSON.stringify(STAT_LABELS)}
+				/>
 			</div>
+		) : (
+			stat_boosts &&
+			stat_boosts.length > 0 && (
+				<div class="stats-section">
+					<h2>ステータス上昇</h2>
+					<div class="stat-chips">
+						{stat_boosts.map((boost) => (
+							<span class="stat-chip">
+								{STAT_LABELS[boost.stat]} +{boost.value}
+							</span>
+						))}
+					</div>
+				</div>
+			)
 		)
 	}
 	<div class="body">
 		<Content />
 	</div>
 	{
+		sortedLevelStats && sortedLevelStats.length > 0 && (
+			<details class="level-table-accordion">
+				<summary>各レベルのステータス表はこちら</summary>
+				<div class="level-table-scroll">
+					<table class="level-table">
+						<thead>
+							<tr>
+								<th>レベル</th>
+								{statKeysInLevelData.map((stat) => (
+									<th>{STAT_LABELS[stat]}</th>
+								))}
+							</tr>
+						</thead>
+						<tbody>
+							{sortedLevelStats.map((entry) => (
+								<tr>
+									<td>{entry.level}</td>
+									{statKeysInLevelData.map((stat) => {
+										const found = entry.stats.find((s) => s.stat === stat);
+										return <td>{found ? `+${found.value}` : '—'}</td>;
+									})}
+								</tr>
+							))}
+						</tbody>
+					</table>
+				</div>
+			</details>
+		)
+	}
+	{
 		relatedFaqs.length > 0 && (
 			<FaqSection faqs={relatedFaqs.map((f) => f.data)} moreHref="/faq/?target=held-item" />
 		)
 	}
 </Layout>
+
+<script>
+	// レベルスライダー: レベル別データをJSONから読み込み、選択中レベルのステータスを表示する。
+	const dataEl = document.getElementById('level-stats-data');
+	const range = document.getElementById('level-range') as HTMLInputElement | null;
+	const output = document.getElementById('level-output');
+	const chips = document.getElementById('level-stat-chips');
+
+	if (dataEl && range && output && chips) {
+		const levelStats: { level: number; stats: { stat: string; value: number }[] }[] = JSON.parse(
+			dataEl.textContent ?? '[]'
+		);
+		const statLabels: Record<string, string> = JSON.parse(
+			document.getElementById('stat-labels-data')?.textContent ?? '{}'
+		);
+
+		function render() {
+			if (!range || !output || !chips) return;
+			const level = Number(range.value);
+			output.textContent = String(level);
+			const entry = levelStats.find((l) => l.level === level);
+			chips.innerHTML = '';
+			(entry?.stats ?? []).forEach((s) => {
+				const span = document.createElement('span');
+				span.className = 'stat-chip';
+				span.textContent = `${statLabels[s.stat] ?? s.stat} +${s.value}`;
+				chips.appendChild(span);
+			});
+		}
+
+		range.addEventListener('input', render);
+		render();
+	}
+</script>
 
 <style>
 	.item-header {
@@ -102,6 +206,65 @@ const relatedFaqs = (await getCollection('faqs')).filter(
 		display: flex;
 		flex-wrap: wrap;
 		gap: 8px;
+	}
+
+	.level-slider label {
+		display: flex;
+		align-items: baseline;
+		gap: 6px;
+		font-weight: 700;
+		font-family: var(--font-number);
+	}
+
+	.level-slider output {
+		font-size: 1.2rem;
+		color: var(--blue);
+	}
+
+	.level-slider input[type='range'] {
+		width: 100%;
+		margin: 8px 0 16px;
+		accent-color: var(--blue);
+	}
+
+	.level-table-accordion {
+		margin-top: 16px;
+		background: var(--surface);
+		border: 1.5px solid #e5e9f2;
+		border-radius: var(--radius);
+		box-shadow: 0 2px 8px rgba(27, 34, 51, 0.06);
+		padding: 16px 24px;
+	}
+
+	.level-table-accordion summary {
+		cursor: pointer;
+		font-weight: 700;
+		color: var(--blue);
+	}
+
+	.level-table-scroll {
+		overflow-x: auto;
+		margin-top: 16px;
+	}
+
+	.level-table {
+		width: 100%;
+		border-collapse: collapse;
+		font-family: var(--font-number);
+		font-size: 0.9rem;
+	}
+
+	.level-table th,
+	.level-table td {
+		padding: 6px 12px;
+		text-align: center;
+		border-bottom: 1px solid #e5e9f2;
+		white-space: nowrap;
+	}
+
+	.level-table th {
+		color: var(--ink-soft);
+		font-weight: 700;
 	}
 
 	.stat-chip {
