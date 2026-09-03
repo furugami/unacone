@@ -3,6 +3,8 @@ slug: accel-bracer
 name_ja: アクセルリスト
 icon: /unacone/images/uploads/held-items/accel-bracer.png
 summary: サンプル：レイアウト確認用の仮データです。
+tags:
+  - attack_carry
 stat_boosts:
   - stat: movement_speed
     value: 110
