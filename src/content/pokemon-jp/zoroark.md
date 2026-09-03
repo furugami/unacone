@@ -3,6 +3,25 @@ slug: zoroark
 name_ja: ゾロアーク
 icon: /unacone/images/uploads/pokemon/zoroark_zoroark.png
 role: speedster
+attack_type: physical
+abilities:
+  combat: 4
+  durability: 1
+  mobility: 4.5
+  scoring: 2
+  support: 1
+difficulty: advanced
+builds:
+  - title: つじぎり型
+    held_items:
+      - muscle-band
+      - rapid-fire-scarf
+      - razor-claw
+    battle_item: full-heal
+    move1_choice: upgrade_b
+    move2_choice: upgrade_a
+usage_memo: 難しいのでコンボを練習してから使おう
+counter_memo: 相手のわざを避けてからその隙を狙おう
 moves:
   ability:
     name: イリュージョン
