@@ -26,7 +26,7 @@ public_folder: "/unacone/images/uploads"
 
 collections:
   - name: "pokemon-jp"
-    label: "ポケモン図鑑"
+    label: "ポケモン一覧"
     folder: "src/content/pokemon-jp"
     create: true
     slug: "{{fields.slug}}"
@@ -311,7 +311,7 @@ collections:
       - { label: "名前", name: "name_ja", widget: "string" }
       - { label: "アイコン（任意）", name: "icon", widget: "image", required: false }
       - { label: "要約（一覧に表示）", name: "summary", widget: "text" }
-      - label: "相性のよいポケモン（ポケモン図鑑から選択、複数可・任意）"
+      - label: "相性のよいポケモン（ポケモン一覧から選択、複数可・任意）"
         name: "recommended_pokemon"
         widget: "list"
         required: false
@@ -402,7 +402,7 @@ collections:
       - { label: "クールダウン（秒、任意）", name: "cooldown_seconds", widget: "number", value_type: "int", required: false }
       - { label: "解放条件（トレーナーレベルの数値、または「ショップで購入可能」等の自由記述。任意）", name: "unlock_level", widget: "string", required: false }
       - { label: "効果の説明（本文）", name: "body", widget: "markdown" }
-      - label: "おすすめポケモン（ポケモン図鑑から選択、複数可・任意）"
+      - label: "おすすめポケモン（ポケモン一覧から選択、複数可・任意）"
         name: "recommended_pokemon"
         widget: "list"
         required: false
