@@ -1,6 +1,7 @@
 ---
 slug: wigglytuff
 name_ja: プクリン
+icon: /unacone/images/uploads/pokemon/wigglytuff_wigglytuff.png
 role: supporter
 moves:
   ability:

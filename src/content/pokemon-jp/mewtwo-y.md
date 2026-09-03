@@ -1,6 +1,7 @@
 ---
 slug: mewtwo-y
 name_ja: ミュウツーY
+icon: /unacone/images/uploads/pokemon/mewtwo-y_mewtwo-y.png
 role: attacker
 moves:
   ability:

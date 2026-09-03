@@ -1,6 +1,7 @@
 ---
 slug: mega-gyarados
 name_ja: メガギャラドス
+icon: /unacone/images/uploads/pokemon/mega-gyarados_mega-gyarados.png
 role: allrounder
 moves:
   ability:

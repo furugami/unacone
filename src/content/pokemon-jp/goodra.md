@@ -1,6 +1,7 @@
 ---
 slug: goodra
 name_ja: ヌメルゴン
+icon: /unacone/images/uploads/pokemon/goodra_goodra.png
 role: defender
 moves:
   ability:

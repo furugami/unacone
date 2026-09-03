@@ -1,6 +1,7 @@
 ---
 slug: meowscarada
 name_ja: マスカーニャ
+icon: /unacone/images/uploads/pokemon/meowscarada_meowscarada.png
 role: speedster
 moves:
   ability:

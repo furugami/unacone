@@ -1,6 +1,7 @@
 ---
 slug: slowbro
 name_ja: ヤドラン
+icon: /unacone/images/uploads/pokemon/slowbro_slowbro.png
 role: defender
 moves:
   ability:

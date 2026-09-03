@@ -1,6 +1,7 @@
 ---
 slug: suicune
 name_ja: スイクン
+icon: /unacone/images/uploads/pokemon/suicune_suicune.png
 role: allrounder
 moves:
   ability:

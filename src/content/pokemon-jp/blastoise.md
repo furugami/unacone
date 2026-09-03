@@ -1,6 +1,7 @@
 ---
 slug: blastoise
 name_ja: カメックス
+icon: /unacone/images/uploads/pokemon/blastoise_blastoise.png
 role: defender
 moves:
   ability:

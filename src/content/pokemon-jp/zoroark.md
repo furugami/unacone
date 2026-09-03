@@ -1,6 +1,7 @@
 ---
 slug: zoroark
 name_ja: ゾロアーク
+icon: /unacone/images/uploads/pokemon/zoroark_zoroark.png
 role: speedster
 moves:
   ability:

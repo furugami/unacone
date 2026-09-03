@@ -1,6 +1,7 @@
 ---
 slug: crustle
 name_ja: イワパレス
+icon: /unacone/images/uploads/pokemon/crustle_crustle.png
 role: defender
 moves:
   ability:

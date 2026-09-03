@@ -1,6 +1,7 @@
 ---
 slug: cinderace
 name_ja: エースバーン
+icon: /unacone/images/uploads/pokemon/cinderace_cinderace.png
 role: attacker
 moves:
   ability:

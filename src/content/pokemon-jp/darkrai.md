@@ -1,6 +1,7 @@
 ---
 slug: darkrai
 name_ja: ダークライ
+icon: /unacone/images/uploads/pokemon/darkrai_darkrai.png
 role: speedster
 moves:
   ability:

@@ -1,6 +1,7 @@
 ---
 slug: blissey
 name_ja: ハピナス
+icon: /unacone/images/uploads/pokemon/blissey_blissey.png
 role: supporter
 moves:
   ability:

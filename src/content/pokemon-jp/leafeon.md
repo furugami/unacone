@@ -1,6 +1,7 @@
 ---
 slug: leafeon
 name_ja: リーフィア
+icon: /unacone/images/uploads/pokemon/leafeon_leafeon.png
 role: speedster
 moves:
   ability:

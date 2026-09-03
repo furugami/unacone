@@ -1,6 +1,7 @@
 ---
 slug: solgaleo
 name_ja: ソルガレオ
+icon: /unacone/images/uploads/pokemon/solgaleo_solgaleo.png
 role: allrounder
 moves:
   ability:

@@ -1,6 +1,7 @@
 ---
 slug: greedent
 name_ja: ヨクバリス
+icon: /unacone/images/uploads/pokemon/greedent_greedent.png
 role: defender
 moves:
   ability:

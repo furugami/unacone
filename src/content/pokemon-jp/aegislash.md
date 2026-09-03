@@ -1,6 +1,7 @@
 ---
 slug: aegislash
 name_ja: ギルガルド
+icon: /unacone/images/uploads/pokemon/aegislash_aegislash.png
 role: allrounder
 moves:
   ability:

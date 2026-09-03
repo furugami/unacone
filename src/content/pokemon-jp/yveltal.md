@@ -1,6 +1,7 @@
 ---
 slug: yveltal
 name_ja: イベルタル
+icon: /unacone/images/uploads/pokemon/yveltal_yveltal.png
 role: attacker
 moves:
   ability:

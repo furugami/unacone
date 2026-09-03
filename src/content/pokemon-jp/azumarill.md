@@ -1,6 +1,7 @@
 ---
 slug: azumarill
 name_ja: マリルリ
+icon: /unacone/images/uploads/pokemon/azumarill_azumarill.png
 role: allrounder
 moves:
   ability:

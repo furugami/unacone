@@ -1,6 +1,7 @@
 ---
 slug: gengar
 name_ja: ゲンガー
+icon: /unacone/images/uploads/pokemon/gengar_gengar.png
 role: speedster
 moves:
   ability:

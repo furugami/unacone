@@ -1,6 +1,7 @@
 ---
 slug: scyther
 name_ja: ストライク
+icon: /unacone/images/uploads/pokemon/scyther_scyther.png
 role: allrounder
 moves:
   ability:

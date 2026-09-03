@@ -1,6 +1,7 @@
 ---
 slug: falinks
 name_ja: タイレーツ
+icon: /unacone/images/uploads/pokemon/falinks_falinks.png
 role: allrounder
 moves:
   ability:

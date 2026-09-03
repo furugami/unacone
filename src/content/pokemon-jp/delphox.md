@@ -1,6 +1,7 @@
 ---
 slug: delphox
 name_ja: マフォクシー
+icon: /unacone/images/uploads/pokemon/delphox_delphox.png
 role: attacker
 moves:
   ability:

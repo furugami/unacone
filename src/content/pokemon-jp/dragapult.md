@@ -1,6 +1,7 @@
 ---
 slug: dragapult
 name_ja: ドラパルト
+icon: /unacone/images/uploads/pokemon/dragapult_dragapult.png
 role: attacker
 moves:
   ability:

@@ -1,6 +1,7 @@
 ---
 slug: espeon
 name_ja: エーフィ
+icon: /unacone/images/uploads/pokemon/espeon_espeon.png
 role: attacker
 moves:
   ability:

@@ -1,6 +1,7 @@
 ---
 slug: meowth
 name_ja: ニャース
+icon: /unacone/images/uploads/pokemon/meowth_meowth.png
 role: speedster
 moves:
   ability:

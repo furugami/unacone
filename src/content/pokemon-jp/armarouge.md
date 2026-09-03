@@ -1,6 +1,7 @@
 ---
 slug: armarouge
 name_ja: グレンアルマ
+icon: /unacone/images/uploads/pokemon/armarouge_armarouge.png
 role: attacker
 moves:
   ability:

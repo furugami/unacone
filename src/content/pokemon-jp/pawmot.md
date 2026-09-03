@@ -1,6 +1,7 @@
 ---
 slug: pawmot
 name_ja: パーモット
+icon: /unacone/images/uploads/pokemon/pawmot_pawmot.png
 role: allrounder
 moves:
   ability:

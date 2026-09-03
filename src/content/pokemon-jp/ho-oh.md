@@ -1,6 +1,7 @@
 ---
 slug: ho-oh
 name_ja: ホウオウ
+icon: /unacone/images/uploads/pokemon/ho-oh_ho-oh.png
 role: defender
 moves:
   ability:

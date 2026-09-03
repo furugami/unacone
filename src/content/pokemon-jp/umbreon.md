@@ -1,6 +1,7 @@
 ---
 slug: umbreon
 name_ja: ブラッキー
+icon: /unacone/images/uploads/pokemon/umbreon_umbreon.png
 role: defender
 moves:
   ability:

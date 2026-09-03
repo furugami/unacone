@@ -1,6 +1,7 @@
 ---
 slug: psyduck
 name_ja: コダック
+icon: /unacone/images/uploads/pokemon/psyduck_psyduck.png
 role: supporter
 moves:
   ability:

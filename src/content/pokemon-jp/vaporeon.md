@@ -1,6 +1,7 @@
 ---
 slug: vaporeon
 name_ja: シャワーズ
+icon: /unacone/images/uploads/pokemon/vaporeon_vaporeon.png
 role: defender
 moves:
   ability:

@@ -1,6 +1,7 @@
 ---
 slug: gardevoir
 name_ja: サーナイト
+icon: /unacone/images/uploads/pokemon/gardevoir_gardevoir.png
 role: attacker
 moves:
   ability:

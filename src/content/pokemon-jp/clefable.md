@@ -1,6 +1,7 @@
 ---
 slug: clefable
 name_ja: ピクシー
+icon: /unacone/images/uploads/pokemon/clefable_clefable.png
 role: supporter
 moves:
   ability:

@@ -1,6 +1,7 @@
 ---
 slug: mew
 name_ja: ミュウ
+icon: /unacone/images/uploads/pokemon/mew_mew.png
 role: attacker
 moves:
   ability:

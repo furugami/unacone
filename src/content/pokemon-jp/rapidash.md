@@ -1,6 +1,7 @@
 ---
 slug: rapidash
 name_ja: ギャロップ
+icon: /unacone/images/uploads/pokemon/rapidash_rapidash.png
 role: speedster
 moves:
   ability:

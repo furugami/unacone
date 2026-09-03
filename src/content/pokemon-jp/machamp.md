@@ -1,6 +1,7 @@
 ---
 slug: machamp
 name_ja: カイリキー
+icon: /unacone/images/uploads/pokemon/machamp_machamp.png
 role: allrounder
 moves:
   ability:

@@ -1,6 +1,7 @@
 ---
 slug: latios
 name_ja: ラティオス
+icon: /unacone/images/uploads/pokemon/latios_latios.png
 role: attacker
 moves:
   ability:

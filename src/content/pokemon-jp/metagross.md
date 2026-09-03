@@ -1,6 +1,7 @@
 ---
 slug: metagross
 name_ja: メタグロス
+icon: /unacone/images/uploads/pokemon/metagross_metagross.png
 role: allrounder
 moves:
   ability:

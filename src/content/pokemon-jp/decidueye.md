@@ -1,6 +1,7 @@
 ---
 slug: decidueye
 name_ja: ジュナイパー
+icon: /unacone/images/uploads/pokemon/decidueye_decidueye.png
 role: attacker
 moves:
   ability:

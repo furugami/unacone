@@ -1,6 +1,7 @@
 ---
 slug: chandelure
 name_ja: シャンデラ
+icon: /unacone/images/uploads/pokemon/chandelure_chandelure.png
 role: attacker
 moves:
   ability:

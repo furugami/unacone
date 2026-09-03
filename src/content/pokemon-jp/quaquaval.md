@@ -1,6 +1,7 @@
 ---
 slug: quaquaval
 name_ja: ウェーニバル
+icon: /unacone/images/uploads/pokemon/quaquaval_quaquaval.png
 role: allrounder
 moves:
   ability:

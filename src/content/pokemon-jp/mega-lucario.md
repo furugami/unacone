@@ -1,6 +1,7 @@
 ---
 slug: mega-lucario
 name_ja: メガルカリオ
+icon: /unacone/images/uploads/pokemon/mega-lucario_mega-lucario.png
 role: allrounder
 moves:
   ability:

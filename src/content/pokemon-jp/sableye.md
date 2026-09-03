@@ -1,6 +1,7 @@
 ---
 slug: sableye
 name_ja: ヤミラミ
+icon: /unacone/images/uploads/pokemon/sableye_sableye.png
 role: supporter
 moves:
   ability:

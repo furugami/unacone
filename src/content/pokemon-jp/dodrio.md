@@ -1,6 +1,7 @@
 ---
 slug: dodrio
 name_ja: ドードリオ
+icon: /unacone/images/uploads/pokemon/dodrio_dodrio.png
 role: speedster
 moves:
   ability:

@@ -1,6 +1,7 @@
 ---
 slug: eldegoss
 name_ja: ワタシラガ
+icon: /unacone/images/uploads/pokemon/eldegoss_eldegoss.png
 role: supporter
 moves:
   ability:

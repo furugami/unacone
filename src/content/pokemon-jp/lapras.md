@@ -1,6 +1,7 @@
 ---
 slug: lapras
 name_ja: ラプラス
+icon: /unacone/images/uploads/pokemon/lapras_lapras.png
 role: defender
 moves:
   ability:

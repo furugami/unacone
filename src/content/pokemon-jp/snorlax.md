@@ -1,6 +1,7 @@
 ---
 slug: snorlax
 name_ja: カビゴン
+icon: /unacone/images/uploads/pokemon/snorlax_snorlax.png
 role: defender
 moves:
   ability:

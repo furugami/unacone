@@ -1,6 +1,7 @@
 ---
 slug: empoleon
 name_ja: エンペルト
+icon: /unacone/images/uploads/pokemon/empoleon_empoleon.png
 role: allrounder
 moves:
   ability:

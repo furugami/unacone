@@ -1,6 +1,7 @@
 ---
 slug: duraludon
 name_ja: ジュラルドン
+icon: /unacone/images/uploads/pokemon/duraludon_duraludon.png
 role: attacker
 moves:
   ability:

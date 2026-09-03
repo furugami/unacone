@@ -1,6 +1,7 @@
 ---
 slug: skeledirge
 name_ja: ラウドボーン
+icon: /unacone/images/uploads/pokemon/skeledirge_skeledirge.png
 role: attacker
 moves:
   ability:

@@ -1,6 +1,7 @@
 ---
 slug: cramorant
 name_ja: ウッウ
+icon: /unacone/images/uploads/pokemon/cramorant_cramorant.png
 role: attacker
 moves:
   ability:

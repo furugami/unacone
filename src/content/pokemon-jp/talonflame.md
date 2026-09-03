@@ -1,6 +1,7 @@
 ---
 slug: talonflame
 name_ja: ファイアロー
+icon: /unacone/images/uploads/pokemon/talonflame_talonflame.png
 role: speedster
 moves:
   ability:

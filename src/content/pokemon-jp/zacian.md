@@ -1,6 +1,7 @@
 ---
 slug: zacian
 name_ja: ザシアン
+icon: /unacone/images/uploads/pokemon/zacian_zacian.png
 role: allrounder
 moves:
   ability:

@@ -1,6 +1,7 @@
 ---
 slug: blaziken
 name_ja: バシャーモ
+icon: /unacone/images/uploads/pokemon/blaziken_blaziken.png
 role: allrounder
 moves:
   ability:

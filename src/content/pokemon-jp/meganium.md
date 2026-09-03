@@ -1,6 +1,7 @@
 ---
 slug: meganium
 name_ja: メガニウム
+icon: /unacone/images/uploads/pokemon/meganium_meganium.png
 role: supporter
 moves:
   ability:

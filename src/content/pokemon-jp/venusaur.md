@@ -1,6 +1,7 @@
 ---
 slug: venusaur
 name_ja: フシギバナ
+icon: /unacone/images/uploads/pokemon/venusaur_venusaur.png
 role: attacker
 moves:
   ability:

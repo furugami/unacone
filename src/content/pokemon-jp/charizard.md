@@ -1,6 +1,7 @@
 ---
 slug: charizard
 name_ja: リザードン
+icon: /unacone/images/uploads/pokemon/charizard_charizard.png
 role: allrounder
 moves:
   ability:

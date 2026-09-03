@@ -1,6 +1,7 @@
 ---
 slug: inteleon
 name_ja: インテレオン
+icon: /unacone/images/uploads/pokemon/inteleon_inteleon.png
 role: attacker
 moves:
   ability:

@@ -1,6 +1,7 @@
 ---
 slug: pikachu
 name_ja: ピカチュウ
+icon: /unacone/images/uploads/pokemon/pikachu_pikachu.png
 role: attacker
 moves:
   ability:

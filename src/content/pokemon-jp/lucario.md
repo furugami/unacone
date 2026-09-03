@@ -1,6 +1,7 @@
 ---
 slug: lucario
 name_ja: ルカリオ
+icon: /unacone/images/uploads/pokemon/lucario_lucario.png
 role: allrounder
 moves:
   ability:

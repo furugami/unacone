@@ -1,6 +1,7 @@
 ---
 slug: sirfetchd
 name_ja: ネギガナイト
+icon: /unacone/images/uploads/pokemon/sirfetchd_sirfetchd.png
 role: allrounder
 moves:
   ability:

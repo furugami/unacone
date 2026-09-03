@@ -1,6 +1,7 @@
 ---
 slug: articuno
 name_ja: フリーザー
+icon: /unacone/images/uploads/pokemon/articuno_articuno.png
 role: defender
 moves:
   ability:

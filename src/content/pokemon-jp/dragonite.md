@@ -1,6 +1,7 @@
 ---
 slug: dragonite
 name_ja: カイリュー
+icon: /unacone/images/uploads/pokemon/dragonite_dragonite.png
 role: allrounder
 moves:
   ability:

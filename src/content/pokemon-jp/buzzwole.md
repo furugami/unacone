@@ -1,6 +1,7 @@
 ---
 slug: buzzwole
 name_ja: マッシブーン
+icon: /unacone/images/uploads/pokemon/buzzwole_buzzwole.png
 role: allrounder
 moves:
   ability:

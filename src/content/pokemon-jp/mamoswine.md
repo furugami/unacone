@@ -1,6 +1,7 @@
 ---
 slug: mamoswine
 name_ja: マンムー
+icon: /unacone/images/uploads/pokemon/mamoswine_mamoswine.png
 role: defender
 moves:
   ability:

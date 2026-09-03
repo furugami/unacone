@@ -1,6 +1,7 @@
 ---
 slug: trevenant
 name_ja: オーロット
+icon: /unacone/images/uploads/pokemon/trevenant_trevenant.png
 role: defender
 moves:
   ability:

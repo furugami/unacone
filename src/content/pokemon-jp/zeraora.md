@@ -1,6 +1,7 @@
 ---
 slug: zeraora
 name_ja: ゼラオラ
+icon: /unacone/images/uploads/pokemon/zeraora_zeraora.png
 role: speedster
 attack_type: physical
 abilities:

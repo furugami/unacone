@@ -1,6 +1,7 @@
 ---
 slug: comfey
 name_ja: キュワワー
+icon: /unacone/images/uploads/pokemon/comfey_comfey.png
 role: supporter
 moves:
   ability:

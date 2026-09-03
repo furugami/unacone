@@ -1,6 +1,7 @@
 ---
 slug: mega-charizard-x
 name_ja: メガリザードンX
+icon: /unacone/images/uploads/pokemon/mega-charizard-x_mega-charizard-x.png
 role: allrounder
 moves:
   ability:

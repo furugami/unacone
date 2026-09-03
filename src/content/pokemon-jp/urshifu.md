@@ -1,6 +1,7 @@
 ---
 slug: urshifu
 name_ja: ウーラオス
+icon: /unacone/images/uploads/pokemon/urshifu_urshifu.png
 role: allrounder
 moves:
   ability:

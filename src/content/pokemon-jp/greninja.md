@@ -1,6 +1,7 @@
 ---
 slug: greninja
 name_ja: ゲッコウガ
+icon: /unacone/images/uploads/pokemon/greninja_greninja.png
 role: attacker
 moves:
   ability:

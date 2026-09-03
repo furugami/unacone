@@ -1,6 +1,7 @@
 ---
 slug: tyranitar
 name_ja: バンギラス
+icon: /unacone/images/uploads/pokemon/tyranitar_tyranitar.png
 role: allrounder
 moves:
   ability:

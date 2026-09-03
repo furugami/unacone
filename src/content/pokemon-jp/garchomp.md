@@ -1,6 +1,7 @@
 ---
 slug: garchomp
 name_ja: ガブリアス
+icon: /unacone/images/uploads/pokemon/garchomp_garchomp.png
 role: allrounder
 moves:
   ability:

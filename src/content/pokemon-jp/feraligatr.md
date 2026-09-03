@@ -1,6 +1,7 @@
 ---
 slug: feraligatr
 name_ja: オーダイル
+icon: /unacone/images/uploads/pokemon/feraligatr_feraligatr.png
 role: allrounder
 moves:
   ability:

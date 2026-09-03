@@ -1,6 +1,7 @@
 ---
 slug: zapdos
 name_ja: サンダー
+icon: /unacone/images/uploads/pokemon/zapdos_zapdos.png
 role: attacker
 moves:
   ability:

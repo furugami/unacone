@@ -1,6 +1,7 @@
 ---
 slug: raichu
 name_ja: ライチュウ
+icon: /unacone/images/uploads/pokemon/raichu_raichu.png
 role: attacker
 moves:
   ability:

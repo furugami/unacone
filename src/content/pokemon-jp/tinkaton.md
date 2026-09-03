@@ -1,6 +1,7 @@
 ---
 slug: tinkaton
 name_ja: デカヌチャン
+icon: /unacone/images/uploads/pokemon/tinkaton_tinkaton.png
 role: allrounder
 moves:
   ability:

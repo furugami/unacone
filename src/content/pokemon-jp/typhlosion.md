@@ -1,6 +1,7 @@
 ---
 slug: typhlosion
 name_ja: バクフーン
+icon: /unacone/images/uploads/pokemon/typhlosion_typhlosion.png
 role: attacker
 moves:
   ability:

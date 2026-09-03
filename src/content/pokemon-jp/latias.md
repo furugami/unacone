@@ -1,6 +1,7 @@
 ---
 slug: latias
 name_ja: ラティアス
+icon: /unacone/images/uploads/pokemon/latias_latias.png
 role: supporter
 moves:
   ability:

@@ -1,6 +1,7 @@
 ---
 slug: moltres
 name_ja: ファイヤー
+icon: /unacone/images/uploads/pokemon/moltres_moltres.png
 role: allrounder
 moves:
   ability:

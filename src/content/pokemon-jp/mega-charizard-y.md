@@ -1,6 +1,7 @@
 ---
 slug: mega-charizard-y
 name_ja: メガリザードンY
+icon: /unacone/images/uploads/pokemon/mega-charizard-y_mega-charizard-y.png
 role: allrounder
 moves:
   ability:

@@ -1,6 +1,7 @@
 ---
 slug: hoopa
 name_ja: フーパ
+icon: /unacone/images/uploads/pokemon/hoopa_hoopa.png
 role: supporter
 moves:
   ability:

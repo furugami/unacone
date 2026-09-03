@@ -1,6 +1,7 @@
 ---
 slug: alcremie
 name_ja: マホイップ
+icon: /unacone/images/uploads/pokemon/alcremie_alcremie.png
 role: supporter
 moves:
   ability:

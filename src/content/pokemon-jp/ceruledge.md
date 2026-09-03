@@ -1,6 +1,7 @@
 ---
 slug: ceruledge
 name_ja: ソウブレイズ
+icon: /unacone/images/uploads/pokemon/ceruledge_ceruledge.png
 role: allrounder
 moves:
   ability:

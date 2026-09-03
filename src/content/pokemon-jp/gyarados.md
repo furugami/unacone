@@ -1,6 +1,7 @@
 ---
 slug: gyarados
 name_ja: ギャラドス
+icon: /unacone/images/uploads/pokemon/gyarados_gyarados.png
 role: allrounder
 moves:
   ability:

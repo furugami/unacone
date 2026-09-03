@@ -1,6 +1,7 @@
 ---
 slug: reshiram
 name_ja: レシラム
+icon: /unacone/images/uploads/pokemon/reshiram_reshiram.png
 role: attacker
 moves:
   ability:

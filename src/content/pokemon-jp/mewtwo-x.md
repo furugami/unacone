@@ -1,6 +1,7 @@
 ---
 slug: mewtwo-x
 name_ja: ミュウツーX
+icon: /unacone/images/uploads/pokemon/mewtwo-x_mewtwo-x.png
 role: allrounder
 moves:
   ability:

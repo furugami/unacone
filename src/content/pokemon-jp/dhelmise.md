@@ -1,6 +1,7 @@
 ---
 slug: dhelmise
 name_ja: ダダリン
+icon: /unacone/images/uploads/pokemon/dhelmise_dhelmise.png
 role: allrounder
 moves:
   ability:

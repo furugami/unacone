@@ -1,6 +1,7 @@
 ---
 slug: glaceon
 name_ja: グレイシア
+icon: /unacone/images/uploads/pokemon/glaceon_glaceon.png
 role: attacker
 moves:
   ability:

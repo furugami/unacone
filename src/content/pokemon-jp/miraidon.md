@@ -1,6 +1,7 @@
 ---
 slug: miraidon
 name_ja: ミライドン
+icon: /unacone/images/uploads/pokemon/miraidon_miraidon.png
 role: attacker
 moves:
   ability:

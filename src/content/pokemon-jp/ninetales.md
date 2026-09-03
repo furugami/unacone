@@ -1,6 +1,7 @@
 ---
 slug: ninetales
 name_ja: キュウコン
+icon: /unacone/images/uploads/pokemon/ninetales_ninetales.png
 role: attacker
 moves:
   ability:

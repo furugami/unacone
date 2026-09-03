@@ -1,6 +1,7 @@
 ---
 slug: mr-mime
 name_ja: バリヤード
+icon: /unacone/images/uploads/pokemon/mr-mime_mr-mime.png
 role: supporter
 moves:
   ability:

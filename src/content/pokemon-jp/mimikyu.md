@@ -1,6 +1,7 @@
 ---
 slug: mimikyu
 name_ja: ミミッキュ
+icon: /unacone/images/uploads/pokemon/mimikyu_mimikyu.png
 role: allrounder
 moves:
   ability:

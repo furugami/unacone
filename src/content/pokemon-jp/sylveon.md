@@ -1,6 +1,7 @@
 ---
 slug: sylveon
 name_ja: ニンフィア
+icon: /unacone/images/uploads/pokemon/sylveon_sylveon.png
 role: attacker
 moves:
   ability:

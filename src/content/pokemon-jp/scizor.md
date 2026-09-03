@@ -1,6 +1,7 @@
 ---
 slug: scizor
 name_ja: ハッサム
+icon: /unacone/images/uploads/pokemon/scizor_scizor.png
 role: allrounder
 moves:
   ability:

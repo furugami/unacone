@@ -1,6 +1,7 @@
 ---
 slug: tsareena
 name_ja: アマージョ
+icon: /unacone/images/uploads/pokemon/tsareena_tsareena.png
 role: allrounder
 moves:
   ability:
