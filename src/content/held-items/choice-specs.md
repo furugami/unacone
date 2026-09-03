@@ -3,23 +3,6 @@ slug: choice-specs
 name_ja: こだわりメガネ
 icon: /unacone/images/uploads/held-items/choice-specs.png
 summary: 説明はまだありません。
-recommended_pokemon:
-  - chandelure
-  - armarouge
-  - cramorant
-  - darkrai
-  - delphox
-  - espeon
-  - gardevoir
-  - gengar
-  - glaceon
-  - inteleon
-  - mew
-  - miraidon
-  - ninetales
-  - venusaur
-  - yveltal
-  - typhlosion
 tags:
   - sp_attack_carry
 stat_boosts:

@@ -58,6 +58,12 @@ const pokemonJp = defineCollection({
           // CMSのlistウィジェットは0件のままだとフィールド自体を書き出さないため、
           // 未入力でもビルド全体が壊れないよう任意化（2026/09/03、venusaurのビルドで顕在化）。
           held_items: z.array(z.string()).optional(),
+          // その他のおすすめもちもの（held-itemsコレクションのslug配列、0〜複数、任意）。
+          // 「相性のよいポケモン」をもちもの側に持たせる旧方式は、ビルドによって
+          // 適したもちものが大きく変わるケースに対応できないため廃止し、
+          // ビルド単位でheld_items（確定の3枠）とは別に、代替・候補となる
+          // もちものを挙げられるようにした。2026/09/04追加。
+          other_recommended_held_items: z.array(z.string()).optional(),
           // battle-itemsコレクションのslug（同上）
           battle_item: z.string(),
           // このビルドでのわざ1/わざ2の選択（moves内のどの項目を使うか）。任意。
@@ -121,11 +127,6 @@ const heldItems = defineCollection({
     name_ja: z.string(),
     icon: z.string().optional(),
     summary: z.string(),
-    // 相性のよいポケモン（ポケモン図鑑のslug配列）。battle-itemsのrecommended_pokemonと
-    // 同じ設計。ポケモン個別ページ側は、この配列に自分のslugが含まれるもちものを逆引きして
-    // 「相性のよいもちもの」として表示する（入力はもちもの側のみで完結させる方針）。
-    // 2026/09/03追加。
-    recommended_pokemon: z.array(z.string()).optional(),
     // タグ（複数選択可）。用途別の分類。項目名はコード内固定辞書
     // （src/lib/heldItemTags.ts）で管理。2026/09/03追加。
     tags: z

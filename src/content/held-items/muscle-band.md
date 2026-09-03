@@ -3,8 +3,6 @@ slug: muscle-band
 name_ja: ちからのハチマキ
 icon: /unacone/images/uploads/held-items/muscle-band.png
 summary: 説明はまだありません。
-recommended_pokemon:
-  - zoroark
 stat_boosts:
   - stat: attack
     value: 17.5

@@ -90,12 +90,6 @@ const allHeldItems = await getCollection('held-items');
 const heldItemMap = new Map(allHeldItems.map((i) => [i.data.slug, i.data]));
 const battleItemMap = new Map((await getCollection('battle-items')).map((i) => [i.data.slug, i.data]));
 
-// 相性のよいもちもの: もちもの側のrecommended_pokemonに自分のslugが含まれるものを逆引き
-// （battle-itemsのrecommended_pokemonと同じ設計。入力はもちもの側のみで完結する）。
-const recommendedHeldItems = allHeldItems.filter((i) =>
-	i.data.recommended_pokemon?.includes(entry.data.slug)
-);
-
 // このポケモンを対象にしているFAQだけを抽出（faqs側が対象を持つ設計。
 // src/content.config.tsの「faqs」コレクション参照）。
 const relatedFaqs = (await getCollection('faqs')).filter(
@@ -112,6 +106,10 @@ function resolveMoveChoice(baseKey: 'move1' | 'move2', choice: 'base' | 'upgrade
 const resolvedBuilds = (builds ?? []).map((build) => ({
 	...build,
 	heldItemDetails: (build.held_items ?? []).map((slug) => ({ slug, item: heldItemMap.get(slug) })),
+	otherRecommendedHeldItemDetails: (build.other_recommended_held_items ?? []).map((slug) => ({
+		slug,
+		item: heldItemMap.get(slug),
+	})),
 	battleItemDetail: { slug: build.battle_item, item: battleItemMap.get(build.battle_item) },
 	move1Selection: resolveMoveChoice('move1', build.move1_choice),
 	move2Selection: resolveMoveChoice('move2', build.move2_choice),
@@ -192,6 +190,25 @@ const resolvedBuilds = (builds ?? []).map((build) => ({
 								)}
 							</div>
 						</div>
+						{
+							build.otherRecommendedHeldItemDetails.length > 0 && (
+								<div class="items-row">
+									<span class="field-label">その他のおすすめもちもの</span>
+									<div class="chip-group">
+										{build.otherRecommendedHeldItemDetails.map(({ slug, item }) =>
+											item ? (
+												<a href={withBase(`/held-items/${slug}/`)} class="item-chip">
+													{item.icon && <img src={item.icon} alt="" class="chip-icon" />}
+													{item.name_ja}
+												</a>
+											) : (
+												<span class="item-chip missing">{slug}</span>
+											)
+										)}
+									</div>
+								</div>
+							)
+						}
 						<div class="items-row">
 							<span class="field-label">バトルアイテム</span>
 							<div class="chip-group">
@@ -227,22 +244,6 @@ const resolvedBuilds = (builds ?? []).map((build) => ({
 						<p>{m.data.effect}</p>
 					</article>
 				))}
-			</section>
-		)
-	}
-
-	{
-		recommendedHeldItems.length > 0 && (
-			<section class="recommended-section">
-				<h2>相性のよいもちもの</h2>
-				<div class="chip-group">
-					{recommendedHeldItems.map((item) => (
-						<a href={withBase(`/held-items/${item.data.slug}/`)} class="item-chip">
-							{item.data.icon && <img src={item.data.icon} alt="" class="chip-icon" />}
-							{item.data.name_ja}
-						</a>
-					))}
-				</div>
 			</section>
 		)
 	}
@@ -378,15 +379,6 @@ const resolvedBuilds = (builds ?? []).map((build) => ({
 		display: flex;
 		flex-wrap: wrap;
 		gap: 8px;
-	}
-
-	.recommended-section {
-		margin-top: 16px;
-		background: var(--surface);
-		border: 1.5px solid #e5e9f2;
-		border-radius: var(--radius);
-		box-shadow: 0 2px 8px rgba(27, 34, 51, 0.06);
-		padding: 24px;
 	}
 
 	.item-chip {

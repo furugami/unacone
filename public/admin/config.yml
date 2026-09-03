@@ -94,6 +94,19 @@ collections:
               value_field: "slug"
               display_fields: ["name_ja"]
               options_length: 999
+          - label: "その他のおすすめもちもの（任意、0〜複数。上記3枠以外の代替・候補）"
+            name: "other_recommended_held_items"
+            widget: "list"
+            required: false
+            field:
+              label: "もちもの"
+              name: "held_item"
+              widget: "relation"
+              collection: "held-items"
+              search_fields: ["name_ja"]
+              value_field: "slug"
+              display_fields: ["name_ja"]
+              options_length: 999
           - label: "バトルアイテム（バトルアイテム図鑑から選択）"
             name: "battle_item"
             widget: "relation"
@@ -311,19 +324,6 @@ collections:
       - { label: "名前", name: "name_ja", widget: "string" }
       - { label: "アイコン（任意）", name: "icon", widget: "image", required: false }
       - { label: "要約（一覧に表示）", name: "summary", widget: "text" }
-      - label: "相性のよいポケモン（ポケモン一覧から選択、複数可・任意）"
-        name: "recommended_pokemon"
-        widget: "list"
-        required: false
-        field:
-          label: "ポケモン"
-          name: "pokemon"
-          widget: "relation"
-          collection: "pokemon-jp"
-          search_fields: ["name_ja"]
-          value_field: "slug"
-          display_fields: ["name_ja"]
-          options_length: 999
       - label: "タグ（任意、複数選択可）"
         name: "tags"
         widget: "select"

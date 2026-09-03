@@ -3,8 +3,6 @@ slug: rapid-fire-scarf
 name_ja: れんだスカーフ
 icon: /unacone/images/uploads/held-items/rapid-fire-scarf.png
 summary: 説明はまだありません。
-recommended_pokemon:
-  - venusaur
 stat_boosts:
   - stat: attack
     value: 14
