@@ -93,6 +93,7 @@ collections:
               search_fields: ["name_ja"]
               value_field: "slug"
               display_fields: ["name_ja"]
+              options_length: 999
           - label: "バトルアイテム（バトルアイテム図鑑から選択）"
             name: "battle_item"
             widget: "relation"
@@ -425,6 +426,7 @@ collections:
         search_fields: ["name_ja"]
         value_field: "slug"
         display_fields: ["name_ja"]
+        options_length: 999
         required: false
       - label: "対象もちもの（任意。上と合わせて基本はどれか1つだけ）"
         name: "target_held_item"
@@ -433,6 +435,7 @@ collections:
         search_fields: ["name_ja"]
         value_field: "slug"
         display_fields: ["name_ja"]
+        options_length: 999
         required: false
       - label: "対象バトルアイテム（任意。上と合わせて基本はどれか1つだけ）"
         name: "target_battle_item"
