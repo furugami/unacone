@@ -44,6 +44,14 @@ const navItems = [
 					<a href={item.href}>{item.label}</a>
 				))}
 			</nav>
+			<details class="mobile-nav">
+				<summary aria-label="メニューを開く"><span class="hamburger-icon"></span></summary>
+				<nav class="mobile-nav-menu">
+					{navItems.map((item) => (
+						<a href={item.href}>{item.label}</a>
+					))}
+				</nav>
+			</details>
 		</header>
 		<main>
 			<slot />
@@ -169,6 +177,116 @@ const navItems = [
 	.site-nav a:hover {
 		color: var(--blue);
 		background: color-mix(in srgb, var(--blue) 10%, white);
+	}
+
+	/* スマホ向けハンバーガーメニュー（PC幅では非表示）。<details>/<summary>のCSS標準機能で
+	   開閉させ、JSは使わない。ボタンは画面右上に固定表示する。2026/09/03追加。 */
+	.mobile-nav {
+		display: none;
+	}
+
+	.mobile-nav > summary {
+		list-style: none;
+		position: fixed;
+		top: 12px;
+		right: 12px;
+		z-index: 100;
+		width: 44px;
+		height: 44px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: var(--surface);
+		border: 1.5px solid #e5e9f2;
+		border-radius: 999px;
+		box-shadow: 0 2px 8px rgba(27, 34, 51, 0.12);
+		cursor: pointer;
+	}
+
+	.mobile-nav > summary::-webkit-details-marker {
+		display: none;
+	}
+
+	.hamburger-icon,
+	.hamburger-icon::before,
+	.hamburger-icon::after {
+		display: block;
+		width: 20px;
+		height: 2px;
+		background: var(--ink);
+		border-radius: 2px;
+	}
+
+	.hamburger-icon {
+		position: relative;
+	}
+
+	.hamburger-icon::before,
+	.hamburger-icon::after {
+		content: '';
+		position: absolute;
+		left: 0;
+	}
+
+	.hamburger-icon::before {
+		top: -6px;
+	}
+
+	.hamburger-icon::after {
+		top: 6px;
+	}
+
+	.mobile-nav[open] > summary .hamburger-icon {
+		background: transparent;
+	}
+
+	.mobile-nav[open] > summary .hamburger-icon::before {
+		top: 0;
+		transform: rotate(45deg);
+	}
+
+	.mobile-nav[open] > summary .hamburger-icon::after {
+		top: 0;
+		transform: rotate(-45deg);
+	}
+
+	.mobile-nav-menu {
+		position: fixed;
+		top: 64px;
+		right: 12px;
+		z-index: 99;
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+		min-width: 180px;
+		padding: 8px;
+		background: var(--surface);
+		border: 1.5px solid #e5e9f2;
+		border-radius: var(--radius);
+		box-shadow: 0 8px 20px rgba(27, 34, 51, 0.15);
+	}
+
+	.mobile-nav-menu a {
+		text-decoration: none;
+		font-weight: 700;
+		color: var(--ink);
+		padding: 10px 12px;
+		border-radius: 8px;
+	}
+
+	.mobile-nav-menu a:hover {
+		color: var(--blue);
+		background: color-mix(in srgb, var(--blue) 10%, white);
+	}
+
+	@media (max-width: 639px) {
+		.site-nav {
+			display: none;
+		}
+
+		.mobile-nav {
+			display: block;
+		}
 	}
 
 	main {
