@@ -78,7 +78,7 @@ function resolveMoveChoice(baseKey: 'move1' | 'move2', choice: 'base' | 'upgrade
 
 const resolvedBuilds = (builds ?? []).map((build) => ({
 	...build,
-	heldItemDetails: build.held_items.map((slug) => ({ slug, item: heldItemMap.get(slug) })),
+	heldItemDetails: (build.held_items ?? []).map((slug) => ({ slug, item: heldItemMap.get(slug) })),
 	battleItemDetail: { slug: build.battle_item, item: battleItemMap.get(build.battle_item) },
 	move1Selection: resolveMoveChoice('move1', build.move1_choice),
 	move2Selection: resolveMoveChoice('move2', build.move2_choice),

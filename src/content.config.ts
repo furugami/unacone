@@ -55,7 +55,9 @@ const pokemonJp = defineCollection({
           title: z.string(),
           // held-itemsコレクションのslugの配列（CMSではrelationウィジェットで選択、
           // 自由入力ではない。2026/08/29変更）
-          held_items: z.array(z.string()),
+          // CMSのlistウィジェットは0件のままだとフィールド自体を書き出さないため、
+          // 未入力でもビルド全体が壊れないよう任意化（2026/09/03、venusaurのビルドで顕在化）。
+          held_items: z.array(z.string()).optional(),
           // battle-itemsコレクションのslug（同上）
           battle_item: z.string(),
           // このビルドでのわざ1/わざ2の選択（moves内のどの項目を使うか）。任意。
