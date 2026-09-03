@@ -2,7 +2,7 @@
 slug: miraidon
 name_ja: ミライドン
 icon: /unacone/images/uploads/medals/miraidon.png
-order: 256
+order: 258
 pokemon_slug: miraidon
 colors:
   - yellow

@@ -2,7 +2,7 @@
 slug: sprigatito
 name_ja: ニャオハ
 icon: /unacone/images/uploads/medals/sprigatito.png
-order: 253
+order: 255
 colors:
   - green
 ---

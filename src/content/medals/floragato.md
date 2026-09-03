@@ -2,7 +2,7 @@
 slug: floragato
 name_ja: ニャローテ
 icon: /unacone/images/uploads/medals/floragato.png
-order: 254
+order: 256
 colors:
   - green
 ---

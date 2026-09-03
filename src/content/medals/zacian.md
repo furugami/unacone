@@ -2,7 +2,7 @@
 slug: zacian
 name_ja: ザシアン
 icon: /unacone/images/uploads/medals/zacian.png
-order: 252
+order: 254
 pokemon_slug: zacian
 colors:
   - gray
