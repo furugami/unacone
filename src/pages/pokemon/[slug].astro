@@ -53,8 +53,15 @@ const moveEntries = moves
 
 // おすすめビルドの「もちもの」「バトルアイテム」は、もちもの/バトルアイテム図鑑の
 // slugを指しているので、実際のデータ（名前・アイコン・詳細ページへのリンク）に解決する。
-const heldItemMap = new Map((await getCollection('held-items')).map((i) => [i.data.slug, i.data]));
+const allHeldItems = await getCollection('held-items');
+const heldItemMap = new Map(allHeldItems.map((i) => [i.data.slug, i.data]));
 const battleItemMap = new Map((await getCollection('battle-items')).map((i) => [i.data.slug, i.data]));
+
+// 相性のよいもちもの: もちもの側のrecommended_pokemonに自分のslugが含まれるものを逆引き
+// （battle-itemsのrecommended_pokemonと同じ設計。入力はもちもの側のみで完結する）。
+const recommendedHeldItems = allHeldItems.filter((i) =>
+	i.data.recommended_pokemon?.includes(entry.data.slug)
+);
 
 // このポケモンを対象にしているFAQだけを抽出（faqs側が対象を持つ設計。
 // src/content.config.tsの「faqs」コレクション参照）。
@@ -191,6 +198,22 @@ const resolvedBuilds = (builds ?? []).map((build) => ({
 		)
 	}
 
+	{
+		recommendedHeldItems.length > 0 && (
+			<section class="recommended-section">
+				<h2>相性のよいもちもの</h2>
+				<div class="chip-group">
+					{recommendedHeldItems.map((item) => (
+						<a href={withBase(`/held-items/${item.data.slug}/`)} class="item-chip">
+							{item.data.icon && <img src={item.data.icon} alt="" class="chip-icon" />}
+							{item.data.name_ja}
+						</a>
+					))}
+				</div>
+			</section>
+		)
+	}
+
 	<section class="external-link-card">
 		<p>
 			詳しい数値データ（ステータス・勝率など）は外部サイトのUniteAPI/unite-db.comをご覧ください。
@@ -286,6 +309,15 @@ const resolvedBuilds = (builds ?? []).map((build) => ({
 		display: flex;
 		flex-wrap: wrap;
 		gap: 8px;
+	}
+
+	.recommended-section {
+		margin-top: 16px;
+		background: var(--surface);
+		border: 1.5px solid #e5e9f2;
+		border-radius: var(--radius);
+		box-shadow: 0 2px 8px rgba(27, 34, 51, 0.06);
+		padding: 24px;
 	}
 
 	.item-chip {

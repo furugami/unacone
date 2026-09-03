@@ -112,6 +112,11 @@ const heldItems = defineCollection({
     name_ja: z.string(),
     icon: z.string().optional(),
     summary: z.string(),
+    // 相性のよいポケモン（ポケモン図鑑のslug配列）。battle-itemsのrecommended_pokemonと
+    // 同じ設計。ポケモン個別ページ側は、この配列に自分のslugが含まれるもちものを逆引きして
+    // 「相性のよいもちもの」として表示する（入力はもちもの側のみで完結させる方針）。
+    // 2026/09/03追加。
+    recommended_pokemon: z.array(z.string()).optional(),
     // タグ（複数選択可）。用途別の分類。項目名はコード内固定辞書
     // （src/lib/heldItemTags.ts）で管理。2026/09/03追加。
     tags: z

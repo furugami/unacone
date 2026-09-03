@@ -305,6 +305,19 @@ collections:
       - { label: "名前", name: "name_ja", widget: "string" }
       - { label: "アイコン（任意）", name: "icon", widget: "image", required: false }
       - { label: "要約（一覧に表示）", name: "summary", widget: "text" }
+      - label: "相性のよいポケモン（ポケモン図鑑から選択、複数可・任意）"
+        name: "recommended_pokemon"
+        widget: "list"
+        required: false
+        field:
+          label: "ポケモン"
+          name: "pokemon"
+          widget: "relation"
+          collection: "pokemon-jp"
+          search_fields: ["name_ja"]
+          value_field: "slug"
+          display_fields: ["name_ja"]
+          options_length: 999
       - label: "タグ（任意、複数選択可）"
         name: "tags"
         widget: "select"
