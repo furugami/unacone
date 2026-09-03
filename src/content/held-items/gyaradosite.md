@@ -1,6 +1,7 @@
 ---
 slug: gyaradosite
 name_ja: ギャラドスナイト
+icon: /unacone/images/uploads/held-items/gyaradosite.png
 summary: 説明はまだありません。
 ---
 ## 効果

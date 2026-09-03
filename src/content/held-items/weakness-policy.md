@@ -1,6 +1,7 @@
 ---
 slug: weakness-policy
 name_ja: じゃくてんほけん
+icon: /unacone/images/uploads/held-items/weakness-policy.png
 summary: 説明はまだありません。
 ---
 ## 効果

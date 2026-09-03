@@ -1,6 +1,7 @@
 ---
 slug: big-root
 name_ja: おおきなねっこ
+icon: /unacone/images/uploads/held-items/big-root.png
 summary: 説明はまだありません。
 ---
 ## 効果
