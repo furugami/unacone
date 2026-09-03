@@ -17,7 +17,6 @@ builds:
       - muscle-band
       - rapid-fire-scarf
       - razor-claw
-      - accel-bracer
     battle_item: full-heal
     move1_choice: upgrade_b
     move2_choice: upgrade_a
