@@ -71,6 +71,13 @@ const pokemonJp = defineCollection({
     // 立ち回り解説（本文）の直前。2026/09/01追加。
     usage_memo: z.string().optional(),
     counter_memo: z.string().optional(),
+    // 立ち回り解説を難易度別3本に分割（旧bodyから移行、2026/09/03）。
+    // 表示は初期は閉じたアコーディオン形式。
+    commentary_beginner: z.string().optional(),
+    commentary_intermediate: z.string().optional(),
+    commentary_advanced: z.string().optional(),
+    // 立ち回り解説動画（任意、YouTubeのURLを複数登録可）。2026/09/03追加。
+    commentary_videos: z.array(z.string()).optional(),
   }),
 });
 

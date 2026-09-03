@@ -8,7 +8,8 @@
 import Layout from '../../layouts/Layout.astro';
 import AbilityPentagon from '../../components/AbilityPentagon.astro';
 import FaqSection from '../../components/FaqSection.astro';
-import { getCollection, render } from 'astro:content';
+import { getCollection } from 'astro:content';
+import { marked } from 'marked';
 import {
 	ROLE_LABELS,
 	ROLE_COLOR_VARS,
@@ -29,9 +30,41 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
-const { Content } = await render(entry);
-const { name_ja, icon, role, attack_type, difficulty, abilities, moves, builds, usage_memo, counter_memo } =
-	entry.data;
+const {
+	name_ja,
+	icon,
+	role,
+	attack_type,
+	difficulty,
+	abilities,
+	moves,
+	builds,
+	usage_memo,
+	counter_memo,
+	commentary_beginner,
+	commentary_intermediate,
+	commentary_advanced,
+	commentary_videos,
+} = entry.data;
+
+// 立ち回り解説（難易度別3本）。設定されているものだけアコーディオンとして表示する。
+const commentarySections = [
+	{ key: 'beginner', label: '初級者向け', markdown: commentary_beginner },
+	{ key: 'intermediate', label: '中級者向け', markdown: commentary_intermediate },
+	{ key: 'advanced', label: '上級者向け', markdown: commentary_advanced },
+].filter((s): s is typeof s & { markdown: string } => Boolean(s.markdown));
+
+// YouTubeのURLから埋め込み用の動画IDを取り出す（watch?v=形式・youtu.be形式の両方に対応）。
+function extractYoutubeId(url: string): string | null {
+	try {
+		const u = new URL(url);
+		if (u.hostname.includes('youtu.be')) return u.pathname.slice(1) || null;
+		if (u.hostname.includes('youtube.com')) return u.searchParams.get('v');
+		return null;
+	} catch {
+		return null;
+	}
+}
 
 // abilitiesは各項目が任意入力のため、5項目すべて揃っている場合のみレーダーチャートを表示する
 // （一部だけ入力された状態だとAbilityPentagonが数値前提の計算をするため描画できない）。
@@ -242,10 +275,46 @@ const resolvedBuilds = (builds ?? []).map((build) => ({
 		)
 	}
 
-	<section class="commentary">
-		<h2>立ち回り解説</h2>
-		<Content />
-	</section>
+	{
+		commentarySections.length > 0 && (
+			<section class="commentary">
+				<h2>立ち回り解説</h2>
+				{commentarySections.map((s) => (
+					<details class="commentary-accordion">
+						<summary>{s.label}</summary>
+						<div class="commentary-body" set:html={marked.parse(s.markdown) as string} />
+					</details>
+				))}
+			</section>
+		)
+	}
+
+	{
+		commentary_videos && commentary_videos.length > 0 && (
+			<section class="commentary-videos">
+				<h2>立ち回り解説動画</h2>
+				<div class="video-grid">
+					{commentary_videos.map((url) => {
+						const videoId = extractYoutubeId(url);
+						return videoId ? (
+							<div class="video-embed">
+								<iframe
+									src={`https://www.youtube.com/embed/${videoId}`}
+									title="立ち回り解説動画"
+									allowfullscreen
+									loading="lazy"
+								/>
+							</div>
+						) : (
+							<a href={url} target="_blank" rel="noopener noreferrer" class="video-link-fallback">
+								{url}
+							</a>
+						);
+					})}
+				</div>
+			</section>
+		)
+	}
 
 	{
 		relatedFaqs.length > 0 && (
@@ -449,5 +518,65 @@ const resolvedBuilds = (builds ?? []).map((build) => ({
 
 	.commentary {
 		margin-top: 24px;
+	}
+
+	.commentary-accordion {
+		margin-top: 12px;
+		background: var(--surface);
+		border: 1.5px solid #e5e9f2;
+		border-radius: var(--radius);
+		box-shadow: 0 2px 8px rgba(27, 34, 51, 0.06);
+		padding: 16px 24px;
+	}
+
+	.commentary-accordion summary {
+		cursor: pointer;
+		font-weight: 700;
+		color: var(--blue);
+	}
+
+	.commentary-body {
+		margin-top: 12px;
+		line-height: 1.8;
+	}
+
+	.commentary-videos {
+		margin-top: 24px;
+	}
+
+	.video-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+		gap: 16px;
+		margin-top: 12px;
+	}
+
+	.video-embed {
+		position: relative;
+		width: 100%;
+		padding-top: 56.25%;
+		border-radius: var(--radius);
+		overflow: hidden;
+		box-shadow: 0 2px 8px rgba(27, 34, 51, 0.06);
+	}
+
+	.video-embed iframe {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		border: 0;
+	}
+
+	.video-link-fallback {
+		display: block;
+		padding: 12px 16px;
+		background: var(--surface);
+		border: 1.5px solid #e5e9f2;
+		border-radius: var(--radius);
+		color: var(--blue);
+		font-weight: 700;
+		text-decoration: none;
+		overflow-wrap: anywhere;
 	}
 </style>
