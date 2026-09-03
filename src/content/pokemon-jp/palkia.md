@@ -1,7 +1,7 @@
 ---
 slug: palkia
 name_ja: パルキア
-icon: /unacone/images/uploads/pokemon/26.jpg
+icon: /unacone/images/uploads/pokemon/palkia_palkia.png
 role: allrounder
 moves:
   ability:
