@@ -89,7 +89,12 @@ collections:
             fields:
               - { label: "名前", name: "name", widget: "string" }
               - { label: "効果", name: "effect", widget: "text" }
-              - { label: "アイコン画像（任意）", name: "icon", widget: "image", required: false }
+              - label: "アイコン画像（任意）"
+                name: "icon"
+                widget: "image"
+                required: false
+                media_folder: "/public/images/uploads/pokemon/{{slug}}"
+                public_folder: "/unacone/images/uploads/pokemon/{{slug}}"
           - label: "わざ1"
             name: "move1"
             widget: "object"
@@ -97,7 +102,12 @@ collections:
             fields:
               - { label: "名前", name: "name", widget: "string" }
               - { label: "効果", name: "effect", widget: "text" }
-              - { label: "アイコン画像（任意）", name: "icon", widget: "image", required: false }
+              - label: "アイコン画像（任意）"
+                name: "icon"
+                widget: "image"
+                required: false
+                media_folder: "/public/images/uploads/pokemon/{{slug}}"
+                public_folder: "/unacone/images/uploads/pokemon/{{slug}}"
           - label: "わざ1派生A"
             name: "move1_upgrade_a"
             widget: "object"
@@ -105,7 +115,12 @@ collections:
             fields:
               - { label: "名前", name: "name", widget: "string" }
               - { label: "効果", name: "effect", widget: "text" }
-              - { label: "アイコン画像（任意）", name: "icon", widget: "image", required: false }
+              - label: "アイコン画像（任意）"
+                name: "icon"
+                widget: "image"
+                required: false
+                media_folder: "/public/images/uploads/pokemon/{{slug}}"
+                public_folder: "/unacone/images/uploads/pokemon/{{slug}}"
           - label: "わざ1派生B（任意。存在しないポケモンもいる）"
             name: "move1_upgrade_b"
             widget: "object"
@@ -113,7 +128,12 @@ collections:
             fields:
               - { label: "名前", name: "name", widget: "string", required: false }
               - { label: "効果", name: "effect", widget: "text", required: false }
-              - { label: "アイコン画像（任意）", name: "icon", widget: "image", required: false }
+              - label: "アイコン画像（任意）"
+                name: "icon"
+                widget: "image"
+                required: false
+                media_folder: "/public/images/uploads/pokemon/{{slug}}"
+                public_folder: "/unacone/images/uploads/pokemon/{{slug}}"
           - label: "わざ2"
             name: "move2"
             widget: "object"
@@ -121,7 +141,12 @@ collections:
             fields:
               - { label: "名前", name: "name", widget: "string" }
               - { label: "効果", name: "effect", widget: "text" }
-              - { label: "アイコン画像（任意）", name: "icon", widget: "image", required: false }
+              - label: "アイコン画像（任意）"
+                name: "icon"
+                widget: "image"
+                required: false
+                media_folder: "/public/images/uploads/pokemon/{{slug}}"
+                public_folder: "/unacone/images/uploads/pokemon/{{slug}}"
           - label: "わざ2派生A"
             name: "move2_upgrade_a"
             widget: "object"
@@ -129,7 +154,12 @@ collections:
             fields:
               - { label: "名前", name: "name", widget: "string" }
               - { label: "効果", name: "effect", widget: "text" }
-              - { label: "アイコン画像（任意）", name: "icon", widget: "image", required: false }
+              - label: "アイコン画像（任意）"
+                name: "icon"
+                widget: "image"
+                required: false
+                media_folder: "/public/images/uploads/pokemon/{{slug}}"
+                public_folder: "/unacone/images/uploads/pokemon/{{slug}}"
           - label: "わざ2派生B（任意。存在しないポケモンもいる）"
             name: "move2_upgrade_b"
             widget: "object"
@@ -137,7 +167,12 @@ collections:
             fields:
               - { label: "名前", name: "name", widget: "string", required: false }
               - { label: "効果", name: "effect", widget: "text", required: false }
-              - { label: "アイコン画像（任意）", name: "icon", widget: "image", required: false }
+              - label: "アイコン画像（任意）"
+                name: "icon"
+                widget: "image"
+                required: false
+                media_folder: "/public/images/uploads/pokemon/{{slug}}"
+                public_folder: "/unacone/images/uploads/pokemon/{{slug}}"
           - label: "ユナイト技"
             name: "unite_move"
             widget: "object"
@@ -145,7 +180,12 @@ collections:
             fields:
               - { label: "名前", name: "name", widget: "string" }
               - { label: "効果", name: "effect", widget: "text" }
-              - { label: "アイコン画像（任意）", name: "icon", widget: "image", required: false }
+              - label: "アイコン画像（任意）"
+                name: "icon"
+                widget: "image"
+                required: false
+                media_folder: "/public/images/uploads/pokemon/{{slug}}"
+                public_folder: "/unacone/images/uploads/pokemon/{{slug}}"
       - label: "おすすめビルド"
         name: "builds"
         widget: "list"
