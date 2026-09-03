@@ -6,20 +6,26 @@ moves:
   ability:
     name: じしんかじょう
     effect: 相手を倒したりアシストしたりすると、すべてのわざの待ち時間が短くなる。
+    icon: /unacone/images/uploads/pokemon/gyarados_moxie.png
   move1:
     name: りゅうのいぶき
     effect: 相手にダメージを与えてまひ状態にする。命中後は通常攻撃の射程と速度が上がる。
+    icon: /unacone/images/uploads/pokemon/gyarados_dragon-breath.png
   move1_upgrade_a:
     name: アクアテール
     effect: しっぽで連続攻撃する。3回命中させると短時間内にもう一度使え、2段目は広い範囲を攻撃する。
+    icon: /unacone/images/uploads/pokemon/gyarados_aqua-tail.png
   move2:
     name: たきのぼり
     effect: 3回連続で突撃して攻撃する。2回命中でシールドを得て、3回命中で相手をふきとばす。
+    icon: /unacone/images/uploads/pokemon/gyarados_waterfall.png
   move2_upgrade_a:
     name: とびはねる
     effect: 力を溜めて指定した場所に飛び込む。溜め時間に応じてシールドとふきとばし効果が強くなる。
+    icon: /unacone/images/uploads/pokemon/gyarados_bounce.png
   unite_move:
     name: ヒリュウジョウウン
     effect: 水中に潜って移動したあと飛び上がって攻撃する。溜めた時間に応じて減速やふきとばし効果が変化する。
+    icon: /unacone/images/uploads/pokemon/gyarados_dragon-current.png
 ---
 （解説はまだありません）

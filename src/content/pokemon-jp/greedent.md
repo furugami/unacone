@@ -6,26 +6,34 @@ moves:
   ability:
     name: ほおぶくろ
     effect: きのみを食べるとHPが回復し、しっぽにもう1個きのみを溜め込む。攻撃を受けるとしばらくしてきのみを落とす。
+    icon: /unacone/images/uploads/pokemon/greedent_cheek-pouch.png
   move1:
     name: たいあたり
     effect: 指定した場所に飛びかかって攻撃し、範囲内の相手にダメージと減速を与える。きのみを消費すると待ち時間が短くなる。
+    icon: /unacone/images/uploads/pokemon/greedent_tackle.png
   move1_upgrade_a:
     name: タネマシンガン
     effect: 一定時間、指定方向を連続で攻撃する。きのみが多いほどダメージが増える。
+    icon: /unacone/images/uploads/pokemon/greedent_bullet-seed.png
   move1_upgrade_b:
     name: ゲップ
     effect: 範囲内の相手にダメージと大きな減速を与える。きのみを消費すると待ち時間が短くなる。
+    icon: /unacone/images/uploads/pokemon/greedent_belch.png
   move2:
     name: まるくなる
     effect: 一時的にシールドを得て、目の前にきのみを落とす。
+    icon: /unacone/images/uploads/pokemon/greedent_defense-curl.png
   move2_upgrade_a:
     name: ほおばる
     effect: きのみをまき散らしてHPを回復する。回復しきれなかった分はシールドになる。
+    icon: /unacone/images/uploads/pokemon/greedent_stuff-cheeks.png
   move2_upgrade_b:
     name: ほしがる
     effect: 一定時間走り抜け、触れた相手にダメージとふきとばしを与える。妨害を受けなくなり、落ちているきのみを踏むと移動速度が上がる。
+    icon: /unacone/images/uploads/pokemon/greedent_covet.png
   unite_move:
     name: よくばりきのみダイブ
     effect: きのみを食べてHPを回復したあと、指定した場所に飛び込んで範囲ダメージとふきとばしを与える。その後、すべてのわざの待ち時間がなくなる。
+    icon: /unacone/images/uploads/pokemon/greedent_berry-belly-flop.png
 ---
 （解説はまだありません）

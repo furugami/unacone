@@ -6,26 +6,34 @@ moves:
   ability:
     name: しんりょく
     effect: HPが半分以下になると一時的に姿を隠せる。その後しばらく移動速度と与えるダメージが上がり、攻撃を当てるたびに自分のHPが回復する。
+    icon: /unacone/images/uploads/pokemon/meowscarada_overgrow.png
   move1:
     name: このは
     effect: 葉っぱを飛ばして相手にダメージを与え、移動速度を下げる。
+    icon: /unacone/images/uploads/pokemon/meowscarada_leafage.png
   move1_upgrade_a:
     name: トリックフラワー
     effect: 相手に花の爆弾を付着させる。一定時間内にもう一度使うと好きなタイミングで爆発させられ、相手の残りHPの割合に応じたダメージを与える。
+    icon: /unacone/images/uploads/pokemon/meowscarada_flower-trick.png
   move1_upgrade_b:
     name: つじぎり
     effect: ツメの斬撃を飛ばしてダメージを与え、マークを付ける。マーク中の相手への通常攻撃は急所が出やすくなる。
+    icon: /unacone/images/uploads/pokemon/meowscarada_night-slash.png
   move2:
     name: つめとぎ
     effect: 移動しながらツメを研ぎ、次の数回の通常攻撃の速度とダメージを上げる。
+    icon: /unacone/images/uploads/pokemon/meowscarada_hone-claws.png
   move2_upgrade_a:
     name: かげぶんしん
     effect: 分身を作り出して一緒にダッシュし、移動速度を上げて相手をかく乱する。もう一度使うと自分と分身の位置を入れ替える。
+    icon: /unacone/images/uploads/pokemon/meowscarada_double-team.png
   move2_upgrade_b:
     name: くさわけ
     effect: 指定した場所に飛びかかって攻撃し、相手をまひ状態にする。命中させると自分の攻撃速度と移動速度が上がる。
+    icon: /unacone/images/uploads/pokemon/meowscarada_trailblaze.png
   unite_move:
     name: ブルーミングショータイム！！
     effect: 指定した場所に瞬時に移動したあと、周囲に花吹雪を発生させて相手に継続ダメージを与える。
+    icon: /unacone/images/uploads/pokemon/meowscarada_floral-flourish.png
 ---
 （解説はまだありません）
