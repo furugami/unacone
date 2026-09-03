@@ -142,12 +142,17 @@ const colorFilters = MEDAL_COLOR_ORDER.filter((c) => usedColors.has(c));
 		margin-bottom: 32px;
 	}
 
-	.medal-set + .medal-set {
-		margin-top: 24px;
+	.medal-set {
+		margin-top: 16px;
+		padding: 16px;
+		background: var(--surface);
+		border: 1.5px solid #e5e9f2;
+		border-radius: var(--radius);
+		box-shadow: 0 2px 8px rgba(27, 34, 51, 0.06);
 	}
 
 	.medal-set h3 {
-		margin: 16px 0 0;
+		margin: 0;
 		font-size: 1rem;
 	}
 
