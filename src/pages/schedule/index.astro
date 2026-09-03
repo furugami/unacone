@@ -111,12 +111,13 @@ const discoveredEntries = (await fetchYoutubeUpcomingByKeyword('ポケモンユ�
 				<p class="discovered-note">
 					「ポケモンユナイト」でYouTubeを検索して見つかった配信です。無関係な動画が混ざる場合があります。
 				</p>
-				<ScheduleTable liveEntries={discoveredLiveEntries} entries={discoveredEntries} showChannelName />
-				{hasMoreDiscoveredLive && (
-					<p class="live-more-link">
-						<a href={withBase('/schedule/live/')}>すべてのライブ中配信を表示 →</a>
-					</p>
-				)}
+				<ScheduleTable liveEntries={discoveredLiveEntries} entries={discoveredEntries} showChannelName>
+					{hasMoreDiscoveredLive && (
+						<p class="live-more-link" slot="after-live">
+							<a href={withBase('/schedule/live/')}>すべてのライブ中配信を表示 →</a>
+						</p>
+					)}
+				</ScheduleTable>
 			</section>
 		)
 	}

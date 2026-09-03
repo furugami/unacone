@@ -50,6 +50,7 @@ for (const entry of entries) {
 			</div>
 		)
 	}
+	<slot name="after-live" />
 	{
 		groups.map((group) => (
 			<div class="date-group">
@@ -71,7 +72,9 @@ for (const entry of entries) {
 	}
 
 	.live-group + .date-group,
-	.date-group + .date-group {
+	.date-group + .date-group,
+	.live-group + :global(.live-more-link),
+	:global(.live-more-link) + .date-group {
 		margin-top: 20px;
 	}
 
