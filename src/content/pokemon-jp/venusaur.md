@@ -48,6 +48,6 @@ builds:
   - battle_item: eject-button
     move1_choice: upgrade_a
     move2_choice: upgrade_a
-    title: 空日
+    title: ソラビ
 ---
 （解説はまだありません）
