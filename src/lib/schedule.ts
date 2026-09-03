@@ -223,9 +223,14 @@ async function fetchYoutubeByKeyword(
 		const videosData = await videosRes.json();
 
 		const timeField = eventType === 'live' ? 'actualStartTime' : 'scheduledStartTime';
+		// YouTube Data APIのsearch.listはタイトルだけでなく概要欄・タグも検索対象になるため、
+		// 概要欄にキーワードが含まれるだけの無関係な配信が混ざる。タイトル自体にキーワードを
+		// 含むものだけに絞り込む（2026/09/03追加）。
 		const items = (videosData.items ?? []).filter(
 			(item: { snippet: { title: string }; liveStreamingDetails?: Record<string, string | undefined> }) =>
-				item.liveStreamingDetails?.[timeField] && looksJapanese(item.snippet.title)
+				item.liveStreamingDetails?.[timeField] &&
+				looksJapanese(item.snippet.title) &&
+				item.snippet.title.includes(keyword)
 		);
 
 		// チャンネルアイコン・登録者数をまとめて取得（重複除去して1回のAPI呼び出しに集約）。

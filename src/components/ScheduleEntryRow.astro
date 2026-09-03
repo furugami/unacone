@@ -15,6 +15,13 @@ const timeLabel = (d: Date) =>
 ---
 
 <li class:list={['entry-row', { live: entry.isLive }]}>
+	<a
+		class="entry-link-overlay"
+		href={entry.url}
+		target="_blank"
+		rel="noopener noreferrer"
+		aria-label={entry.title}
+	/>
 	{
 		entry.isLive ? (
 			<span class="live-badge">LIVE</span>
@@ -36,9 +43,7 @@ const timeLabel = (d: Date) =>
 		)
 	}
 	<div class="entry-main">
-		<a href={entry.url} target="_blank" rel="noopener noreferrer">
-			<span class="entry-title">{entry.title}</span>
-		</a>
+		<span class="entry-title">{entry.title}</span>
 		<div class="badge-row">
 			<span class={`platform-badge platform-${entry.platform}`}>
 				{entry.platform === 'twitch' ? 'Twitch' : 'YouTube'}
@@ -52,6 +57,7 @@ const timeLabel = (d: Date) =>
 
 <style>
 	.entry-row {
+		position: relative;
 		display: flex;
 		flex-wrap: wrap;
 		align-items: center;
@@ -60,6 +66,20 @@ const timeLabel = (d: Date) =>
 		border: 1px solid #e5e9f2;
 		border-radius: var(--radius);
 		background: var(--surface);
+		transition: box-shadow 0.15s ease, border-color 0.15s ease;
+	}
+
+	.entry-row:hover {
+		box-shadow: 0 4px 10px rgba(27, 34, 51, 0.08);
+		border-color: var(--blue);
+	}
+
+	/* カード全体をクリック可能にするための透明な重ねリンク。チャンネル名リンクは
+	   position: relative + z-index で上に重ね、そちらの領域だけチャンネルページへ遷移させる。 */
+	.entry-link-overlay {
+		position: absolute;
+		inset: 0;
+		z-index: 1;
 	}
 
 	.entry-row.live {
@@ -103,19 +123,14 @@ const timeLabel = (d: Date) =>
 		min-width: 200px;
 	}
 
-	.entry-main > a {
-		display: block;
-		text-decoration: none;
-		color: var(--ink);
-	}
-
-	.entry-main > a:hover .entry-title {
-		text-decoration: underline;
-	}
-
 	.entry-title {
 		display: block;
 		overflow-wrap: anywhere;
+		color: var(--ink);
+	}
+
+	.entry-row:hover .entry-title {
+		text-decoration: underline;
 	}
 
 	.badge-row {
@@ -127,6 +142,8 @@ const timeLabel = (d: Date) =>
 	}
 
 	.entry-channel {
+		position: relative;
+		z-index: 2;
 		flex-shrink: 0;
 		display: flex;
 		align-items: center;
