@@ -117,31 +117,34 @@ const resolvedBuilds = (builds ?? []).map((build) => ({
 ---
 
 <Layout title={name_ja}>
-	<header class="pokemon-header">
-		{icon && <img src={icon} alt="" class="pokemon-icon" />}
-		<h1>{name_ja}</h1>
-		<span class="role-badge" style={`background: var(${ROLE_COLOR_VARS[role]})`}>
-			{ROLE_LABELS[role]}
-		</span>
-		{attack_type && <span class="attack-type-badge">{ATTACK_TYPE_LABELS[attack_type]}</span>}
-		{difficulty && <span class="difficulty-badge">{DIFFICULTY_LABELS[difficulty]}</span>}
-	</header>
-
-	{
-		hasFullAbilities && (
-			<section class="abilities-section">
-				<AbilityPentagon
-					abilities={{
-						combat: abilities!.combat!,
-						durability: abilities!.durability!,
-						mobility: abilities!.mobility!,
-						scoring: abilities!.scoring!,
-						support: abilities!.support!,
-					}}
-				/>
-			</section>
-		)
-	}
+	<div class="hero-row">
+		<div class="hero-left">
+			{icon && <img src={icon} alt="" class="pokemon-icon" />}
+			<h1>{name_ja}</h1>
+			<div class="badge-row">
+				<span class="role-badge" style={`background: var(${ROLE_COLOR_VARS[role]})`}>
+					{ROLE_LABELS[role]}
+				</span>
+				{attack_type && <span class="attack-type-badge">{ATTACK_TYPE_LABELS[attack_type]}</span>}
+				{difficulty && <span class="difficulty-badge">{DIFFICULTY_LABELS[difficulty]}</span>}
+			</div>
+		</div>
+		{
+			hasFullAbilities && (
+				<div class="hero-right">
+					<AbilityPentagon
+						abilities={{
+							combat: abilities!.combat!,
+							durability: abilities!.durability!,
+							mobility: abilities!.mobility!,
+							scoring: abilities!.scoring!,
+							support: abilities!.support!,
+						}}
+					/>
+				</div>
+			)
+		}
+	</div>
 
 	{
 		resolvedBuilds.length > 0 && (
@@ -325,20 +328,43 @@ const resolvedBuilds = (builds ?? []).map((build) => ({
 </Layout>
 
 <style>
-	.pokemon-header {
+	.hero-row {
 		display: flex;
 		flex-wrap: wrap;
 		align-items: center;
-		gap: 8px 12px;
+		gap: 24px;
 	}
 
-	.pokemon-header h1 {
-		flex-shrink: 0;
+	.hero-left {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 10px;
+		flex: 0 1 auto;
+	}
+
+	.hero-left h1 {
+		margin: 0;
+		text-align: center;
+	}
+
+	.badge-row {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 8px;
+	}
+
+	.hero-right {
+		flex: 1 1 280px;
+		display: flex;
+		justify-content: center;
+		min-width: 280px;
 	}
 
 	.pokemon-icon {
-		width: 56px;
-		height: 56px;
+		width: 240px;
+		height: 240px;
 		object-fit: contain;
 	}
 
@@ -409,12 +435,6 @@ const resolvedBuilds = (builds ?? []).map((build) => ({
 		width: 18px;
 		height: 18px;
 		object-fit: contain;
-	}
-
-	.abilities-section {
-		display: flex;
-		justify-content: center;
-		margin-top: 16px;
 	}
 
 	.role-badge,
