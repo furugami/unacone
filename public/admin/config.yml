@@ -305,6 +305,18 @@ collections:
       - { label: "名前", name: "name_ja", widget: "string" }
       - { label: "アイコン（任意）", name: "icon", widget: "image", required: false }
       - { label: "要約（一覧に表示）", name: "summary", widget: "text" }
+      - label: "タグ（任意、複数選択可）"
+        name: "tags"
+        widget: "select"
+        multiple: true
+        required: false
+        options:
+          - { label: "専用", value: "exclusive" }
+          - { label: "攻撃キャリー向け", value: "attack_carry" }
+          - { label: "特攻キャリー向け", value: "sp_attack_carry" }
+          - { label: "サポート向け", value: "support" }
+          - { label: "ディフェンス向け", value: "defense" }
+          - { label: "ゴール向け", value: "goal" }
       - label: "ステータス上昇（任意、複数追加可）"
         name: "stat_boosts"
         widget: "list"

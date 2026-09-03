@@ -112,6 +112,13 @@ const heldItems = defineCollection({
     name_ja: z.string(),
     icon: z.string().optional(),
     summary: z.string(),
+    // タグ（複数選択可）。用途別の分類。項目名はコード内固定辞書
+    // （src/lib/heldItemTags.ts）で管理。2026/09/03追加。
+    tags: z
+      .array(
+        z.enum(['exclusive', 'attack_carry', 'sp_attack_carry', 'support', 'defense', 'goal'])
+      )
+      .optional(),
     // ステータス上昇（複数選択可）。項目名はコード内固定辞書（src/lib/stats.ts）で管理。
     // 2026/08/30追加。
     stat_boosts: z

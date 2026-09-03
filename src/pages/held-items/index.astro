@@ -4,31 +4,154 @@
 import Layout from '../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 import { withBase } from '../../lib/url';
+import { HELD_ITEM_TAG_LABELS, HELD_ITEM_TAG_ORDER } from '../../lib/heldItemTags';
 
 const heldItems = (await getCollection('held-items')).sort((a, b) =>
 	a.data.name_ja.localeCompare(b.data.name_ja, 'ja')
 );
+
+// 実際に使われているタグだけフィルタボタンを出す（メダルの属性色フィルタと同じ方式）。
+const usedTags = new Set(heldItems.flatMap((item) => item.data.tags ?? []));
+const tagFilters = HELD_ITEM_TAG_ORDER.filter((t) => usedTags.has(t));
 ---
 
 <Layout title="もちもの">
 	<h1>もちもの</h1>
-	<ul class="item-grid">
+
+	{
+		tagFilters.length > 0 && (
+			<div class="tag-filter" role="group" aria-label="タグで絞り込み">
+				<button type="button" class="filter-btn is-active" data-filter="all">
+					すべて
+				</button>
+				{tagFilters.map((tag) => (
+					<button type="button" class="filter-btn" data-filter={tag}>
+						{HELD_ITEM_TAG_LABELS[tag]}
+					</button>
+				))}
+			</div>
+		)
+	}
+
+	<ul class="item-grid" id="held-item-list">
 		{
 			heldItems.map((item) => (
-				<li>
+				<li data-tags={(item.data.tags ?? []).join(' ')}>
 					<a href={withBase(`/held-items/${item.data.slug}/`)}>
 						{item.data.icon && <img src={item.data.icon} alt="" class="icon" />}
 						<span class="name">{item.data.name_ja}</span>
 						<span class="summary">{item.data.summary}</span>
+						{item.data.tags && item.data.tags.length > 0 && (
+							<span class="tag-list">
+								{item.data.tags.map((tag) => (
+									<span class="tag-badge">{HELD_ITEM_TAG_LABELS[tag]}</span>
+								))}
+							</span>
+						)}
 					</a>
 				</li>
 			))
 		}
 	</ul>
+	<p class="no-results" hidden>
+		該当するもちものがありません。
+	</p>
 	{heldItems.length === 0 && <p>準備中です。もうしばらくお待ちください。</p>}
 </Layout>
 
+<script>
+	// タグフィルタ（複数選択可、OR条件）。メダルの属性色フィルタと同じ方式。
+	const buttons = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+	const allButton = document.querySelector<HTMLButtonElement>('.filter-btn[data-filter="all"]');
+	const items = document.querySelectorAll<HTMLLIElement>('#held-item-list > li');
+	const noResults = document.querySelector<HTMLParagraphElement>('.no-results');
+	const selectedTags = new Set<string>();
+
+	function applyFilter() {
+		let visibleCount = 0;
+		items.forEach((item) => {
+			const tags = (item.dataset.tags ?? '').split(' ').filter(Boolean);
+			const matches = selectedTags.size === 0 || tags.some((t) => selectedTags.has(t));
+			item.hidden = !matches;
+			if (matches) visibleCount++;
+		});
+		if (noResults) noResults.hidden = visibleCount > 0;
+	}
+
+	buttons.forEach((button) => {
+		button.addEventListener('click', () => {
+			const filter = button.dataset.filter;
+			if (filter === 'all') {
+				selectedTags.clear();
+				buttons.forEach((b) => b.classList.remove('is-active'));
+				allButton?.classList.add('is-active');
+			} else if (filter) {
+				if (selectedTags.has(filter)) {
+					selectedTags.delete(filter);
+					button.classList.remove('is-active');
+				} else {
+					selectedTags.add(filter);
+					button.classList.add('is-active');
+				}
+				allButton?.classList.toggle('is-active', selectedTags.size === 0);
+			}
+			applyFilter();
+		});
+	});
+</script>
+
 <style>
+	.tag-filter {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+		margin-top: 16px;
+	}
+
+	.filter-btn {
+		font-family: var(--font-body);
+		font-weight: 700;
+		font-size: 0.85rem;
+		padding: 6px 14px;
+		border-radius: 999px;
+		border: 1.5px solid var(--ink-soft);
+		background: var(--surface);
+		color: var(--ink);
+		cursor: pointer;
+		transition: transform 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+	}
+
+	.filter-btn:hover {
+		transform: translateY(-2px);
+	}
+
+	.filter-btn.is-active {
+		background: color-mix(in srgb, var(--blue) 18%, white);
+		border-color: var(--blue);
+	}
+
+	.no-results {
+		margin-top: 24px;
+		color: var(--ink-soft);
+	}
+
+	.tag-list {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 4px;
+	}
+
+	.tag-badge {
+		font-size: 0.7rem;
+		font-weight: 700;
+		padding: 2px 8px;
+		border-radius: 999px;
+		border: 1px solid var(--blue);
+		color: var(--blue);
+		background: color-mix(in srgb, var(--blue) 10%, white);
+	}
+
 	.item-grid {
 		list-style: none;
 		margin: 24px 0 0;
