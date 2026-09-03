@@ -176,6 +176,21 @@ const resolvedBuilds = (builds ?? []).map((build) => ({
 							)
 						}
 						<div class="items-row">
+							<span class="field-label">バトルアイテム</span>
+							<div class="chip-group">
+								{build.battleItemDetail.item ? (
+									<a href={withBase(`/battle-items/${build.battleItemDetail.slug}/`)} class="item-chip">
+										{build.battleItemDetail.item.icon && (
+											<img src={build.battleItemDetail.item.icon} alt="" class="chip-icon" />
+										)}
+										{build.battleItemDetail.item.name_ja}
+									</a>
+								) : (
+									<span class="item-chip missing">{build.battleItemDetail.slug}</span>
+								)}
+							</div>
+						</div>
+						<div class="items-row">
 							<span class="field-label">もちもの</span>
 							<div class="chip-group">
 								{build.heldItemDetails.map(({ slug, item }) =>
@@ -209,21 +224,6 @@ const resolvedBuilds = (builds ?? []).map((build) => ({
 								</div>
 							)
 						}
-						<div class="items-row">
-							<span class="field-label">バトルアイテム</span>
-							<div class="chip-group">
-								{build.battleItemDetail.item ? (
-									<a href={withBase(`/battle-items/${build.battleItemDetail.slug}/`)} class="item-chip">
-										{build.battleItemDetail.item.icon && (
-											<img src={build.battleItemDetail.item.icon} alt="" class="chip-icon" />
-										)}
-										{build.battleItemDetail.item.name_ja}
-									</a>
-								) : (
-									<span class="item-chip missing">{build.battleItemDetail.slug}</span>
-								)}
-							</div>
-						</div>
 						{build.note && <p class="note">{build.note}</p>}
 					</article>
 				))}
