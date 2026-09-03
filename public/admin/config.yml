@@ -94,7 +94,7 @@ collections:
               value_field: "slug"
               display_fields: ["name_ja"]
               options_length: 999
-          - label: "その他のおすすめもちもの（任意、0〜複数。上記3枠以外の代替・候補）"
+          - label: "その他のもちもの候補（任意、0〜複数。上記3枠以外の代替・候補）"
             name: "other_recommended_held_items"
             widget: "list"
             required: false
