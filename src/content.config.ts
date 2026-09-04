@@ -268,6 +268,10 @@ const medalSets = defineCollection({
     slug: z.string(),
     title: z.string(),
     medals: z.array(z.string()).max(10),
+    // メダル一覧ページ（/medals/）のおすすめセット欄に表示するかどうか。
+    // 特定ポケモン専用など汎用性のないセットを非表示にできるよう2026/09/04追加。
+    // 既定はtrue（従来通り表示）。
+    show_in_list: z.boolean().default(true),
   }),
 });
 

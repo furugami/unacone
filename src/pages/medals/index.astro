@@ -18,7 +18,7 @@ const medalBySlug = new Map(medals.map((m) => [m.data.slug, m]));
 
 // おすすめメダルセット（2026/08/31、複数セットを作れる仕様に変更）。
 // 1セット＝メダル図鑑から最大10個組み合わせたもの。セット数の制限はない。
-const medalSets = (await getCollection('medal-sets')).map((set) => ({
+const medalSets = (await getCollection('medal-sets', ({ data }) => data.show_in_list)).map((set) => ({
 	title: set.data.title,
 	medals: set.data.medals
 		.map((slug) => medalBySlug.get(slug))

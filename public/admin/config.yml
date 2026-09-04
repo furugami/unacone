@@ -500,6 +500,7 @@ collections:
     fields:
       - { label: "スラッグ", name: "slug", widget: "string" }
       - { label: "セット名", name: "title", widget: "string" }
+      - { label: "メダル一覧ページに表示する", name: "show_in_list", widget: "boolean", default: true, hint: "特定ポケモン専用などおすすめセット欄に出したくない場合はオフにしてください" }
       - label: "メダル（メダル図鑑から選択、ちょうど10個を目安に）"
         name: "medals"
         widget: "list"
