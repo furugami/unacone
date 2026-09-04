@@ -2,14 +2,14 @@
 slug: set-1
 title: セット1
 medals:
-  - machop
-  - machoke
   - machamp
+  - primeape
   - marowak
+  - nidoqueen
   - aerodactyl
   - ho-oh
-  - spearow
-  - dodrio
+  - pidgeot
+  - fearow
+  - kangaskhan
   - tauros
-  - gyarados
 ---
