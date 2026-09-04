@@ -2,6 +2,7 @@
 // ポケモン/もちもの/バトルアイテムの各詳細ページ下部に表示する「よくある質問」セクション。
 // faqsコレクションから対象slugで絞り込んだ結果を渡してもらう想定（絞り込み自体は呼び出し側）。
 import { withBase } from '../lib/url';
+import { renderMarkdownWithBase } from '../lib/markdown';
 
 interface FaqEntry {
 	question: string;
@@ -25,10 +26,10 @@ const { faqs, moreHref } = Astro.props;
 					<span class="qa-badge q">Q</span>
 					{qa.question}
 				</p>
-				<p class="faq-a">
+				<div class="faq-a">
 					<span class="qa-badge a">A</span>
-					{qa.answer}
-				</p>
+					<div class="faq-a-body" set:html={renderMarkdownWithBase(qa.answer)} />
+				</div>
 			</div>
 		))
 	}
@@ -84,6 +85,23 @@ const { faqs, moreHref } = Astro.props;
 	.faq-a {
 		margin-top: 6px;
 		color: var(--ink-soft);
+	}
+
+	.faq-a-body {
+		min-width: 0;
+	}
+
+	.faq-a-body :global(p) {
+		margin: 0;
+	}
+
+	.faq-a-body :global(p + p) {
+		margin-top: 8px;
+	}
+
+	.faq-a-body :global(a) {
+		color: var(--blue);
+		font-weight: 700;
 	}
 
 	.qa-badge {

@@ -6,6 +6,7 @@
 import Layout from '../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 import { withBase } from '../../lib/url';
+import { renderMarkdownWithBase } from '../../lib/markdown';
 
 const [allFaqs, pokemonList, heldItems, battleItems] = await Promise.all([
 	getCollection('faqs'),
@@ -80,10 +81,10 @@ const targetFilters = Object.keys(TARGET_LABELS) as (keyof typeof TARGET_LABELS)
 						<span class="qa-badge q">Q</span>
 						{entry.question}
 					</p>
-					<p class="faq-a">
+					<div class="faq-a">
 						<span class="qa-badge a">A</span>
-						{entry.answer}
-					</p>
+						<div class="faq-a-body" set:html={renderMarkdownWithBase(entry.answer)} />
+					</div>
 					{entry.targetHref && (
 						<p class="target-tag">
 							<span class="tag-label">{TARGET_LABELS[entry.target]}</span>
@@ -203,6 +204,23 @@ const targetFilters = Object.keys(TARGET_LABELS) as (keyof typeof TARGET_LABELS)
 	.faq-a {
 		margin-top: 6px;
 		color: var(--ink-soft);
+	}
+
+	.faq-a-body {
+		min-width: 0;
+	}
+
+	.faq-a-body :global(p) {
+		margin: 0;
+	}
+
+	.faq-a-body :global(p + p) {
+		margin-top: 8px;
+	}
+
+	.faq-a-body :global(a) {
+		color: var(--blue);
+		font-weight: 700;
 	}
 
 	.qa-badge {

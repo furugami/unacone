@@ -425,7 +425,7 @@ collections:
     fields:
       - { label: "スラッグ（半角英数、ファイル名になる）", name: "slug", widget: "string" }
       - { label: "質問", name: "question", widget: "string" }
-      - { label: "回答", name: "answer", widget: "text" }
+      - { label: "回答", name: "answer", widget: "markdown", hint: "他ページへのリンクは、ツールバーのリンクボタンでサイト内パス（例: /medals/ ）を指定すると挿入できます" }
       - label: "対象ポケモン（任意。3つの対象欄のうちどれか1つだけ選ぶ。どれも選ばなければ「よくある質問」一覧にのみ掲載される全般FAQになる）"
         name: "target_pokemon"
         widget: "relation"
