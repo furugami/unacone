@@ -1,6 +1,6 @@
 ---
 slug: set-1
-title: セット1
+title: 茶6白6(攻撃重視)
 show_in_list: true
 medals:
   - machamp
