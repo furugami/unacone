@@ -48,7 +48,7 @@ builds:
   - title: ランクマ標準ビルド
     held_items:
       - kiaino-hachimaki
-    battle_item: shippuu-no-jutsu
+    battle_item: eject-button
     move1_choice: upgrade_a
     move2_choice: base
     note: 序盤から積極的にジャングルを回るビルド
