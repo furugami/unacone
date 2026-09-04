@@ -19,6 +19,9 @@ builds:
       - kiaino-hachimaki
     other_recommended_held_items:
       - accel-bracer
+    battle_item: full-heal
+    move1_choice: upgrade_a
+    move2_choice: upgrade_b
   - title: つじぎり型
     held_items:
       - muscle-band
