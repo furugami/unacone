@@ -1,6 +1,6 @@
 ---
 slug: set-4
-title: 茶6白6紫2(移動速度重視)
+title: 茶6白6紫2(攻撃タイプ向け 移動速度重視)
 show_in_list: true
 medals:
   - diglett
