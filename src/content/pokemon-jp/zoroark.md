@@ -5,13 +5,20 @@ icon: /unacone/images/uploads/pokemon/zoroark_zoroark.png
 role: speedster
 attack_type: physical
 abilities:
-  combat: 4
+  combat: 4.5
   durability: 1
-  mobility: 4.5
-  scoring: 2
+  mobility: 5
+  scoring: 2.5
   support: 1
 difficulty: advanced
 builds:
+  - title: だましうち型
+    held_items:
+      - attack-weight
+      - weakness-policy
+      - kiaino-hachimaki
+    other_recommended_held_items:
+      - accel-bracer
   - title: つじぎり型
     held_items:
       - muscle-band
@@ -22,8 +29,8 @@ builds:
     move2_choice: upgrade_a
     other_recommended_held_items:
       - accel-bracer
-usage_memo: 難しいのでコンボを練習してから使おう
-counter_memo: 相手のわざを避けてからその隙を狙おう
+usage_memo: ・慣れるまではコンボを完結させるのが難しいので、カジュアルマッチなどで練習してからランクマッチで使うのがおすすめ！
+counter_memo: ・相手がコンボをミスした時や、コンボが終わった隙を狙おう
 moves:
   ability:
     name: イリュージョン
