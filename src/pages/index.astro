@@ -44,34 +44,36 @@ const latestArticles = (await getCollection('articles'))
 			<h2>現在のTier表</h2>
 			<a href={withBase('/pokemon/')}>一覧をもっと見る →</a>
 		</div>
-		{
-			tierRows.length > 0 ? (
-				tierRows.map((row) => (
-					<div class="tier-row">
-						<span class={`tier-label tier-${row.tier}`}>{row.tier}</span>
-						<ul class="tier-pokemon-list">
-							{row.pokemon.map((p) => (
-								<li>
-									<a
-										href={withBase(`/pokemon/${p.data.slug}/`)}
-										title={p.data.name_ja}
-										style={`--role-color: var(${ROLE_COLOR_VARS[p.data.role]})`}
-									>
-										{p.data.icon ? (
-											<img src={p.data.icon} alt={p.data.name_ja} class="tier-icon" />
-										) : (
-											<span class="tier-icon-fallback">{p.data.name_ja}</span>
-										)}
-									</a>
-								</li>
-							))}
-						</ul>
-					</div>
-				))
-			) : (
-				<p>Tier表は準備中です。</p>
-			)
-		}
+		<div class="tier-table-card">
+			{
+				tierRows.length > 0 ? (
+					tierRows.map((row) => (
+						<div class="tier-row">
+							<span class={`tier-label tier-${row.tier}`}>{row.tier}</span>
+							<ul class="tier-pokemon-list">
+								{row.pokemon.map((p) => (
+									<li>
+										<a
+											href={withBase(`/pokemon/${p.data.slug}/`)}
+											title={p.data.name_ja}
+											style={`--role-color: var(${ROLE_COLOR_VARS[p.data.role]})`}
+										>
+											{p.data.icon ? (
+												<img src={p.data.icon} alt={p.data.name_ja} class="tier-icon" />
+											) : (
+												<span class="tier-icon-fallback">{p.data.name_ja}</span>
+											)}
+										</a>
+									</li>
+								))}
+							</ul>
+						</div>
+					))
+				) : (
+					<p>Tier表は準備中です。</p>
+				)
+			}
+		</div>
 	</section>
 
 	<section class="articles-section">
@@ -138,10 +140,22 @@ const latestArticles = (await getCollection('articles'))
 		text-decoration: none;
 	}
 
+	.tier-table-card {
+		margin-top: 12px;
+		padding: 20px;
+		background: var(--surface);
+		border: 1.5px solid #e5e9f2;
+		border-radius: var(--radius);
+		box-shadow: 0 2px 8px rgba(27, 34, 51, 0.07);
+	}
+
 	.tier-row {
 		display: flex;
 		align-items: center;
 		gap: 16px;
+	}
+
+	.tier-row + .tier-row {
 		margin-top: 12px;
 	}
 
