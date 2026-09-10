@@ -4,7 +4,7 @@
 // 配信スケジュール・Discordはヘッダーナビからの導線のみで、ここには置かない。
 import Layout from '../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
-import { ROLE_COLOR_VARS, TIER_ORDER } from '../lib/pokemon';
+import { ROLE_COLOR_VARS, ROLE_LABELS, TIER_ORDER } from '../lib/pokemon';
 import { withBase } from '../lib/url';
 
 const pokemonList = await getCollection('pokemon-jp');
@@ -28,6 +28,8 @@ const tierRows = TIER_ORDER.map((tier) => ({
 		.filter((p): p is NonNullable<typeof p> => Boolean(p)),
 })).filter((row) => row.pokemon.length > 0);
 
+const roleFilters = Object.keys(ROLE_LABELS) as (keyof typeof ROLE_LABELS)[];
+
 const latestArticles = (await getCollection('articles'))
 	.sort((a, b) => b.data.publish_date.valueOf() - a.data.publish_date.valueOf())
 	.slice(0, 3);
@@ -44,15 +46,34 @@ const latestArticles = (await getCollection('articles'))
 			<h2>現在のTier表</h2>
 			<a href={withBase('/pokemon/')}>一覧をもっと見る →</a>
 		</div>
+		{
+			tierRows.length > 0 && (
+				<div class="tier-filter" role="group" aria-label="タイプで絞り込み">
+					<button type="button" class="filter-btn is-active" data-filter="all">
+						すべて
+					</button>
+					{roleFilters.map((role) => (
+						<button
+							type="button"
+							class="filter-btn"
+							data-filter={role}
+							style={`--filter-color: var(${ROLE_COLOR_VARS[role]})`}
+						>
+							{ROLE_LABELS[role]}
+						</button>
+					))}
+				</div>
+			)
+		}
 		<div class="tier-table-card">
 			{
 				tierRows.length > 0 ? (
-					tierRows.map((row) => (
-						<div class="tier-row">
+					tierRows.map((row, index) => (
+						<div class={`tier-row${index === 0 ? ' no-divider' : ''}`}>
 							<span class={`tier-label tier-${row.tier}`}>{row.tier}</span>
 							<ul class="tier-pokemon-list">
 								{row.pokemon.map((p) => (
-									<li>
+									<li data-role={p.data.role}>
 										<a
 											href={withBase(`/pokemon/${p.data.slug}/`)}
 											title={p.data.name_ja}
@@ -73,6 +94,7 @@ const latestArticles = (await getCollection('articles'))
 					<p>Tier表は準備中です。</p>
 				)
 			}
+			<p class="tier-no-results" hidden>該当するポケモンがいません。</p>
 		</div>
 	</section>
 
@@ -103,6 +125,42 @@ const latestArticles = (await getCollection('articles'))
 		<a class="cta-button" href={withBase('/pokemon/')}>ポケモン一覧を見る →</a>
 	</section>
 </Layout>
+
+<script>
+	const buttons = document.querySelectorAll<HTMLButtonElement>('.tier-filter .filter-btn');
+	const rows = document.querySelectorAll<HTMLDivElement>('.tier-table-card .tier-row');
+	const noResults = document.querySelector<HTMLParagraphElement>('.tier-no-results');
+
+	buttons.forEach((button) => {
+		button.addEventListener('click', () => {
+			buttons.forEach((b) => b.classList.remove('is-active'));
+			button.classList.add('is-active');
+
+			const filter = button.dataset.filter;
+			let visibleRowCount = 0;
+			let firstVisibleRow: HTMLDivElement | null = null;
+
+			rows.forEach((row) => {
+				const items = row.querySelectorAll<HTMLLIElement>('li');
+				let visibleCount = 0;
+				items.forEach((item) => {
+					const matches = filter === 'all' || item.dataset.role === filter;
+					item.hidden = !matches;
+					if (matches) visibleCount++;
+				});
+				row.hidden = visibleCount === 0;
+				row.classList.remove('no-divider');
+				if (visibleCount > 0) {
+					visibleRowCount++;
+					if (!firstVisibleRow) firstVisibleRow = row;
+				}
+			});
+
+			firstVisibleRow?.classList.add('no-divider');
+			if (noResults) noResults.hidden = visibleRowCount > 0;
+		});
+	});
+</script>
 
 <style>
 	.hero {
@@ -140,6 +198,36 @@ const latestArticles = (await getCollection('articles'))
 		text-decoration: none;
 	}
 
+	.tier-filter {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+		margin-top: 16px;
+	}
+
+	.tier-filter .filter-btn {
+		--filter-color: var(--ink-soft);
+		font-family: var(--font-body);
+		font-weight: 700;
+		font-size: 0.85rem;
+		padding: 6px 16px;
+		border-radius: 999px;
+		border: 1.5px solid var(--filter-color);
+		background: var(--surface);
+		color: var(--filter-color);
+		cursor: pointer;
+		transition: transform 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+	}
+
+	.tier-filter .filter-btn:hover {
+		transform: translateY(-2px);
+	}
+
+	.tier-filter .filter-btn.is-active {
+		background: var(--filter-color);
+		color: #fff;
+	}
+
 	.tier-table-card {
 		margin-top: 12px;
 		padding: 20px;
@@ -157,12 +245,19 @@ const latestArticles = (await getCollection('articles'))
 		display: flex;
 		align-items: center;
 		gap: 16px;
-	}
-
-	.tier-row + .tier-row {
 		margin-top: 12px;
 		padding-top: 12px;
 		border-top: 1px solid rgba(255, 255, 255, 0.15);
+	}
+
+	.tier-row.no-divider {
+		margin-top: 0;
+		padding-top: 0;
+		border-top: none;
+	}
+
+	.tier-row[hidden] {
+		display: none;
 	}
 
 	.tier-label {
