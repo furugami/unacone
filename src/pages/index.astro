@@ -54,9 +54,14 @@ const latestArticles = (await getCollection('articles'))
 								<li>
 									<a
 										href={withBase(`/pokemon/${p.data.slug}/`)}
+										title={p.data.name_ja}
 										style={`--role-color: var(${ROLE_COLOR_VARS[p.data.role]})`}
 									>
-										{p.data.name_ja}
+										{p.data.icon ? (
+											<img src={p.data.icon} alt={p.data.name_ja} class="tier-icon" />
+										) : (
+											<span class="tier-icon-fallback">{p.data.name_ja}</span>
+										)}
 									</a>
 								</li>
 							))}
@@ -180,30 +185,37 @@ const latestArticles = (await getCollection('articles'))
 	.tier-pokemon-list a {
 		display: inline-flex;
 		align-items: center;
-		gap: 6px;
-		padding: 6px 14px;
-		border-radius: 999px;
+		justify-content: center;
+		width: 56px;
+		height: 56px;
+		flex-shrink: 0;
+		border-radius: 50%;
 		background: var(--surface);
-		border: 1.5px solid #e5e9f2;
+		border: 2.5px solid var(--role-color);
+		overflow: hidden;
 		text-decoration: none;
-		font-size: 0.9rem;
-		font-weight: 700;
-		transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+		box-shadow: 0 2px 6px rgba(27, 34, 51, 0.1);
+		transition: transform 0.15s ease, box-shadow 0.15s ease;
 	}
 
 	.tier-pokemon-list a:hover {
-		transform: translateY(-2px);
-		box-shadow: 0 6px 14px rgba(27, 34, 51, 0.12);
-		border-color: var(--role-color);
+		transform: translateY(-2px) scale(1.06);
+		box-shadow: 0 6px 14px rgba(27, 34, 51, 0.2);
 	}
 
-	.tier-pokemon-list a::before {
-		content: '';
-		width: 8px;
-		height: 8px;
-		flex-shrink: 0;
-		border-radius: 50%;
-		background: var(--role-color);
+	.tier-icon {
+		width: 100%;
+		height: 100%;
+		object-fit: contain;
+	}
+
+	.tier-icon-fallback {
+		padding: 4px;
+		font-size: 0.6rem;
+		font-weight: 700;
+		line-height: 1.1;
+		text-align: center;
+		color: var(--ink);
 	}
 
 	.article-cards {
